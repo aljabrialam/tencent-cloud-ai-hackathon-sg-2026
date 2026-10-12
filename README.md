@@ -127,6 +127,17 @@ Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.
 | 8 | Receipt | What actually happened, link to audit |
 | 9 | Audit trail | "Why did the agent do this?" — timeline with rule ids and chain integrity |
 
+### Screens — digibank-faithful renders
+
+<p>
+  <img src="design/sleek/home.png" width="22%" alt="Home — digibank hero, accounts, mic FAB">
+  <img src="design/sleek/listening.png" width="22%" alt="Listening — waveform + live transcript">
+  <img src="design/sleek/confirm.png" width="22%" alt="Confirm — verified card, authorise with PIN">
+  <img src="design/sleek/receipt-audit.png" width="22%" alt="Receipt + Audit — ledger read-back, hash-chained trail">
+</p>
+
+The remaining five screens (Clarify, Multi-intent, Frozen, Scam, Authorise) are built to the same style in the [interactive mockup](design/digivoice-app-mockup.html) — open it in a browser and press **▶ Play demo path** to walk the whole flow. RN scaffolds for all 10 screens: [`design/mokkoi/`](design/mokkoi/).
+
 ## Who it is for
 
 | Persona | Need | Stories |
