@@ -159,6 +159,10 @@ Business value, personas and the eight use cases: [`docs/use-cases.md`](docs/use
 
 ## Beyond the phone — wearables
 
+<p><img src="design/meta/ray-ban-display-neural-band.png" width="60%" alt="Meta Ray-Ban Display glasses with Meta Neural Band"></p>
+
+*Meta Ray-Ban Display + Meta Neural Band — image: meta.com*
+
 digiVoice extends the same zero-trust pipeline to **Meta Ray-Ban Display glasses + Neural Band**: the glasses' mics capture the request hands-free, the HUD shows a glanceable summary of the card, and the Neural Band pinch *forwards the draft to the phone* — where biometric + OOB still sign `sha256(draft)`. The glasses can propose; only the phone can approve. On a scam or frozen verdict the HUD shows an amber "Paused — see your phone".
 
 **The hands-free journey** (full stage-by-stage table + HUD rules in [`docs/meta-wearable-concept.md`](docs/meta-wearable-concept.md)): speak at the glasses on the MRT → transcript rolls in the HUD while the band micro-pulses on each parsed entity → clarify aloud ("Two Johns — say *Tan* or *Lim*?") or pinch to pick → card rises on the lens (`S$500.00 → Mum ····4521 ✓ verified · Approve on your phone →`) → **single-pinch sends it to the phone** → Face ID signs → green tick on the lens, receipt on the phone.
@@ -187,6 +191,19 @@ digiVoice extends the same zero-trust pipeline to **Meta Ray-Ban Display glasses
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
 **Meta references** — [Wearables Developer Portal](https://wearables.developer.meta.com/) · [Device Access Toolkit](https://wearables.developer.meta.com/docs/develop/dat/getting-started-toolkit) ([iOS](https://github.com/facebook/meta-wearables-dat-ios) / [Android](https://github.com/facebook/meta-wearables-dat-android)) · [Mock Device Kit](https://wearables.developer.meta.com/docs/develop/dat/mock-device-kit/) · [Web Apps for Ray-Ban Display](https://github.com/facebook/meta-wearables-webapp) ([setup](https://wearables.developer.meta.com/docs/develop/webapps/setup)) · [Meta Ray-Ban Display](https://www.meta.com/ai-glasses/meta-ray-ban-display/) · [Meta Neural Band](https://www.meta.com/ai-glasses/accessories/neural-band/) · [Meta EMG research](https://www.meta.com/emerging-tech/emg-wearable-technology/)
+
+## What's out there — and how digiVoice differs
+
+Voice banking and glasses payments already exist; the difference is the constraint architecture, not the surface.
+
+| Exists today | Their model | digiVoice's difference |
+|---|---|---|
+| **Warba Bank "Bdr"** (live) — agentic voice banking, real transactions | LLM executes transfers behind an on-screen confirm | Our model has **no tools at all** — it emits a typed draft; only a signature over `sha256(draft)` executes. The unsafe path is structurally absent, not policy-guarded |
+| **Wells Fargo Fargo / Commerzbank Ava / Kasisto KAIgentic** — conversational banking | Assistant inside menu-driven flows | Declared intent *replaces* menus — multi-intent with symbolic formulas (`half(remaining)`) resolved by deterministic code, not model arithmetic |
+| **Alipay+ GlassPay on RayNeo / Rokid** (shipped) — pay by glasses | Voice + QR on the glasses; **voiceprint/iris auth on the wearable itself** | Opposite trust split: wearables **propose**, only the phone **approves** — EMG pinch can't prove identity, so `authorise` is unmapped by design. Safer for the exact demographic (elderly, motor-impaired) wearable-first banking targets |
+| **Bank-side scam/risk engines** | Invisible back-end scoring | Made *visible and interruptive* — freeze on validator disagreement, named-reason scam interstitial with cooling-off and hotline, every stage hash-chained into an auditable "why did the agent do this?" |
+
+The claim isn't "first voice payment" or "first glasses payment" — it's **first transaction agent where the LLM cannot move money by construction**, extended to a surface you can't even see a confirmation screen on.
 
 ## Mapping to the DBS challenge
 
