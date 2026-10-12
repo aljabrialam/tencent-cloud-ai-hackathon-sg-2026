@@ -4,7 +4,7 @@
 
 digiVoice is a Direct Conversational Transaction Agent (DCTA) for the **Banking Track — DBS** at the Tencent Cloud AI CAN DO IT Hackathon Singapore 2026 (Scenario 1: voice-enabled payment and transaction with KYC and basic risk control). It takes the DBS brief literally: GenAI is a *generator of drafts, never an executor of funds*.
 
-Built 12–16 October 2026, solo, with Spec Kit, CodeBuddy and Tencent Cloud. Mock bank, mock biometrics, mock gateway — as the challenge permits. Nothing real is moved.
+Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock biometrics, mock gateway — as the challenge permits. Nothing real is moved.
 
 ---
 
@@ -19,7 +19,7 @@ Built 12–16 October 2026, solo, with Spec Kit, CodeBuddy and Tencent Cloud. Mo
 | **Core rule** | *The drafting model has no tools.* `LLMProvider.complete(prompt) → string`. There is no function it can call. Every number the user sees was computed by code from a symbolic formula the model emitted |
 | **Three stops** | **Freeze** (validator disagrees) · **Hold/Block** (policy: limits, velocity, KYC, new payee) · **Scam interstitial** (authority + urgency + new payee + large amount → cooling-off + hotline) |
 | **LLM** | Tencent Hunyuan primary; OpenAI / Anthropic behind the same adapter, switchable by config. Drafting and validation can use different vendors |
-| **Status** | Spec, constitution, business flow, UX screens, architecture and policy rules written · Figma mockups in progress · implementation starts 13 Oct — see [Status](#status) |
+| **Status** | Spec, constitution, business flow, UX screens, architecture and policy rules written · interactive mockup in `design/` · implementation in progress — see [Status](#status) |
 | **Stack** | Expo / React Native + TypeScript (mobile) · Node + TypeScript (agent service + mock bank) · zod schemas · vitest · Spec Kit (constitution → specify → plan → tasks → implement) |
 
 ## The problem
@@ -87,7 +87,7 @@ flowchart LR
   BIO --> GW
 ```
 
-Nine principles hold this together; they are the project's [constitution](.specify/memory/constitution.md) (v1.1.0):
+Eleven principles hold this together; they are the project's [constitution](.specify/memory/constitution.md) (v1.2.0):
 
 1. **LLM interprets, code executes.** The model's only output is a schema-validated `TransactionIntent`. It has no tools.
 2. **Explicit authorisation before every mutation.** A native card shows every resolved field; biometric/PIN signs a hash of exactly that; any edit invalidates it. Silence is never consent.
@@ -98,12 +98,14 @@ Nine principles hold this together; they are the project's [constitution](.speci
 7. **Honest simulation.** Mock bank, simulated biometrics and injected demo scenarios are labelled as such everywhere — UI, README, narration.
 8. **State outside the agent.** Conversation and drafts live in durable storage; every LLM call is stateless; a service restart mid-flow loses nothing.
 9. **Demo primacy.** The deliverable is the 3-minute demo. Work that doesn't reach the screen is out of scope; P3 is cut first.
+10. **Multi-agent separation of duties.** Five bounded agents — Drafting (ADP), Validation (different engine, read-only), Policy (deterministic), Clarifier, Executor/Auditor — communicate through typed artifacts. No agent both proposes and approves.
+11. **Disruptive reach.** Declared intent replaces menus; excluded users (elderly, disabled, non-English, scam-targeted) become first-class; safety is the product; wearables extend the same zero-trust pipeline while authorisation stays on the phone.
 
 Full flow, trust boundaries and sequence diagrams: [`docs/business-flow.md`](docs/business-flow.md) · components and types: [`docs/architecture.md`](docs/architecture.md).
 
 ## What the user sees
 
-Nine screens, one card. Figma mockups are being built in `design/`; the screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md).
+Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) (open in a browser); the screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md).
 
 | # | Screen | What it proves |
 |---|---|---|
@@ -168,14 +170,14 @@ Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — bot
 
 | Area | State |
 |---|---|
-| Constitution v1.0.0 | Done |
+| Constitution v1.2.0 | Done |
 | Feature spec 001 | Done — quality checklist passed |
 | Business flow, use cases, UX screens, architecture, policy rules, demo script, submission checklist | Done — `docs/` |
-| Figma mockups (9 screens) | In progress |
-| Plan + tasks (Spec Kit) | Next |
-| Shared types, policy engine + tests, mock bank, gateway | 13 Oct |
-| Expo app, LLM adapter, validator, shield | 14–15 Oct |
-| CodeBuddy proof, cover, demo video, submission | 15–16 Oct |
+| Interactive mockup — 9 screens + glasses HUD | Done — `design/digivoice-app-mockup.html` |
+| Plan + tasks (Spec Kit) | In progress |
+| Shared types, policy engine + tests, mock bank, gateway | Planned |
+| Expo app, LLM adapter, validator, shield | Planned |
+| CodeBuddy proof, cover, demo video, submission | Planned |
 
 ## Repository
 
@@ -184,8 +186,8 @@ Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — bot
 specs/      Feature specs, plans, tasks
 docs/       Business flow · use cases · UX screens · architecture · policy rules · demo script · checklist
 design/     Figma exports, cover image, tool-usage proof
-apps/       mobile (Expo) · service (Node)       — from 13 Oct
-packages/   shared types, schemas, policy        — from 13 Oct
+apps/       mobile (Expo) · service (Node) · glasses-hud (Display Web App)
+packages/   shared types, schemas, policy
 ```
 
 ## Workflow
