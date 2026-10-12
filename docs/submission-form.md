@@ -61,5 +61,5 @@ https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026
 |---|---|
 | Demo video | Spec wants **5–8 min** (overview + features + build reflection). Current cut is ~3:00 — see note below. |
 | WorkBuddy/CodeBuddy/Miora history | ≥3 screenshots of chat logs → save to `design/tool-proof/` and upload (mandatory, no scoring without it) |
-| Cover image | `design/cover.png` — generated below ✓ |
+| Cover image | `design/cover.png` 380×216 ✓ — built as editable layers in Figma (`Cover — 16:9` frame in the [digiVoice file](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)); `design/cover-figma-1920.png` is the full-res export |
 | Social post (bonus) | Post on YouTube/X/Xiaohongshu with #WorkBuddy #CodeBuddy #Miora #TencentCloudHackathon, submit link |
