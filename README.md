@@ -300,6 +300,7 @@ The claim isn't "first voice payment" or "first glasses payment" — it's **firs
 | **Demo script** | [`docs/demo-script.md`](docs/demo-script.md) — 3-minute beat sheet: success, multi-intent, clarify, freeze, scam, audit |
 | **Spec** | [`specs/001-conversational-transaction-agent/spec.md`](specs/001-conversational-transaction-agent/spec.md) — 8 user stories, 18 functional requirements, 8 measurable success criteria |
 | **Requirements map** | [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md) — every DCTA brief bullet → mechanism → artifact, incl. the 10 judging dimensions |
+| **Technical approach** | [`specs/001-conversational-transaction-agent/plan.md`](specs/001-conversational-transaction-agent/plan.md) — technical context, constitution gate, source layout · [`research.md`](specs/001-conversational-transaction-agent/research.md) — 12 decisions with alternatives · [`data-model.md`](specs/001-conversational-transaction-agent/data-model.md) · [`contracts/`](specs/001-conversational-transaction-agent/contracts/service-api.md) — service API + LLM prompt contracts · [`quickstart.md`](specs/001-conversational-transaction-agent/quickstart.md) — e2e validation |
 | **Constitution** | [`.specify/memory/constitution.md`](.specify/memory/constitution.md) |
 | **Submission checklist** | [`docs/submission-checklist.md`](docs/submission-checklist.md) — mandatory items incl. CodeBuddy/WorkBuddy proof |
 
@@ -324,7 +325,8 @@ Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — bot
 | Interactive mockup — 9 screens + glasses HUD | Done — `design/digivoice-app-mockup.html` · mirrored in Figma |
 | Per-screen PNGs of the mockup | Done — `design/screens/` (all 10 screens) |
 | RN screen scaffolds (Mokkoi, DBS tokens) | Done — `design/mokkoi/` (all 10 screens, consistent tokens + WCAG checks) |
-| Plan + tasks (Spec Kit) | In progress |
+| Plan + design artifacts (Spec Kit) | Done — `specs/001-*/plan.md`, `research.md`, `data-model.md`, `contracts/` (service API + LLM prompts), `quickstart.md` |
+| Tasks (Spec Kit) | Next — `/speckit.tasks` |
 | Shared types, policy engine + tests, mock bank, gateway | Planned |
 | Expo app, LLM adapter, validator, shield | Planned |
 | CodeBuddy proof, cover, demo video, submission | Planned |
