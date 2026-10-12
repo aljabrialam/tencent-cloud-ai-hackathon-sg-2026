@@ -136,7 +136,7 @@ const AuthoriseScreen = () => {
             <Switch
               value={notifications}
               onValueChange={setNotifications}
-              trackColor={{ false: '#DDE3E7', true: '#FF4724' }}
+              trackColor={{ false: '#DDE3E7', true: '#E60023' }}
               thumbColor="#FFFFFF"
               accessibilityRole="switch"
               accessibilityLabel="Enable notifications"
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   dropdownOption: { paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#DDE3E7' },
   dropdownOptionText: { fontSize: 16, color: '#172733' },
-  dropdownOptionSelected: { color: '#FF4724', fontWeight: '600' },
+  dropdownOptionSelected: { color: '#E60023', fontWeight: '600' },
   toggleRow: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
     backgroundColor: '#FFFFFF', borderRadius: 12, padding: 16, marginBottom: 20,
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   toggleInfo: { flex: 1, marginRight: 12 },
   toggleHint: { fontSize: 13, color: '#69737B', marginTop: 4 },
   submitBtn: {
-    backgroundColor: '#FF4724', borderRadius: 14, paddingVertical: 18,
+    backgroundColor: '#E60023', borderRadius: 14, paddingVertical: 18,
     alignItems: 'center', marginTop: 8,
   },
   submitBtnText: { fontSize: 17, fontWeight: '700', color: '#FFFFFF' },

@@ -162,8 +162,8 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   backButton: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     borderRadius: 20,
     backgroundColor: '#EEF2F5CC',
     alignItems: 'center',
@@ -176,8 +176,8 @@ const styles = StyleSheet.create({
     lineHeight: 28,
   },
   bookmarkButton: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     borderRadius: 20,
     backgroundColor: '#EEF2F5CC',
     alignItems: 'center',
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   badge: {
-    backgroundColor: '#FF47241A',
+    backgroundColor: '#E600231A',
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 8,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   badgeText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#FF4724',
+    color: '#E60023',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
   },
   primaryAction: {
     flex: 2,
-    backgroundColor: '#FF4724',
+    backgroundColor: '#E60023',
     borderRadius: 14,
     paddingVertical: 16,
     alignItems: 'center',

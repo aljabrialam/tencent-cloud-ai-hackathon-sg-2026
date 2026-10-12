@@ -8,12 +8,12 @@
 <style>
   :root{
     --bg:#F4F4F2; --surface:#FFFFFF; --line:#ECEAE6;
-    --text:#1B1B2F; --muted:#8A8A93; --faint:#B9B9C2;
+    --text:#1B1B2F; --muted:#6E6E78; --faint:#6E6E78;
     --red:#E60023; --red2:#C5001E; --redwash:#FDE8EA;
-    --ok:#00A651; --okwash:#E5F6EC;
-    --warn:#E8A13A; --warnwash:#FCF3E4; --warntext:#9A6A15;
-    --err:#D62300; --errwash:#FCEBE7;
-    --navy:#1B1B2F; --blue:#2E7BD6;
+    --ok:#00A651; --oktext:#0E6B34; --okwash:#E5F6EC;
+    --warn:#E8A13A; --warnwash:#FCF3E4; --warntext:#7A5210;
+    --err:#B51E00; --errwash:#FCEBE7;
+    --navy:#1B1B2F; --blue:#2563B8;
     --radius:22px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -71,7 +71,7 @@
   .rrow.last{border-radius:0 0 18px 18px;border-bottom:0}
   .av{width:30px;height:30px;border-radius:50%;background:#EFEFED;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex:none}
   .pill{font-size:8px;font-weight:700;padding:3px 8px;border-radius:999px;display:inline-flex;align-items:center;gap:3px}
-  .pill.ok{background:var(--okwash);color:var(--ok)}
+  .pill.ok{background:var(--okwash);color:var(--oktext)}
   .pill.gy{background:#EFEFED;color:var(--muted)}
   .pill.wr{background:var(--warnwash);color:var(--warntext)}
   .pill.rd{background:var(--errwash);color:var(--err)}
@@ -103,15 +103,15 @@
   .opt{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:10px 12px;margin:6px 14px;font-size:10.5px;display:flex;align-items:center;gap:10px}
   .opt .oi{width:30px;height:30px;border-radius:50%;background:#EFEFED;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex:none}
   .opt.sel{border-color:var(--ok);background:var(--okwash)}
-  .opt.sel .oi{background:var(--ok);color:#fff}
+  .opt.sel .oi{background:var(--oktext);color:#fff}
   .chips{display:flex;gap:8px;padding:0 14px}
   .chip{flex:1;text-align:center;border:1.5px solid var(--blue);border-radius:14px;padding:9px 6px;font-size:10px;font-weight:600;color:var(--blue);background:#fff}
-  .chip.sel{border-color:var(--ok);color:var(--ok);background:var(--okwash)}
+  .chip.sel{border-color:var(--oktext);color:var(--oktext);background:var(--okwash)}
   .footnote{font-size:8.5px;color:var(--faint);padding:8px 16px;display:flex;align-items:center;gap:5px}
   /* ---------- cards ---------- */
   .card{background:var(--surface);border-radius:var(--radius);margin:6px 14px;overflow:hidden;box-shadow:0 4px 16px rgba(27,27,47,.06)}
   .card .ch{padding:10px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
-  .vbadge{display:inline-flex;align-items:center;gap:6px;background:var(--ok);color:#fff;font-size:10px;font-weight:700;padding:5px 11px;border-radius:999px}
+  .vbadge{display:inline-flex;align-items:center;gap:6px;background:var(--oktext);color:#fff;font-size:10px;font-weight:700;padding:5px 11px;border-radius:999px}
   .spk{width:28px;height:28px;border-radius:50%;background:var(--redwash);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:12px;margin-left:auto}
   .frow{display:flex;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:10.5px}
   .frow:last-child{border:0}
@@ -128,7 +128,7 @@
   .cta.navy{background:var(--navy);box-shadow:0 4px 14px rgba(27,27,47,.25);text-transform:none;letter-spacing:0}
   .cta.dis{background:#EFEFED;color:var(--muted);box-shadow:none;text-transform:none;letter-spacing:0;font-weight:600}
   .ghost{color:var(--text);text-align:center;font-size:11.5px;font-weight:600;padding:10px}
-  .expiry{display:flex;align-items:center;justify-content:center;gap:5px;font-size:9.5px;color:var(--warn);font-weight:600;padding:6px}
+  .expiry{display:flex;align-items:center;justify-content:center;gap:5px;font-size:9.5px;color:var(--warntext);font-weight:600;padding:6px}
   .step{display:flex;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line);font-size:10.5px}
   .step .n{width:18px;height:18px;border-radius:50%;background:var(--blue);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px;font-weight:700}
   .fchip{display:inline-block;background:var(--warnwash);color:var(--warntext);border-radius:8px;padding:3px 8px;font-size:8.5px;font-weight:700;margin-top:4px}
@@ -143,7 +143,7 @@
   .cmp .b b{color:var(--err);display:block;margin-top:2px;font-size:14px}
   .reasons{padding:6px 14px}
   .reasons .r{display:flex;gap:8px;padding:6px 0;font-size:10.5px;align-items:flex-start}
-  .reasons .r i{color:var(--warn);font-style:normal;flex:none}
+  .reasons .r i{color:var(--warntext);font-style:normal;flex:none}
   /* ---------- authorise ---------- */
   .hash{font-family:"SF Mono",Menlo,monospace;font-size:11px;color:var(--blue);background:var(--surface);border-radius:12px;padding:10px;text-align:center;margin:6px 14px;box-shadow:0 2px 8px rgba(27,27,47,.05);letter-spacing:.06em}
   .face{width:74px;height:74px;border-radius:50%;border:2.5px solid var(--ok);display:flex;align-items:center;justify-content:center;font-size:32px;margin:16px auto 6px;background:var(--okwash)}
@@ -151,7 +151,7 @@
   .code i{width:28px;height:36px;border:1.5px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:800;font-size:15px;background:var(--surface)}
   .code i.sep{border:0;width:8px}
   /* ---------- receipt/audit ---------- */
-  .check{width:58px;height:58px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;margin:22px auto 8px;box-shadow:0 6px 18px rgba(0,166,81,.35)}
+  .check{width:58px;height:58px;border-radius:50%;background:var(--oktext);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;margin:22px auto 8px;box-shadow:0 6px 18px rgba(0,166,81,.35)}
   .tl{position:relative;margin:4px 16px;padding-left:18px;font-size:9.5px}
   .tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1.5px;background:var(--line)}
   .tl .ev{position:relative;padding:5px 0}
@@ -183,7 +183,7 @@
   .lens .htiny{font-size:7px;color:rgba(255,255,255,.45);text-align:center;margin-top:4px}
   .lens .hint{display:flex;justify-content:center;gap:10px;font-size:8px;color:rgba(255,255,255,.7);margin-top:8px}
   .lens .hint b{color:#fff;font-weight:600}
-  .lens .bigtick{width:40px;height:40px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;margin:22px auto 6px}
+  .lens .bigtick{width:40px;height:40px;border-radius:50%;background:var(--oktext);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;margin:22px auto 6px}
   .band{width:150px;height:150px;border-radius:50%;background:linear-gradient(160deg,#22222E,#17171F);position:relative;box-shadow:0 10px 30px rgba(0,0,0,.25),inset 0 0 0 6px #26262F,inset 0 0 0 7px rgba(255,255,255,.05)}
   .band .bpulse{position:absolute;inset:0;border-radius:50%;border:2px solid var(--blue);animation:pulse 2s ease-out infinite}
   @keyframes pulse{0%{transform:scale(.6);opacity:0}30%{opacity:.9}100%{transform:scale(1.15);opacity:0}}
@@ -231,7 +231,7 @@
   .webframe .waudit{font-size:10px;color:#44525D}
   .webframe .waudit .arow{display:flex;gap:8px;padding:5px 0;border-top:1px solid var(--border);align-items:baseline}
   .webframe .waudit .arow b{color:var(--navy);font-family:ui-monospace,monospace;font-size:9px;white-space:nowrap}
-  .webframe .waudit .arow .ok{color:var(--ok);font-weight:800}
+  .webframe .waudit .arow .ok{color:var(--oktext);font-weight:800}
 
   /* compact variant for multi-state strips */
   .webframe.sm{width:452px}
@@ -263,7 +263,7 @@
   .watch .wamt{font-size:17px;font-weight:700}
   .watch .wsub{font-size:8px;color:rgba(255,255,255,.6);margin-top:2px}
   .watch .wcta{font-size:9px;font-weight:700;color:#FFC4B4;margin-top:6px}
-  .watch .wtick{width:34px;height:34px;border-radius:50%;background:var(--ok);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;margin:26px auto 4px}
+  .watch .wtick{width:34px;height:34px;border-radius:50%;background:var(--oktext);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;margin:26px auto 4px}
   .dwave{display:flex;gap:3px;align-items:center;height:22px;margin:14px auto}
   .dwave i{width:3px;background:#fff;border-radius:2px;height:5px;animation:wv 1s ease-in-out infinite}
   .dwave i:nth-child(odd){animation-delay:.14s}.dwave i:nth-child(3n){animation-delay:.28s}
@@ -283,7 +283,7 @@
   .car .camt{font-size:19px;font-weight:800}
   .car .csub{font-size:8.5px;color:rgba(255,255,255,.6);margin-top:3px}
   .car .ccta{font-size:10px;font-weight:700;color:#FFC4B4;margin-top:7px}
-  .car .cpark{position:relative;display:inline-block;background:var(--ok);color:#fff;font-size:8px;font-weight:800;border-radius:5px;padding:2px 6px}
+  .car .cpark{position:relative;display:inline-block;background:var(--oktext);color:#fff;font-size:8px;font-weight:800;border-radius:5px;padding:2px 6px}
   .car .cdim{color:rgba(255,255,255,.5);font-size:10px;text-align:center;margin:auto}
   .car .cdim b{color:rgba(255,255,255,.8)}
 
@@ -366,7 +366,7 @@
     <div class="lst-badge"><i></i>Listening…</div>
     <div class="lst-title">I'm listening</div>
     <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="tsr"><div class="lbl"><span>Live transcript</span><span style="color:var(--ok)">✓ Clear</span></div>Send <b>two hundred</b> to <u>Mum</u> for groceries&nbsp;▌</div>
+    <div class="tsr"><div class="lbl"><span>Live transcript</span><span style="color:var(--oktext)">✓ Clear</span></div>Send <b>two hundred</b> to <u>Mum</u> for groceries&nbsp;▌</div>
     <div class="tiny" style="text-align:center;padding:8px">English · confidence 0.97 · tap to stop</div>
     <div class="grow"></div>
     <div class="stopbtn"><i></i></div>

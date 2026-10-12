@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: 18, fontWeight: '600', color: '#172733', marginBottom: 8 },
   cardText: { fontSize: 14, color: '#69737B', lineHeight: 20 },
   button: {
-    backgroundColor: '#FF4724',
+    backgroundColor: '#E60023',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -66,13 +66,13 @@ const styles = StyleSheet.create({
   buttonText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
   outlineButton: {
     borderWidth: 1,
-    borderColor: '#FF4724',
+    borderColor: '#E60023',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
     marginTop: 12,
   },
-  outlineButtonText: { fontSize: 16, fontWeight: '600', color: '#FF4724' },
+  outlineButtonText: { fontSize: 16, fontWeight: '600', color: '#E60023' },
 });
 
 export default FrozenScreen;

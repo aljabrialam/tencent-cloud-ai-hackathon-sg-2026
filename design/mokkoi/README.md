@@ -6,7 +6,7 @@ React Native screens generated with **[Mokkoi](https://github.com/RHINOREX123/mo
 
 | Token | Value | Source |
 |---|---|---|
-| `primary` | `#FF4724` | DBS digital red |
+| `primary` | `#E60023` | DBS digital red |
 | `accent` | `#0077CC` | Links / secondary actions |
 | `background` | `#EEF2F5` | digibank surface |
 | `surface` | `#FFFFFF` | Cards |

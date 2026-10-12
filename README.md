@@ -133,7 +133,7 @@ Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.
 
 | # | Screen | What it proves |
 |---|---|---|
-| 1 | Home | Balances, recent with status pills, hold-to-speak |
+| 1 | Home | Balances, recent with status pills, tap-to-talk mic FAB |
 | 2 | Listening | Transcript always shown before anything is drafted |
 | 3 | Clarify | "Which John?" — chips with distinguishing detail, one question at a time |
 | 4 | Confirm | The card: every field, balance after, verified badge, required tier, expiry |
@@ -303,6 +303,7 @@ The claim isn't "first voice payment" or "first glasses payment" — it's **firs
 | **Spec** | [`specs/001-conversational-transaction-agent/spec.md`](specs/001-conversational-transaction-agent/spec.md) — 8 user stories, 18 functional requirements, 8 measurable success criteria |
 | **Requirements map** | [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md) — every DCTA brief bullet → mechanism → artifact, incl. the 10 judging dimensions |
 | **Technical approach** | [`specs/001-conversational-transaction-agent/plan.md`](specs/001-conversational-transaction-agent/plan.md) — technical context, constitution gate, source layout · [`research.md`](specs/001-conversational-transaction-agent/research.md) — 12 decisions with alternatives · [`data-model.md`](specs/001-conversational-transaction-agent/data-model.md) · [`contracts/`](specs/001-conversational-transaction-agent/contracts/service-api.md) — service API + LLM prompt contracts · [`quickstart.md`](specs/001-conversational-transaction-agent/quickstart.md) — e2e validation |
+| **UX / accessibility audit** | [`docs/ux-accessibility-audit.md`](docs/ux-accessibility-audit.md) — WCAG 2.2 AA contrast measured from real hex values, HIG/M3 target sizes, colour-never-alone — with the fixes applied |
 | **Constitution** | [`.specify/memory/constitution.md`](.specify/memory/constitution.md) |
 | **Submission checklist** | [`docs/submission-checklist.md`](docs/submission-checklist.md) — mandatory items incl. CodeBuddy/WorkBuddy proof |
 

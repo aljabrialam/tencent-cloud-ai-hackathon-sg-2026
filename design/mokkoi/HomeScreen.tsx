@@ -31,11 +31,11 @@ interface ActivityItem {
 }
 
 const QUICK_ACTIONS: QuickAction[] = [
-  { id: '1', icon: '\uD83D\uDCB3', label: 'Pay', color: '#FF4724' },
+  { id: '1', icon: '\uD83D\uDCB3', label: 'Pay', color: '#E60023' },
   { id: '2', icon: '\uD83D\uDCB0', label: 'Transfer', color: '#0077CC' },
   { id: '3', icon: '\uD83D\uDCC8', label: 'Invest', color: '#00AB61' },
   { id: '4', icon: '\uD83C\uDFE6', label: 'Accounts', color: '#69737B' },
-  { id: '5', icon: '\uD83D\uDCB1', label: 'Exchange', color: '#FF4724' },
+  { id: '5', icon: '\uD83D\uDCB1', label: 'Exchange', color: '#E60023' },
   { id: '6', icon: '\uD83D\uDCC4', label: 'Statements', color: '#D62300' },
 ];
 
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#FF4724',
+    backgroundColor: '#E60023',
     alignItems: 'center',
     justifyContent: 'center',
   },
