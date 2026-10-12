@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { T } from './src/theme';
@@ -15,11 +15,23 @@ import { Audit } from './src/screens/Audit';
 
 const SCENARIOS = Object.keys(DEMO_PATHS);
 
+const qs = typeof window !== 'undefined' ? window.location.search : '';
+const AUTO = /[?&]auto=1/.test(qs);
+const BARE = /[?&]bare=1/.test(qs);
+
 export default function App() {
-  const [scenario, setScenario] = useState(SCENARIOS[0]);
+  const scnMatch = qs.match(/[?&]scn=(\d)/);
+  const [scenario, setScenario] = useState(SCENARIOS[scnMatch ? +scnMatch[1] : 0] ?? SCENARIOS[0]);
   const [idx, setIdx] = useState(0);
   const path = DEMO_PATHS[scenario];
   const stage: Stage = path[idx];
+
+  // ?auto=1 — walk the path on a timer for screen recording
+  useEffect(() => {
+    if (!AUTO) return;
+    const t = setInterval(() => setIdx(i => (i + 1) % path.length), 3200);
+    return () => clearInterval(t);
+  }, [path.length]);
 
   const go = (s: Stage) => {
     const i = path.indexOf(s);
@@ -32,7 +44,7 @@ export default function App() {
     <SafeAreaView style={s.c}>
       <StatusBar style="dark" />
       {/* demo chrome — not part of the product UI; ?bare=1 hides it for screenshots */}
-      {!(typeof window !== 'undefined' && /[?&]bare=1/.test(window.location.search)) && (
+      {!BARE && (
       <View style={s.chrome}>
         <Text style={s.chromeLbl} numberOfLines={1}>{scenario} · {stage} ({idx + 1}/{path.length})</Text>
         <View style={s.chromeRow}>
