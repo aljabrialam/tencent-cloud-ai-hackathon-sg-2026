@@ -165,6 +165,25 @@ digiVoice extends the same zero-trust pipeline to **Meta Ray-Ban Display glasses
 
 **Neural Band gestures** — single pinch: forward/select · double pinch: dismiss · twist: scroll card · pinch-hold: repeat read-aloud. **Authorise is deliberately unmapped**: EMG can't prove *who* pinched, so the band can propose, never approve. **HUD rules** — one glanceable card, never an app; no Pay/Approve affordance on the lens; word + colour + icon for every state (never colour alone); auto-dismiss to ambient so balances never linger.
 
+### The lens UI — every pipeline state designed
+
+<p>
+  <img src="design/screens/hud-ambient.png" width="24%" alt="HUD ambient — lens dark, no balances">
+  <img src="design/screens/hud-listening.png" width="24%" alt="HUD listening — waveform + transcript">
+  <img src="design/screens/hud-clarify.png" width="24%" alt="HUD clarify — answer by voice or pinch">
+  <img src="design/screens/hud-card.png" width="24%" alt="HUD card — verified draft, approve on phone">
+</p>
+<p>
+  <img src="design/screens/hud-waiting.png" width="24%" alt="HUD waiting — card held while phone signs">
+  <img src="design/screens/hud-sent.png" width="24%" alt="HUD sent — green tick, ledger confirmed">
+  <img src="design/screens/hud-frozen.png" width="24%" alt="HUD frozen — amber, speak to correct">
+  <img src="design/screens/hud-scam.png" width="24%" alt="HUD scam — steady amber pause, gestures dead">
+</p>
+
+### Neural Band — the silent controller
+
+<p><img src="design/screens/band-gestures.png" width="80%" alt="Neural Band gesture map — pinch, double pinch, twist, pinch-hold; authorise unmapped"></p>
+
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
 ## Mapping to the DBS challenge

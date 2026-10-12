@@ -165,6 +165,33 @@
   .hud .hmeta{position:absolute;top:10px;right:14px;font-size:8px;color:rgba(255,255,255,.55);letter-spacing:.15em}
   .hud .wave{position:absolute;bottom:14px;left:16px;height:24px}
   .hud .wave i{background:#fff}
+  /* ---------- wearable screens ---------- */
+  .wgrid{display:flex;gap:28px;flex-wrap:wrap}
+  .wcell{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .lens{width:300px;height:190px;border-radius:18px;background:linear-gradient(160deg,#0A1218 0%,#06131C 60%,#0A1A24 100%);position:relative;overflow:hidden;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.25),inset 0 0 0 1px rgba(255,255,255,.06);transition:box-shadow .4s}
+  .lens.active{box-shadow:0 0 0 3px var(--ok),0 10px 30px rgba(0,166,81,.4)}
+  .lens .hmeta{position:absolute;top:10px;right:12px;font-size:7.5px;color:rgba(255,255,255,.5);letter-spacing:.15em}
+  .lens .hstate{position:absolute;top:10px;left:14px;font-size:8px;letter-spacing:.12em;color:rgba(255,255,255,.55);text-transform:uppercase}
+  .lens .hcard{background:rgba(255,255,255,.94);border-radius:11px;padding:10px 12px;font-size:10px;line-height:1.5;color:var(--text);box-shadow:0 4px 16px rgba(0,0,0,.3);margin-top:16px}
+  .lens .hcard.amber{background:#FCF3E4;border-left:3px solid var(--warn)}
+  .lens .hcard.green{background:#E5F6EC;border-left:3px solid var(--ok)}
+  .lens .hwave{display:flex;gap:3px;align-items:center;height:34px;margin:34px auto 6px;width:max-content}
+  .lens .hwave i{width:3px;background:#fff;border-radius:3px;animation:w 1s ease-in-out infinite}
+  .lens .hwave i:nth-child(odd){animation-delay:.12s}.lens .hwave i:nth-child(3n){animation-delay:.24s}.lens .hwave i:nth-child(4n){animation-delay:.36s}
+  .lens .hts{background:rgba(255,255,255,.94);border-radius:10px;padding:8px 11px;font-size:10.5px;color:var(--text);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+  .lens .hts b{color:var(--red)}
+  .lens .htiny{font-size:7px;color:rgba(255,255,255,.45);text-align:center;margin-top:4px}
+  .lens .hint{display:flex;justify-content:center;gap:10px;font-size:8px;color:rgba(255,255,255,.7);margin-top:8px}
+  .lens .hint b{color:#fff;font-weight:600}
+  .lens .bigtick{width:40px;height:40px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;margin:22px auto 6px}
+  .band{width:150px;height:150px;border-radius:50%;background:linear-gradient(160deg,#22222E,#17171F);position:relative;box-shadow:0 10px 30px rgba(0,0,0,.25),inset 0 0 0 6px #26262F,inset 0 0 0 7px rgba(255,255,255,.05)}
+  .band .bpulse{position:absolute;inset:0;border-radius:50%;border:2px solid var(--blue);animation:pulse 2s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(.6);opacity:0}30%{opacity:.9}100%{transform:scale(1.15);opacity:0}}
+  .band .bg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-size:22px}
+  .band .bl{font-size:7px;letter-spacing:.12em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-top:3px}
+  .bandrow{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+  .banditem{display:flex;flex-direction:column;align-items:center;gap:8px;width:150px}
+  .banditem .capw{font-size:9px;color:#6E6E78;text-align:center;line-height:1.4}
   .note{font-size:12.5px;color:#6E6E78;max-width:940px;line-height:1.65;margin:24px 0}
   .note b{color:var(--text)}
   section{margin-top:40px}
@@ -382,20 +409,73 @@
 </div>
 
 <section>
-  <h2>Concept — Meta Ray-Ban Display + Neural Band <span class="pill wr">concept · not built</span></h2>
-  <div class="note">Same agent, same rules, hands-free. The glasses hear the request and show the card; <b>the signature still happens on the phone</b> — the concept inherits every guardrail instead of bypassing them. Integration path: Meta Wearables Device Access Toolkit + Display Web Apps (see <code>docs/meta-wearable-concept.md</code>).</div>
-  <div class="glasses">
-    <div class="tiny">RIGHT LENS HUD · Meta Ray-Ban Display (concept render)</div>
-    <div class="hud">
-      <div class="hmeta">DIGIVOICE · EN</div>
-      <div class="hcard">
-        <b>"Pay Mum S$200 for groceries"</b><br>
-        S$200.00 → Mum ····4521 · verified ✓<br>
-        <span style="color:var(--warntext)">Approve on your phone →</span>
-      </div>
-      <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="concept-note">Pinch (Neural Band) sends the card to the phone · over-limit or scam shows an amber "Paused — see your phone"</div>
+  <h2>Wearable UI — Meta Ray-Ban Display HUD <span class="pill wr">concept · simulator-tested path</span></h2>
+  <div class="note">Every stage of the pipeline has a designed lens state. The rule that shapes all of them: <b>the strongest verb the HUD can show is "Approve on your phone →" — an authorise affordance can never exist on the lens.</b> One card, never an app; word + colour + icon for every state; auto-dismiss to ambient so balances never linger. Full interaction spec: <code>docs/meta-wearable-concept.md</code>.</div>
+  <div class="wgrid">
+
+    <div class="wcell"><div class="lens" data-w="0">
+      <div class="hstate">Ambient</div><div class="hmeta">DIGIVOICE · EN</div>
+      <div style="color:rgba(255,255,255,.35);font-size:9px;margin-top:60px;text-align:center">— idle —</div>
+      <div class="htiny">nothing on the lens until you speak · no persistent money info</div>
+    </div><div class="cap"><b>W0 · Ambient</b>Lens is dark; no balances ever linger</div></div>
+
+    <div class="wcell"><div class="lens" data-w="1">
+      <div class="hstate">Listening</div><div class="hmeta">DIGIVOICE · EN</div>
+      <div class="hwave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="hts">Send <b>two hundred</b> to <b>Mum</b> for groceries…</div>
+      <div class="htiny">tap temple = say it back · band pulses on each parsed entity</div>
+    </div><div class="cap"><b>W1 · Listening</b>Waveform + rolling transcript, band haptics</div></div>
+
+    <div class="wcell"><div class="lens" data-w="2">
+      <div class="hstate">Clarify</div><div class="hmeta">DIGIVOICE · EN</div>
+      <div class="hcard">Two payees named <b>John</b> —<br>say <b>Tan</b> or <b>Lim</b>?</div>
+      <div class="hint"><span>pinch = <b>Tan</b></span><span>twist = <b>Lim</b></span><span>2×pinch = <b>neither</b></span></div>
+      <div class="htiny">band gestures answer silently — no speech needed in noisy places</div>
+    </div><div class="cap"><b>W2 · Clarify</b>One question; answer by voice or pinch</div></div>
+
+    <div class="wcell"><div class="lens" data-w="3">
+      <div class="hstate">Draft ready</div><div class="hmeta">a3f9·08c2</div>
+      <div class="hcard green"><b>S$200.00 → Mum ····4521</b> · verified ✓<br><span style="color:var(--warntext);font-weight:600">Approve on your phone →</span></div>
+      <div class="hint"><span>pinch = <b>send to phone</b></span><span>2×pinch = <b>dismiss</b></span></div>
+    </div><div class="cap"><b>W3 · Card</b>Glanceable draft + fingerprint; pinch forwards</div></div>
+
+    <div class="wcell"><div class="lens" data-w="4">
+      <div class="hstate">Waiting</div><div class="hmeta">a3f9·08c2</div>
+      <div class="hcard">S$200.00 → Mum ····4521<br><span class="muted">… waiting for phone — Face ID</span></div>
+      <div class="hint"><span>pinch-hold = <b>read aloud again</b></span></div>
+    </div><div class="cap"><b>W4 · Waiting</b>Card held; phone is signing</div></div>
+
+    <div class="wcell"><div class="lens" data-w="5">
+      <div class="hstate">Executed</div><div class="hmeta">DIGIVOICE · EN</div>
+      <div class="bigtick">✓</div>
+      <div class="hts" style="text-align:center"><b>Sent</b> — S$200.00 to Mum<br>TXN-88214 · ledger confirmed</div>
+      <div class="htiny">band triple-pulse · card clears to ambient in ~4 s</div>
+    </div><div class="cap"><b>W5 · Sent</b>Tick + txn id, then auto-dismiss</div></div>
+
+    <div class="wcell"><div class="lens" data-w="6">
+      <div class="hstate">Frozen</div><div class="hmeta">DIGIVOICE · EN</div>
+      <div class="hcard amber">⛔ <b>I may have misunderstood</b><br>"two hundred" vs <b>S$2,000.00</b> — nothing sent.<br><span style="font-weight:600">Speak to correct →</span></div>
+      <div class="htiny">pinch = say it again · phone shows the comparison card</div>
+    </div><div class="cap"><b>W6 · Frozen</b>Amber, plain words, recovery offered</div></div>
+
+    <div class="wcell"><div class="lens" data-w="7">
+      <div class="hstate">Scam pause</div><div class="hmeta">SHIELD · SHD-AUTH</div>
+      <div class="hcard amber">⚠ <b>Paused — this looks like a scam.</b><br>Authority + urgency + new account.<br><b>See your phone, or tap for the hotline.</b></div>
+      <div class="htiny">steady amber, never flashing · band gestures disabled — nothing can be waved through</div>
+    </div><div class="cap"><b>W7 · Scam</b>Steady amber; gestures dead by design</div></div>
+
+  </div>
+</section>
+
+<section>
+  <h2>Neural Band — the silent controller</h2>
+  <div class="note">EMG wristband for one-handed, no-look control — built for arthritis, tremor, low vision, and the MRT-commuter with a hand on a rail. Haptic pulses confirm the parse <i>and</i> carry state to Deaf users. <b>Authorise is deliberately unmapped</b>: the band can't prove who pinched, so it can propose, never approve.</div>
+  <div class="bandrow">
+    <div class="banditem"><div class="band"><div class="bpulse"></div><div class="bg">🤏<div class="bl">single pinch</div></div></div><div class="capw"><b>Forward / select</b> — send card to phone, pick first option, confirm read-aloud</div></div>
+    <div class="banditem"><div class="band"><div class="bg">🤏🤏<div class="bl">double pinch</div></div></div><div class="capw"><b>Dismiss / cancel</b> — remove the card, exit the flow</div></div>
+    <div class="banditem"><div class="band"><div class="bg">↻<div class="bl">twist</div></div></div><div class="capw"><b>Navigate</b> — scroll a multi-step card on the lens</div></div>
+    <div class="banditem"><div class="band"><div class="bg">🤏⏱<div class="bl">pinch-hold</div></div></div><div class="capw"><b>Repeat</b> — replay the speaker read-aloud</div></div>
+    <div class="banditem"><div class="band" style="box-shadow:0 10px 30px rgba(0,0,0,.25),inset 0 0 0 6px #2A1515,inset 0 0 0 7px rgba(214,35,0,.25)"><div class="bg" style="color:#D62300">✕<div class="bl">unmapped</div></div></div><div class="capw"><b>Authorise — intentionally absent</b> — signing is phone biometric + OOB only</div></div>
   </div>
 </section>
 
@@ -414,12 +494,18 @@
 const phones=[...document.querySelectorAll('.phone')];
 const order=[0,1,3,7,8,9,1,2,3,5,6,7,8];
 let idx=0,timer=null;
-const shot=new URLSearchParams(location.search).get('shot');
-if(shot!==null){
-  document.querySelectorAll('h1,.sub,.bar,section').forEach(e=>e.style.display='none');
+const qs=new URLSearchParams(location.search);
+const shot=qs.get('shot'),wshot=qs.get('wshot'),bshot=qs.get('bshot');
+if(shot!==null||wshot!==null||bshot!==null){
   document.body.style.padding='24px 0';
-  const cells=[...document.querySelectorAll('.cell')];
-  cells.forEach((c,i)=>{c.style.display=i==+shot?'flex':'none'});
+  const sel=shot!==null?'.cell':wshot!==null?'.wcell':'.banditem';
+  const i=+(shot??wshot??bshot);
+  const cells=[...document.querySelectorAll(sel)];
+  const target=bshot==='all'?document.querySelector('.bandrow'):cells[i];
+  document.querySelectorAll('section').forEach(s=>{s.style.display=s.contains(target)?'':'none'});
+  document.querySelectorAll('h1,.sub,.bar,section h2,section .note').forEach(e=>e.style.display='none');
+  if(bshot!=='all')cells.forEach((c,j)=>{c.style.display=j==i?'flex':'none'});
+  if(sel!=='.cell')document.getElementById('grid').style.display='none';
 }
 
 function go(i){phones.forEach(p=>p.classList.remove('active'));const p=phones[i];p.classList.add('active');p.parentElement.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
