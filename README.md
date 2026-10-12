@@ -87,13 +87,17 @@ flowchart LR
   BIO --> GW
 ```
 
-Five rules hold this together; they are the project's [constitution](.specify/memory/constitution.md):
+Nine principles hold this together; they are the project's [constitution](.specify/memory/constitution.md) (v1.1.0):
 
 1. **LLM interprets, code executes.** The model's only output is a schema-validated `TransactionIntent`. It has no tools.
-2. **Explicit authorisation before every mutation.** A native card shows every resolved field; biometric/PIN signs a hash of exactly that; any edit invalidates it.
+2. **Explicit authorisation before every mutation.** A native card shows every resolved field; biometric/PIN signs a hash of exactly that; any edit invalidates it. Silence is never consent.
 3. **Deterministic policy engine, tested first.** Tiers, limits, velocity, new-payee and KYC rules are pure functions with a rule id, written test-first.
-4. **Complete, tamper-evident audit trail.** Transcript, every draft version, validator verdict, every rule that fired, signature fingerprint, gateway decision — hash-chained and viewable in-app.
-5. **Fail closed, in plain language.** Ambiguity → one question. Policy failure → reason and next step. Validator unavailable → frozen. Never silent, never a guess.
+4. **Verification after action.** "Executed" means the ledger shows it — receipts render read-back state, never submitted values. Retries reuse the same signed draft, never a re-derived one.
+5. **Immutable audit — and evidence, not prose, in the UI.** Transcript, drafts, validator verdict, every rule that fired, signature fingerprint, gateway decision: hash-chained, viewable in-app, and every claim on screen carries its evidence.
+6. **Fail closed.** Ambiguity → one question. Policy failure → reason and next step. Validator unavailable → frozen.
+7. **Honest simulation.** Mock bank, simulated biometrics and injected demo scenarios are labelled as such everywhere — UI, README, narration.
+8. **State outside the agent.** Conversation and drafts live in durable storage; every LLM call is stateless; a service restart mid-flow loses nothing.
+9. **Demo primacy.** The deliverable is the 3-minute demo. Work that doesn't reach the screen is out of scope; P3 is cut first.
 
 Full flow, trust boundaries and sequence diagrams: [`docs/business-flow.md`](docs/business-flow.md) · components and types: [`docs/architecture.md`](docs/architecture.md).
 

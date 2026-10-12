@@ -319,7 +319,13 @@ verifying an identical draft and a localised card.
   Tamil for transcript, clarification, and confirmation card, with optional read-aloud of the
   card.
 - **FR-017**: System MUST operate entirely against mock bank, biometric, and gateway services
-  seeded with demo accounts, payees, and transaction history; no real customer data is used.
+  seeded with demo accounts, payees, and transaction history; no real customer data is used,
+  and all mock or simulated behaviour MUST be labelled as such in the interface.
+- **FR-019**: After any execution call, the system MUST confirm the result by reading back the
+  ledger state, and receipts MUST display the ledger-confirmed outcome rather than the values
+  submitted; ambiguous outcomes MUST be reconciled before being reported.
+- **FR-020**: Conversation and draft state MUST be held in durable service storage so that a
+  service restart mid-flow preserves the draft; LLM calls MUST be stateless.
 - **FR-018**: System MUST allow the language-model provider to be switched by configuration
   without changing behaviour of validation, policy, or execution.
 
