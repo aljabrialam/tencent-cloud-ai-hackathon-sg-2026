@@ -188,6 +188,17 @@ digiVoice extends the same zero-trust pipeline to **Meta Ray-Ban Display glasses
 
 <p><img src="design/screens/band-gestures.png" width="80%" alt="Neural Band gesture map — pinch, double pinch, twist, pinch-hold; authorise unmapped"></p>
 
+### Running code — not just mockups
+
+`apps/glasses-hud/` is a **real Meta Ray-Ban Display Web App** built with Meta's official UI Toolkit (`@wearables-ui-toolkit/mrbd`) — every lens state above implemented as a focusable, directional-nav flow, with *no* approve affordance anywhere. It passes Meta's own quality gate (`check-webapp.mjs` from the official webapp toolkit): **0 structure findings, typecheck + production build clean, browser QA at the 600×600 device window** — 5 initial requests, ~50 ms load, ~10 MB heap, all focus targets in-viewport and named. Evidence: [`apps/glasses-hud/TEST-EVIDENCE.md`](apps/glasses-hud/TEST-EVIDENCE.md).
+
+<p>
+  <img src="design/screens/hud-toolkit-normal.png" width="36%" alt="Real toolkit render — state menu on the lens">
+  <img src="design/screens/hud-toolkit-additive.png" width="36%" alt="Additive-display composite — as rendered on the lens">
+</p>
+
+*Left: real Toolkit render · Right: additive-display composite over a live scene — both produced by Meta's own test harness.*
+
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
 **Meta references** — [Wearables Developer Portal](https://wearables.developer.meta.com/) · [Device Access Toolkit](https://wearables.developer.meta.com/docs/develop/dat/getting-started-toolkit) ([iOS](https://github.com/facebook/meta-wearables-dat-ios) / [Android](https://github.com/facebook/meta-wearables-dat-android)) · [Mock Device Kit](https://wearables.developer.meta.com/docs/develop/dat/mock-device-kit/) · [Web Apps for Ray-Ban Display](https://github.com/facebook/meta-wearables-webapp) ([setup](https://wearables.developer.meta.com/docs/develop/webapps/setup)) · [Meta Ray-Ban Display](https://www.meta.com/ai-glasses/meta-ray-ban-display/) · [Meta Neural Band](https://www.meta.com/ai-glasses/accessories/neural-band/) · [Meta EMG research](https://www.meta.com/emerging-tech/emg-wearable-technology/)
