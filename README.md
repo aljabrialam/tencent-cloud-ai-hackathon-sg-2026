@@ -19,6 +19,7 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 | **When it stops** | **Freeze** (auditor disagrees) · **Hold/Block** (limits, velocity, KYC, new payee) · **Scam interstitial** (cooling-off + hotline) — all visible, all audited |
 | **Beyond the phone** | One agent, every surface — Meta glasses + Neural Band, watch, car, speaker, earbuds, web. **Wearables propose; only the phone approves.** Four surfaces are real runnable code, not slides: `apps/mobile/` (Expo, all demo paths), `apps/web/` (digibank web + future-surface sims), `apps/glasses-hud/` passes Meta's own test gate, `apps/watch/` compiles for arm64 watchOS |
 | **Stack** | Expo/React Native + TS (mobile) · Node + TS (agent service, mock bank) · zod · vitest · Tencent ADP + Hunyuan + TRTC · Spec Kit |
+| **Demo** | ▶ [Watch the full demo](https://youtu.be/K-hxJaWUQCc) — one pipeline across phone, glasses, watch and web |
 
 **📖 In a hurry? Start here:** [the problem](#the-problem) → [one worked example](#a-concrete-example) → [how it works](#how-it-works) → [every DBS requirement, answered](#mapping-to-the-dbs-challenge) → [the screens](#what-the-user-sees) → [wearables](#beyond-the-phone--wearables) → [vs what's out there](#whats-out-there--and-how-digivoice-differs) → [judge's index](#for-judges)
 
