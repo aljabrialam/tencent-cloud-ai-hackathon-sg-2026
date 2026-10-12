@@ -34,12 +34,12 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 | Web | digibank web shell + speaker / earbuds / in-car future-surface sims | [`demo/web-app.mp4`](demo/web-app.mp4) |
 | Consolidated | All of the above, stitched at 1920×1080 | [`demo/digivoice-demo.mp4`](demo/digivoice-demo.mp4) · voice-over cue sheet [`demo/narration.md`](demo/narration.md) |
 
-**Interactive demos** — open in a browser, they auto-play:
+**Interactive demos** — live on GitHub Pages, auto-play in the browser:
 
-- [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) — the full product mockup (phone, watch, HUD, surfaces) · press **▶ Play demo path**
-- [`apps/mobile/film.html`](apps/mobile/film.html) — phone film (real simulator footage + per-scenario captions)
-- [`apps/glasses-hud/film.html`](apps/glasses-hud/film.html) — glasses film (wearer-view scene, real HUD capture)
-- [`apps/watch/film.html`](apps/watch/film.html) — watch film (compiled SwiftUI renders in bezel)
+- [**Full product mockup**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html) — phone, watch, HUD, surfaces · press **▶ Play demo path**
+- [**Phone film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html) — real simulator footage + per-scenario captions
+- [**Glasses film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html) — wearer-view scene, real HUD capture
+- [**Watch film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html) — compiled SwiftUI renders in bezel
 
 ## The problem
 
