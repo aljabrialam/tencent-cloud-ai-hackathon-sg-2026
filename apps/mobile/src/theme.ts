@@ -1,0 +1,21 @@
+// digiVoice design tokens — AA-verified palette (docs/ux-accessibility-audit.md)
+export const T = {
+  bg: '#EEF2F5',
+  surface: '#FFFFFF',
+  line: '#DDE3E7',
+  text: '#172733',
+  muted: '#69737B',
+  faint: '#8A8A93',
+  red: '#E60023',
+  redWash: '#FDE8EA',
+  navy: '#172733',
+  blue: '#2563B8',
+  ok: '#0E6B34',
+  okWash: '#E5F6EC',
+  warn: '#E8A13A',
+  warnText: '#7A5210',
+  warnWash: '#FCF3E4',
+  err: '#B51E00',
+  errWash: '#FCEBE7',
+  radius: 16,
+};

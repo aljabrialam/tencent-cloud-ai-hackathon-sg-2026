@@ -17,7 +17,7 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 | **The rule that defines us** | *The LLM has no tools.* It can only emit a typed draft. Deterministic code resolves it, a second model audits it, policy gates it, and only a biometric signature over the exact draft executes it. **The agent cannot move money — by construction, not by policy.** |
 | **The pipeline** | Voice → transcript → LLM drafts typed JSON → code resolves payees/accounts/formulas → independent LLM audits draft vs transcript → policy engine picks the auth tier → confirmation card → Face ID signs → gateway executes → hash-chained audit |
 | **When it stops** | **Freeze** (auditor disagrees) · **Hold/Block** (limits, velocity, KYC, new payee) · **Scam interstitial** (cooling-off + hotline) — all visible, all audited |
-| **Beyond the phone** | One agent, every surface — Meta glasses + Neural Band, watch, car, speaker, earbuds, web. **Wearables propose; only the phone approves.** Two surfaces are real compiled code, not slides: `apps/glasses-hud/` passes Meta's own test gate; `apps/watch/` compiles for arm64 watchOS |
+| **Beyond the phone** | One agent, every surface — Meta glasses + Neural Band, watch, car, speaker, earbuds, web. **Wearables propose; only the phone approves.** Four surfaces are real runnable code, not slides: `apps/mobile/` (Expo, all demo paths), `apps/web/` (digibank web + future-surface sims), `apps/glasses-hud/` passes Meta's own test gate, `apps/watch/` compiles for arm64 watchOS |
 | **Stack** | Expo/React Native + TS (mobile) · Node + TS (agent service, mock bank) · zod · vitest · Tencent ADP + Hunyuan + TRTC · Spec Kit |
 
 **📖 In a hurry? Start here:** [the problem](#the-problem) → [one worked example](#a-concrete-example) → [how it works](#how-it-works) → [every DBS requirement, answered](#mapping-to-the-dbs-challenge) → [the screens](#what-the-user-sees) → [wearables](#beyond-the-phone--wearables) → [vs what's out there](#whats-out-there--and-how-digivoice-differs) → [judge's index](#for-judges)
@@ -163,6 +163,24 @@ Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.
 
 Rendered straight from the mockup (`design/screens/` — regenerated via headless Chrome against `design/digivoice-app-mockup.html`). RN scaffolds for all 10 screens: [`design/mokkoi/`](design/mokkoi/).
 
+### Run it — real UI, mock data
+
+The screens above aren't just designs — they run. **`apps/mobile/`** is a real Expo/React Native app that walks all five demo paths (happy, multi-intent, ambiguous payee, validator freeze, scam shield) as a switchable state machine:
+
+```sh
+cd apps/mobile && npm install && npx expo start   # Expo Go — or --web for browser
+```
+
+<p>
+  <img src="apps/mobile/screenshots/app-home.png" width="19%" alt="Running app — Home">
+  <img src="apps/mobile/screenshots/app-listening.png" width="19%" alt="Running app — Listening">
+  <img src="apps/mobile/screenshots/app-confirm.png" width="19%" alt="Running app — Confirm">
+  <img src="apps/mobile/screenshots/app-frozen.png" width="19%" alt="Running app — Frozen">
+  <img src="apps/mobile/screenshots/app-audit.png" width="19%" alt="Running app — Audit">
+</p>
+
+Captured from the running app, not the mockup (`apps/mobile/screenshots/`). All mock data — the sole authorise button lives only here.
+
 ## Who it is for
 
 | Persona | Need | Stories |
@@ -236,6 +254,10 @@ Each surface has a designed state flow — and a shipping platform underneath, n
 **Web / desktop** — the big-screen review surface. Chat transcript beside the confirmation card, inside the digibank web shell — and the approve hand-off still points at the phone:
 <p><img src="design/screens/mock-surf-web.png" width="92%" alt="digiVoice web states — draft, clarify, frozen, audit inside digibank web"></p>
 
+**Running code — not just mockups:** `apps/web/` is a real Vite + React app — the digibank web shell with live draft/clarify/frozen/audit states. `npm run dev` to try it; captures in `apps/web/screenshots/`:
+
+<p><img src="apps/web/screenshots/web-draft.png" width="92%" alt="Running digiVoice web app — transcript beside the confirmation card"></p>
+
 > **Feasible today:** digibank web already exists as a channel — digiVoice is a chat panel + the same draft card component. Signing stays on the enrolled phone, so desktop adds no new trust boundary.
 
 <p><img src="design/surfaces/smart-speaker.jpg" width="34%" alt="Amazon Echo Dot"></p>
@@ -278,6 +300,10 @@ The innovation isn't a new app per device — it's **one signed-draft pipeline w
 | **Smart speaker / home assistant** | Bills due, scheduled transfers, spend questions | Sensitive answers gated by voice-match or a phone ping; **voice is identity-weak — spoken approval is never accepted** |
 | **Wireless earbuds** | Private read-aloud of drafts and receipts, real-time fraud warnings that interrupt media | Works with any earbuds — no special hardware; **PINs and card numbers are never spoken into the mic** |
 | **In-car** (CarPlay / Android Auto / IVI) | "Pay my parking fee" · "How much did I spend on fuel this month?" | Audio-first while moving; the card only appears at standstill; **never scrolling, typing, or authorising while driving** |
+
+**All three future surfaces run interactively** in `apps/web/` → *Future surfaces* — click a question and watch the speaker ping the phone, duck the earbuds' media for a fraud warning, or flip the car between moving (audio-only) and standstill (card appears). Same mock draft, same rule: they propose, the phone approves.
+
+<p><img src="apps/web/screenshots/web-surfaces.png" width="92%" alt="Running future-surface sims — speaker phone-ping, earbud read-aloud, in-car standstill card"></p>
 
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
@@ -347,7 +373,7 @@ Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — bot
 specs/      Feature specs, plans, tasks
 docs/       Business flow · use cases · UX screens · architecture · policy rules · demo script · checklist
 design/     Figma exports, cover image, tool-usage proof
-apps/       mobile (Expo) · service (Node) · glasses-hud (Display Web App) · watch (SwiftUI watchOS)
+apps/       mobile (Expo, runnable) · web (Vite React, runnable) · service (Node) · glasses-hud (Display Web App) · watch (SwiftUI watchOS)
 packages/   shared types, schemas, policy
 ```
 
