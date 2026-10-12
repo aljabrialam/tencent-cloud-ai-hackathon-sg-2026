@@ -204,6 +204,23 @@
   .surf .sans.amber{background:#FFF7E8;border-left-color:var(--warn)}
   .surf .snever{font-size:9.5px;color:var(--err);font-weight:700;padding:10px 16px;border-top:1px dashed var(--border);background:#FFF8F7}
   .surf .stag{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 16px 12px}
+  .webframe{width:920px;max-width:100%;margin:18px auto 0;background:#fff;border-radius:18px;box-shadow:0 16px 48px rgba(23,39,51,.14);overflow:hidden}
+  .webframe .wbar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#EDF1F4;border-bottom:1px solid var(--border)}
+  .webframe .wbar i{width:10px;height:10px;border-radius:50%;background:#D6DDE2}
+  .webframe .wbar i:first-child{background:#FF5F57}.webframe .wbar i:nth-child(2){background:#FEBC2E}.webframe .wbar i:nth-child(3){background:#28C840}
+  .webframe .wbar .wurl{flex:1;background:#fff;border-radius:8px;font-size:10px;color:var(--muted);padding:5px 12px;margin-left:8px}
+  .webframe .wbody{display:grid;grid-template-columns:180px 1fr;min-height:330px}
+  .webframe .wnav{background:var(--navy);padding:18px 0;color:#fff}
+  .webframe .wnav .wlogo{padding:0 18px 14px;font-weight:800;font-size:14px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:8px}
+  .webframe .wnav .wi{padding:9px 18px;font-size:11px;color:rgba(255,255,255,.72)}
+  .webframe .wnav .wi.on{background:rgba(255,255,255,.1);color:#fff;border-left:3px solid var(--red);padding-left:15px}
+  .webframe .wmain{padding:20px 22px;display:grid;grid-template-columns:1.2fr 1fr;gap:18px;align-content:start}
+  .webframe .wchat .wbubble{background:var(--surface);border-radius:12px 12px 12px 4px;padding:9px 12px;font-size:11px;margin-bottom:8px;max-width:88%}
+  .webframe .wchat .wbubble.mine{background:#FFE9E4;border-radius:12px 12px 4px 12px;margin-left:auto}
+  .webframe .wcard{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px}
+  .webframe .wcard .wamt{font-size:22px;font-weight:800;color:var(--navy)}
+  .webframe .wcard .wrow{display:flex;justify-content:space-between;font-size:10.5px;padding:6px 0;border-top:1px solid var(--border);color:#44525D}
+  .webframe .wcard .wlock{margin-top:10px;background:var(--surface);border-radius:9px;padding:8px 10px;font-size:10px;color:var(--warntext);font-weight:600}
   .note{font-size:12.5px;color:#6E6E78;max-width:940px;line-height:1.65;margin:24px 0}
   .note b{color:var(--text)}
   section{margin-top:40px}
@@ -532,6 +549,34 @@
     </div>
 
   </div>
+
+  <div class="webframe" id="websurface">
+    <div class="wbar"><i></i><i></i><i></i><div class="wurl">https://internet-banking.dbs.com.sg/digivoice</div></div>
+    <div class="wbody">
+      <div class="wnav">
+        <div class="wlogo">digibank</div>
+        <div class="wi on">digiVoice</div>
+        <div class="wi">Accounts</div><div class="wi">Pay &amp; Transfer</div>
+        <div class="wi">digiWealth</div><div class="wi">Cards</div>
+        <div class="wi">Settings</div>
+      </div>
+      <div class="wmain">
+        <div class="wchat">
+          <div class="wbubble mine">"Pay Mum $200 for groceries"</div>
+          <div class="wbubble">Draft created and verified — S$200.00 to Mum, account ending 4521.</div>
+          <div class="wbubble">I've sent it to your phone. Approve there with Face ID.</div>
+        </div>
+        <div class="wcard">
+          <div class="wamt">S$200.00</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">to Mum · DBS/POSB ending 4521 · verified ✓</div>
+          <div class="wrow"><span>Policy tier</span><b>Small — biometric</b></div>
+          <div class="wrow"><span>Draft</span><b>a3f9·08c2</b></div>
+          <div class="wlock">🔒 Approve on your phone — this browser view can display, not sign.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="concept-note">The web surface replays the same card — but it is display + draft capture only. The phone remains the sole signer, on every surface.</div>
 </section>
 
 <section>
@@ -550,16 +595,17 @@ const phones=[...document.querySelectorAll('.phone')];
 const order=[0,1,3,7,8,9,1,2,3,5,6,7,8];
 let idx=0,timer=null;
 const qs=new URLSearchParams(location.search);
-const shot=qs.get('shot'),wshot=qs.get('wshot'),bshot=qs.get('bshot'),ashot=qs.get('ashot');
-if(shot!==null||wshot!==null||bshot!==null||ashot!==null){
+const shot=qs.get('shot'),wshot=qs.get('wshot'),bshot=qs.get('bshot'),ashot=qs.get('ashot'),webshot=qs.get('webshot');
+if(shot!==null||wshot!==null||bshot!==null||ashot!==null||webshot!==null){
   document.body.style.padding='24px 0';
-  const sel=shot!==null?'.cell':wshot!==null?'.wcell':ashot!==null?'.surf':'.banditem';
-  const i=+(shot??wshot??bshot??ashot);
+  const sel=shot!==null?'.cell':wshot!==null?'.wcell':ashot!==null?'.surf':webshot!==null?'#websurface':'.banditem';
+  const i=+(shot??wshot??bshot??ashot??webshot);
   const cells=[...document.querySelectorAll(sel)];
   const target=bshot==='all'?document.querySelector('.bandrow'):ashot==='all'?document.querySelector('.surfrow'):cells[i];
   document.querySelectorAll('section').forEach(s=>{s.style.display=s.contains(target)?'':'none'});
   document.querySelectorAll('h1,.sub,.bar,section h2,section .note').forEach(e=>e.style.display='none');
-  if(bshot!=='all'&&ashot!=='all')cells.forEach((c,j)=>{c.style.display=j==i?'flex':'none'});
+  if(bshot!=='all'&&ashot!=='all'&&webshot===null)cells.forEach((c,j)=>{c.style.display=j==i?'flex':'none'});
+  if(webshot!==null)document.querySelectorAll('.surfrow').forEach(s=>s.style.display='none');
   if(sel!=='.cell')document.getElementById('grid').style.display='none';
 }
 

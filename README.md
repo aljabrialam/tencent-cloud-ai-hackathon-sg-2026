@@ -210,6 +210,9 @@ The innovation isn't a new app per device — it's **one signed-draft pipeline w
 | **In-car** (CarPlay / Android Auto / IVI) | "Pay my parking fee" · "How much did I spend on fuel this month?" | Audio-first while moving; the card only appears at standstill; **never scrolling, typing, or authorising while driving** |
 | **Smart speaker / home assistant** | Bills due, scheduled transfers, spend questions | Sensitive answers gated by voice-match or a phone ping; **voice is identity-weak — spoken approval is never accepted** |
 | **Wireless earbuds** | Private read-aloud of drafts and receipts, real-time fraud warnings that interrupt media | Works with any earbuds — no special hardware; **PINs and card numbers are never spoken into the mic** |
+| **Web / desktop** | Full transaction review on the big screen — chat transcript + card side-by-side inside digibank web | The browser view is display + draft capture only — **the phone remains the sole signer even on a logged-in desktop session** |
+
+<p><img src="design/screens/surface-web.png" width="90%" alt="digiVoice on digibank web — chat transcript plus confirmation card, approve on your phone"></p>
 
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
