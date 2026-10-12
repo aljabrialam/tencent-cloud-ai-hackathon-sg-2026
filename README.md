@@ -112,7 +112,7 @@ Full flow, trust boundaries and sequence diagrams: [`docs/business-flow.md`](doc
 
 ## What the user sees
 
-Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) (open in a browser); the screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md).
+Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) (open in a browser); the screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md). High-fidelity reference renders generated with Sleek are in [`design/sleek/`](design/sleek/) (Home, Listening, Confirm, Receipt+Audit), and the mockup is mirrored as editable layers in Figma ([digiVoice — DCTA](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)). Design tooling: Sleek (render references) + [Mokkoi](https://github.com/RHINOREX123/mokkoi-mcp-server) (MIT-licensed MCP server for React Native screen scaffolding with WCAG checks).
 
 | # | Screen | What it proves |
 |---|---|---|
@@ -186,7 +186,8 @@ Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — bot
 | Constitution v1.2.0 | Done |
 | Feature spec 001 | Done — quality checklist passed |
 | Business flow, use cases, UX screens, architecture, policy rules, demo script, submission checklist | Done — `docs/` |
-| Interactive mockup — 9 screens + glasses HUD | Done — `design/digivoice-app-mockup.html` |
+| Interactive mockup — 9 screens + glasses HUD | Done — `design/digivoice-app-mockup.html` · mirrored in Figma |
+| High-fidelity reference renders | Done — `design/sleek/` (4 core screens; remaining screens rebuilt in mockup) |
 | Plan + tasks (Spec Kit) | In progress |
 | Shared types, policy engine + tests, mock bank, gateway | Planned |
 | Expo app, LLM adapter, validator, shield | Planned |
