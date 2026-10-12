@@ -67,6 +67,10 @@ Two details matter more than they look. The model wrote `half(remaining(savings)
 
 ```mermaid
 flowchart LR
+  subgraph W["Wearables — input & display only"]
+    MIC["Ray-Ban Display<br/><small>mic · speakers · HUD</small>"]
+    BAND["Neural Band<br/><small>pinch → send to phone</small>"]
+  end
   subgraph P["Probabilistic — may be wrong or attacked"]
     ASR["ASR"] --> L1["Drafting LLM<br/><small>JSON only · no tools</small>"]
     L2["Validation LLM<br/><small>read-only</small>"]
@@ -74,16 +78,19 @@ flowchart LR
   subgraph D["Deterministic — tested code"]
     S["Schema"] --> RS["Resolver"] --> PO["Policy"] --> SD["Shield"]
   end
-  subgraph H["Human"]
+  subgraph H["Human — phone"]
     CARD["Confirmation card"] --> BIO["Biometric → signature"]
   end
   subgraph X["Execution — signed drafts only"]
     GW["Gateway"] --> LED["Mock core banking"]
   end
+  MIC -->|"voice"| ASR
+  BAND -->|"forward draft"| CARD
   L1 --> S
   L1 -. "no path" .- GW
   L2 -. "freeze only" .-> CARD
   SD --> CARD
+  CARD -. "glanceable summary" .-> MIC
   BIO --> GW
 ```
 
@@ -130,6 +137,12 @@ Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.
 | Compliance reviewer | What was said, understood, approved, executed — in order | US7 |
 
 Business value, personas and the eight use cases: [`docs/use-cases.md`](docs/use-cases.md).
+
+## Beyond the phone — wearables
+
+digiVoice extends the same zero-trust pipeline to **Meta Ray-Ban Display glasses + Neural Band**: the glasses' mics capture the request hands-free, the HUD shows a glanceable summary of the card, and the Neural Band pinch *forwards the draft to the phone* — where biometric + OOB still sign `sha256(draft)`. The glasses can propose; only the phone can approve. On a scam or frozen verdict the HUD shows an amber "Paused — see your phone".
+
+Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit. Details: [`docs/meta-wearable-concept.md`](docs/meta-wearable-concept.md).
 
 ## Mapping to the DBS challenge
 
