@@ -214,6 +214,22 @@ The innovation isn't a new app per device — it's **one signed-draft pipeline w
 
 <p><img src="design/screens/surface-web.png" width="90%" alt="digiVoice on digibank web — chat transcript plus confirmation card, approve on your phone"></p>
 
+### Mock experiences per surface
+
+Each surface has a designed state flow, not a logo on a slide:
+
+**Smartwatch** — glance, buzz, phone signs. Draft buzzes the wrist; no Pay button exists on a watch face:
+<p><img src="design/screens/mock-surf-watch.png" width="92%" alt="Smartwatch states — ambient complication, listening, draft card, sent, scam pause"></p>
+
+**In-car** — audio-first while moving; the card only appears at standstill. Moving = no card, no scrolling, ever:
+<p><img src="design/screens/mock-surf-car.png" width="92%" alt="In-car IVI states — idle tile, listening, parked card, suppressed while moving, fraud alert"></p>
+
+**Smart speaker** — answers out loud, money on the phone. Sensitive answers bounce to a private surface; voice never authorises:
+<p><img src="design/screens/mock-surf-speaker.png" width="92%" alt="Smart speaker states — idle, listening ring, answers, bounce to phone, privacy redirect"></p>
+
+**Wireless earbuds** — the private channel. Whispered drafts and receipts, fraud warnings that interrupt your music — on earbuds people already own:
+<p><img src="design/screens/mock-surf-earbuds.png" width="92%" alt="Earbud states — connected, whispered draft, confirmation, fraud interrupt, controls"></p>
+
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
 **Meta references** — [Wearables Developer Portal](https://wearables.developer.meta.com/) · [Device Access Toolkit](https://wearables.developer.meta.com/docs/develop/dat/getting-started-toolkit) ([iOS](https://github.com/facebook/meta-wearables-dat-ios) / [Android](https://github.com/facebook/meta-wearables-dat-android)) · [Mock Device Kit](https://wearables.developer.meta.com/docs/develop/dat/mock-device-kit/) · [Web Apps for Ray-Ban Display](https://github.com/facebook/meta-wearables-webapp) ([setup](https://wearables.developer.meta.com/docs/develop/webapps/setup)) · [Meta Ray-Ban Display](https://www.meta.com/ai-glasses/meta-ray-ban-display/) · [Meta Neural Band](https://www.meta.com/ai-glasses/accessories/neural-band/) · [Meta EMG research](https://www.meta.com/emerging-tech/emg-wearable-technology/)

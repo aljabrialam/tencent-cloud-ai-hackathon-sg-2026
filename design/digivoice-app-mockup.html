@@ -221,6 +221,61 @@
   .webframe .wcard .wamt{font-size:22px;font-weight:800;color:var(--navy)}
   .webframe .wcard .wrow{display:flex;justify-content:space-between;font-size:10.5px;padding:6px 0;border-top:1px solid var(--border);color:#44525D}
   .webframe .wcard .wlock{margin-top:10px;background:var(--surface);border-radius:9px;padding:8px 10px;font-size:10px;color:var(--warntext);font-weight:600}
+
+  /* per-surface device mockups */
+  .devrow{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+  .devcell{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .devcell .capw{max-width:190px}
+
+  .watch{width:170px;height:192px;border-radius:44px;background:#060609;border:5px solid #33333E;box-shadow:0 14px 34px rgba(23,39,51,.28),inset 0 0 0 1px #14141B;padding:16px 13px;display:flex;flex-direction:column;color:#fff;position:relative}
+  .watch .wtime{font-size:24px;font-weight:200;letter-spacing:.02em}
+  .watch .wdate{font-size:8px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.14em}
+  .watch .wcomp{margin-top:auto;background:rgba(255,255,255,.07);border-radius:10px;padding:6px 8px;font-size:8.5px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:5px}
+  .watch .wcomp i{width:6px;height:6px;border-radius:50%;background:var(--red)}
+  .watch .wcard{background:rgba(255,255,255,.1);border-radius:12px;padding:10px;margin-top:8px}
+  .watch .wcard.am{background:rgba(235,150,0,.16);border:1px solid rgba(235,150,0,.5)}
+  .watch .wamt{font-size:17px;font-weight:700}
+  .watch .wsub{font-size:8px;color:rgba(255,255,255,.6);margin-top:2px}
+  .watch .wcta{font-size:9px;font-weight:700;color:#FFC4B4;margin-top:6px}
+  .watch .wtick{width:34px;height:34px;border-radius:50%;background:var(--ok);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;margin:26px auto 4px}
+  .dwave{display:flex;gap:3px;align-items:center;height:22px;margin:14px auto}
+  .dwave i{width:3px;background:#fff;border-radius:2px;height:5px;animation:wv 1s ease-in-out infinite}
+  .dwave i:nth-child(odd){animation-delay:.14s}.dwave i:nth-child(3n){animation-delay:.28s}
+  @keyframes wv{0%,100%{height:5px}50%{height:19px}}
+  .wscript{font-size:9px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.08);border-radius:8px;padding:6px 8px;line-height:1.45}
+  .wscript b{color:#FFB4A3}
+  .wtiny{font-size:7px;color:rgba(255,255,255,.45);text-align:center;margin-top:auto}
+
+  .car{width:330px;height:200px;border-radius:16px;background:linear-gradient(160deg,#11161D,#080B10);border:5px solid #2B323C;box-shadow:0 16px 40px rgba(23,39,51,.3),inset 0 0 0 1px #1B212A;padding:14px 16px;color:#fff;display:flex;flex-direction:column}
+  .car .chead{display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.12em}
+  .car .ctiles{display:flex;gap:10px;margin-top:14px}
+  .car .ctile{flex:1;background:rgba(255,255,255,.06);border-radius:10px;padding:10px;font-size:9px;color:rgba(255,255,255,.75)}
+  .car .ctile b{display:block;font-size:11px;color:#fff;margin-bottom:3px}
+  .car .ctile.dv{background:rgba(255,71,36,.14);border:1px solid rgba(255,71,36,.4)}
+  .car .ccard{background:rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;margin-top:12px}
+  .car .ccard.am{background:rgba(235,150,0,.14);border:1px solid rgba(235,150,0,.5)}
+  .car .camt{font-size:19px;font-weight:800}
+  .car .csub{font-size:8.5px;color:rgba(255,255,255,.6);margin-top:3px}
+  .car .ccta{font-size:10px;font-weight:700;color:#FFC4B4;margin-top:7px}
+  .car .cpark{position:relative;display:inline-block;background:var(--ok);color:#fff;font-size:8px;font-weight:800;border-radius:5px;padding:2px 6px}
+  .car .cdim{color:rgba(255,255,255,.5);font-size:10px;text-align:center;margin:auto}
+  .car .cdim b{color:rgba(255,255,255,.8)}
+
+  .spkw{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .spk{width:110px;height:140px;border-radius:16px 16px 22px 22px;background:linear-gradient(165deg,#2B2F38,#16191F);box-shadow:0 14px 34px rgba(23,39,51,.3);position:relative;padding:12px}
+  .spk .ring{width:58px;height:58px;border-radius:50%;margin:8px auto 0;border:5px solid #0D1015;box-shadow:inset 0 0 8px rgba(0,0,0,.6)}
+  .spk .ring.lit{border-color:transparent;background:conic-gradient(#00AB61,#0077CC,#FF4724,#00AB61);box-shadow:0 0 16px rgba(0,119,204,.7);animation:spin 2.4s linear infinite}
+  .spk .ring.amb{border-color:transparent;background:var(--warn);box-shadow:0 0 16px rgba(235,150,0,.7);animation:none}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .spk .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);margin:10px auto 0}
+  .transb{background:#fff;border:1px solid var(--border);border-radius:12px 12px 12px 4px;padding:8px 11px;font-size:10px;color:var(--text);max-width:170px;box-shadow:0 4px 14px rgba(23,39,51,.1);font-style:italic}
+  .transb.am{border-color:var(--warn);background:#FFFBF2}
+
+  .buds{width:150px;height:120px;position:relative;display:flex;align-items:flex-end;justify-content:center;gap:14px}
+  .buds .bud{width:34px;height:56px;border-radius:17px 17px 8px 8px;background:linear-gradient(170deg,#fff,#DDE3E7);box-shadow:0 10px 22px rgba(23,39,51,.25);position:relative}
+  .buds .bud:after{content:'';position:absolute;top:-7px;left:7px;width:20px;height:20px;border-radius:50%;background:linear-gradient(170deg,#fff,#C9D1D6)}
+  .buds .bud.on:after{box-shadow:0 0 12px rgba(0,119,204,.9);background:#EAF4FF}
+  .buds .bud.am:after{box-shadow:0 0 12px rgba(235,150,0,.95);background:#FFF4E0}
   .note{font-size:12.5px;color:#6E6E78;max-width:940px;line-height:1.65;margin:24px 0}
   .note b{color:var(--text)}
   section{margin-top:40px}
@@ -579,6 +634,139 @@
   <div class="concept-note">The web surface replays the same card — but it is display + draft capture only. The phone remains the sole signer, on every surface.</div>
 </section>
 
+<section id="surf-watch">
+  <h2>Smartwatch — glance, buzz, phone signs <span class="pill wr">Apple Watch / Wear OS</span></h2>
+  <div class="note">The wrist is a glance-and-nudge surface. A draft buzzes your wrist; one look tells you it's real; the signature still happens on the phone — because a watch face can't prove intent the way a biometric + hash-signed card can.</div>
+  <div class="devrow">
+
+    <div class="devcell"><div class="watch">
+      <div class="wtime">14:31</div><div class="wdate">Tue 21 Oct</div>
+      <div class="wcomp"><i></i>digiVoice · idle</div>
+    </div><div class="cap"><b>0 · Ambient</b>Complication only — no balance on the wrist</div></div>
+
+    <div class="devcell"><div class="watch">
+      <div class="wdate">Listening</div>
+      <div class="dwave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="wscript">Send <b>two hundred</b> to <b>Mum</b>…</div>
+      <div class="wtiny">raise wrist → speak</div>
+    </div><div class="cap"><b>1 · Listening</b>Waveform + rolling transcript</div></div>
+
+    <div class="devcell"><div class="watch">
+      <div class="wdate">Draft ready · a3f9·08c2</div>
+      <div class="wcard"><div class="wamt">S$200.00</div><div class="wsub">→ Mum ····4521 · verified ✓</div>
+      <div class="wcta">Approve on your phone →</div></div>
+      <div class="wtiny">twist crown = details · double-press = dismiss</div>
+    </div><div class="cap"><b>2 · Draft</b>One glanceable card — never a Pay button</div></div>
+
+    <div class="devcell"><div class="watch">
+      <div class="wtick">✓</div>
+      <div class="wsub" style="text-align:center"><b style="color:#fff">Sent</b> — S$200.00 to Mum</div>
+      <div class="wtiny">TXN-88214 · clears in ~4 s</div>
+    </div><div class="cap"><b>3 · Sent</b>Haptic + tick, then gone</div></div>
+
+    <div class="devcell"><div class="watch">
+      <div class="wdate">SHIELD · SHD-AUTH</div>
+      <div class="wcard am"><div class="wamt" style="font-size:11px">Paused — looks like a scam</div>
+      <div class="wsub">Authority + urgency. See your phone.</div></div>
+      <div class="wtiny">steady amber · no actions on-wrist</div>
+    </div><div class="cap"><b>4 · Paused</b>Amber glance — gestures dead</div></div>
+
+  </div>
+</section>
+
+<section id="surf-car">
+  <h2>In-car — audio first, card only at standstill <span class="pill wr">CarPlay / Android Auto</span></h2>
+  <div class="note">Driver safety is the constraint that shapes everything: while the car moves there is <b>no card at all</b> — just voice. The draft surfaces on the IVI only when parked, and approval still waits for the phone.</div>
+  <div class="devrow">
+
+    <div class="devcell"><div class="car">
+      <div class="chead"><span>digiVoice</span><span>14:31</span></div>
+      <div class="ctiles"><div class="ctile"><b>Navigation</b>Ayer Rajah Expy</div><div class="ctile"><b>Media</b>Kiss92 FM</div><div class="ctile dv"><b>digiVoice</b>Say a command</div></div>
+      <div class="csub" style="margin-top:auto">digiVoice tile lives alongside nav and media — one tap or "Hey digiVoice"</div>
+    </div><div class="cap"><b>C0 · Idle</b>A tile, not a takeover</div></div>
+
+    <div class="devcell"><div class="car">
+      <div class="chead"><span>Listening</span><span>14:31</span></div>
+      <div class="dwave" style="height:30px;margin:18px auto"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="wscript" style="font-size:10px">"Pay my parking fee — Block 12A…"</div>
+      <div class="csub" style="text-align:center;margin-top:8px">eyes stay on the road</div>
+    </div><div class="cap"><b>C1 · Listening</b>Voice in — nothing to read</div></div>
+
+    <div class="devcell"><div class="car">
+      <div class="chead"><span>Draft ready · a3f9·08c2</span><span class="cpark">P · parked</span></div>
+      <div class="ccard"><div class="camt">S$4.20 — parking, Block 12A</div>
+      <div class="csub">ERP/parking wallet · verified ✓</div>
+      <div class="ccta">Approve on your phone →</div></div>
+    </div><div class="cap"><b>C2 · Card (parked)</b>Big type, glanceable, still no authorise</div></div>
+
+    <div class="devcell"><div class="car">
+      <div class="chead"><span>digiVoice</span><span>moving</span></div>
+      <div class="cdim"><b>Audio only while driving.</b><br>Your draft is ready — it will show here when you stop,<br>or approve on your phone at your next stop.</div>
+    </div><div class="cap"><b>C3 · Suppressed</b>Moving = no card, no scrolling</div></div>
+
+    <div class="devcell"><div class="car">
+      <div class="chead"><span>Shield · SHD-AUTH</span><span>14:33</span></div>
+      <div class="ccard am"><div class="camt" style="font-size:12px">Paused — this looks like a scam</div>
+      <div class="csub">Authority + urgency + new account.<br>Spoken alert now; details on your phone, parked.</div></div>
+    </div><div class="cap"><b>C4 · Fraud</b>Voice warns instantly; card waits for standstill</div></div>
+
+  </div>
+</section>
+
+<section id="surf-speaker">
+  <h2>Smart speaker — answers out loud, money on the phone <span class="pill wr">home assistant</span></h2>
+  <div class="note">Speakers live in shared rooms, so privacy rules bite hardest here: questions get answered aloud, but anything sensitive bounces to the phone — and <b>no spoken phrase can ever authorise a payment</b>.</div>
+  <div class="devrow">
+
+    <div class="devcell spkw"><div class="spk"><div class="ring"></div><div class="dot"></div></div>
+      <div class="cap"><b>P0 · Idle</b>Ring dark — never listening until wake word</div></div>
+
+    <div class="devcell spkw"><div class="spk"><div class="ring lit"></div><div class="dot"></div></div>
+      <div class="transb">"What bills are due this week?"</div>
+      <div class="cap"><b>P1 · Listening</b>Ring spins — you can see it hear</div></div>
+
+    <div class="devcell spkw"><div class="spk"><div class="ring lit"></div><div class="dot"></div></div>
+      <div class="transb">"Two bills: Singtel S$45 Thursday, SP S$89 Friday."</div>
+      <div class="cap"><b>P2 · Answers</b>Safe facts spoken aloud</div></div>
+
+    <div class="devcell spkw"><div class="spk"><div class="ring lit"></div><div class="dot"></div></div>
+      <div class="transb">"I've sent a draft to your phone — approve with Face ID. I can't take approval out loud."</div>
+      <div class="cap"><b>P3 · Bounce</b>Voice never authorises</div></div>
+
+    <div class="devcell spkw"><div class="spk"><div class="ring amb"></div><div class="dot"></div></div>
+      <div class="transb am">"Your October balance question — I've sent that to your phone; this room isn't private."</div>
+      <div class="cap"><b>P4 · Privacy</b>Sensitive answers leave the room</div></div>
+
+  </div>
+</section>
+
+<section id="surf-earbuds">
+  <h2>Wireless earbuds — the private channel <span class="pill wr">any earbuds, no special hardware</span></h2>
+  <div class="note">The most private surface of all — no screen needed. Confirmations and fraud warnings are <b>whispered</b>, real-time, and interrupt whatever is playing. Works on the earbuds people already own.</div>
+  <div class="devrow">
+
+    <div class="devcell"><div class="buds"><div class="bud"></div><div class="bud"></div></div>
+      <div class="cap"><b>E0 · Connected</b>Any Bluetooth earbuds — nothing to buy</div></div>
+
+    <div class="devcell"><div class="buds"><div class="bud on"></div><div class="bud on"></div></div>
+      <div class="transb">"Draft ready — two hundred dollars to Mum. Sending to your phone."</div>
+      <div class="cap"><b>E1 · Whispered draft</b>You hear it; the MRT doesn't</div></div>
+
+    <div class="devcell"><div class="buds"><div class="bud on"></div><div class="bud on"></div></div>
+      <div class="transb">"Sent — two hundred dollars to Mum, today 14:31."</div>
+      <div class="cap"><b>E2 · Confirmation</b>Receipt read privately</div></div>
+
+    <div class="devcell"><div class="buds"><div class="bud am"></div><div class="bud am"></div></div>
+      <div class="transb am">"Fraud alert — that call pattern matches a known scam. I've paused the draft. Check your phone."</div>
+      <div class="cap"><b>E3 · Interrupt</b>Warnings cut through your music</div></div>
+
+    <div class="devcell"><div class="buds"><div class="bud"></div><div class="bud"></div></div>
+      <div class="transb">tap = repeat · hold = dismiss · never: speak PIN or card numbers</div>
+      <div class="cap"><b>E4 · Controls</b>Two gestures, no secrets spoken</div></div>
+
+  </div>
+</section>
+
 <section>
   <h2>Accessibility — built for the users who need this most</h2>
   <div class="note">
@@ -595,8 +783,14 @@ const phones=[...document.querySelectorAll('.phone')];
 const order=[0,1,3,7,8,9,1,2,3,5,6,7,8];
 let idx=0,timer=null;
 const qs=new URLSearchParams(location.search);
-const shot=qs.get('shot'),wshot=qs.get('wshot'),bshot=qs.get('bshot'),ashot=qs.get('ashot'),webshot=qs.get('webshot');
-if(shot!==null||wshot!==null||bshot!==null||ashot!==null||webshot!==null){
+const shot=qs.get('shot'),wshot=qs.get('wshot'),bshot=qs.get('bshot'),ashot=qs.get('ashot'),webshot=qs.get('webshot'),secshot=qs.get('secshot');
+if(secshot!==null){
+  document.body.style.padding='24px 0';
+  const t=document.getElementById(secshot);
+  document.querySelectorAll('section').forEach(s=>{s.style.display=(s===t)?'':'none'});
+  document.querySelectorAll('h1,.sub,.bar').forEach(e=>e.style.display='none');
+  const g=document.getElementById('grid');if(g)g.style.display='none';
+}else if(shot!==null||wshot!==null||bshot!==null||ashot!==null||webshot!==null){
   document.body.style.padding='24px 0';
   const sel=shot!==null?'.cell':wshot!==null?'.wcell':ashot!==null?'.surf':webshot!==null?'#websurface':'.banditem';
   const i=+(shot??wshot??bshot??ashot??webshot);
