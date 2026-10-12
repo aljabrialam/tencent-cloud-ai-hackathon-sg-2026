@@ -3,8 +3,17 @@
 <head>
 <meta charset="utf-8">
 <style>
-  body { margin:0; background:#0d1117; display:flex; align-items:center; justify-content:center; height:100vh; overflow:hidden; }
-  .stage { display:flex; align-items:center; gap:90px; }
+  body { margin:0; display:flex; align-items:center; justify-content:center; height:100vh; overflow:hidden;
+         background:
+           radial-gradient(1200px 600px at 30% -10%, rgba(230,0,35,.14), transparent 60%),
+           radial-gradient(1000px 700px at 80% 110%, rgba(37,99,235,.16), transparent 60%),
+           linear-gradient(180deg,#182238 0%,#0E1526 60%,#0A0F1C 100%); }
+  body::before { content:""; position:fixed; inset:0;
+         background-image:radial-gradient(circle, rgba(255,255,255,.045) 1px, transparent 1px);
+         background-size:26px 26px; pointer-events:none; }
+  body::after { content:""; position:fixed; inset:0; pointer-events:none;
+         background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%); }
+  .stage { display:flex; align-items:center; gap:90px; position:relative; }
   .watch {
     width: 460px; height: 550px; border-radius: 96px;
     background: #000;

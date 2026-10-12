@@ -4,7 +4,7 @@ You are a video post-production assistant. Add a spoken voice-over to the attach
 
 ## Input
 
-- `digivoice-demo.mp4` — a silent screen recording, total **2:57.6** (no audio track). 1920×1080, 30 fps. Inspect it for exact resolution, frame rate and duration.
+- `digivoice-demo.mp4` — a silent screen recording, total **2:59.4** (no audio track). 1920×1080, 30 fps. Inspect it for exact resolution, frame rate and duration.
 - The numbered narration lines in **Narration** below. Each has a start cue in `m:ss.s` measured from the very start of the video.
 
 ## Task
@@ -51,10 +51,10 @@ You are a video post-production assistant. Add a spoken voice-over to the attach
 13. **[1:33.5]** The lens stays dark until you speak — capture, transcribe, clarify, aloud or by pinch.
 14. **[1:41.0]** The draft card glances — the only forward path is approve on your phone.
 15. **[1:48.5]** Waiting means the phone is signing. Frozen and scam-pause stop the pipeline the same way.
-16. **[2:01.5]** The smartwatch runs the same five states — compiled SwiftUI, not a mockup.
-17. **[2:07.5]** A watch face never carries a Pay button. The wrist can show — never sign.
-18. **[2:21.0]** On digibank web, the same transcript and draft card side by side — display only.
-19. **[2:33.0]** Speaker, earbuds, car — simulated future surfaces. One pipeline, many mouths and ears; the phone approves.
+16. **[2:02.2]** The smartwatch runs the same five states — compiled SwiftUI, not a mockup.
+17. **[2:08.2]** A watch face never carries a Pay button. The wrist can show — never sign.
+18. **[2:21.7]** On digibank web, the same transcript and draft card side by side — display only.
+19. **[2:33.7]** Speaker, earbuds, car — simulated future surfaces. One pipeline, many mouths and ears; the phone approves.
 
 ## Beat reference
 
@@ -65,8 +65,8 @@ Context only — what is on screen at each cue. Do not read this aloud.
 | 0:00.0 | 0:03.0 | Title card: "The phone signs." |
 | 0:03.0 | 1:26.1 | Phone film — **real Simulator window footage** in sync-captioned frame: Happy → Multi-intent → Ambiguous → Validator freeze → Scam shield |
 | 1:26.1 | 1:29.1 | Title card: "Meta Ray-Ban Display" |
-| 1:29.1 | 1:58.2 | Glasses film — lens bezel over real HUD footage: ambient · listening · clarify · draft card · waiting · sent · frozen · scam pause |
-| 1:58.2 | 2:01.2 | Title card: "Smartwatch" |
-| 2:01.2 | 2:17.6 | Watch film — compiled SwiftUI renders in bezel: ambient · listening · draft · sent · paused |
-| 2:17.6 | 2:20.6 | Title card: "digibank web + future surfaces" |
-| 2:20.6 | 2:57.6 | Web app — live transcript + draft, clarify / frozen / audit, then speaker · earbuds · in-car simulation cards |
+| 1:29.1 | 1:58.8 | Glasses film — wearer-view scene over real HUD footage — table, letter, Neural Band chip, phone approval card: ambient · listening · clarify · draft card · waiting · sent · frozen · scam pause |
+| 1:58.8 | 2:01.8 | Title card: "Smartwatch" |
+| 2:01.8 | 2:18.2 | Watch film — compiled SwiftUI renders in bezel: ambient · listening · draft · sent · paused |
+| 2:18.2 | 2:21.2 | Title card: "digibank web + future surfaces" |
+| 2:21.2 | 2:59.4 | Web app — live transcript + draft, clarify / frozen / audit, then speaker · earbuds · in-car simulation cards |

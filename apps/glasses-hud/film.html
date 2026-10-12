@@ -3,39 +3,102 @@
 <head>
 <meta charset="utf-8">
 <style>
-  body { margin:0; background:#0d1117; display:flex; align-items:center; justify-content:center; height:100vh; overflow:hidden; }
-  .stage { display:flex; align-items:center; gap:90px; }
-  .glasses { position:relative; flex-shrink:0; width:640px; height:640px; }
-  .glasses::before { /* temple arm hint */
-    content:""; position:absolute; left:-46px; top:80px; width:44px; height:14px;
-    background:#2c2c2e; border-radius:7px 0 0 7px;
-  }
-  .glasses::after { /* brow line hint */
-    content:""; position:absolute; left:0; right:0; top:-26px; height:26px;
-    border-radius:60px 60px 0 0; background:linear-gradient(180deg,#3a3a3c,#1c1c1e);
-  }
-  .lens {
-    width: 640px; height: 640px; border-radius: 60px;
-    background: #000;
-    border: 10px solid #242428;
-    box-shadow: 0 0 0 3px #3a3a3c, 0 30px 90px rgba(0,0,0,.85),
-                inset 0 0 80px rgba(90,140,255,.05);
-    position: relative; overflow: hidden;
-  }
-  .screen { position:absolute; inset:0; }
-  .screen video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-  .meta { max-width:520px; }
-  .state { color:#fff; font:800 44px -apple-system,Helvetica,sans-serif; letter-spacing:-.5px; min-height:54px; }
-  .sub { color:#8a8a93; font:500 19px/1.5 -apple-system,Helvetica,sans-serif; margin-top:14px; }
-  .rule { margin-top:34px; color:#ffb3a8; font:700 15px/1.5 -apple-system,Helvetica,sans-serif;
-          border-left:3px solid #E60023; padding-left:14px; }
+  body { margin:0; display:flex; align-items:center; justify-content:center; height:100vh; overflow:hidden;
+         background:
+           radial-gradient(1200px 600px at 30% -10%, rgba(230,0,35,.14), transparent 60%),
+           radial-gradient(1000px 700px at 80% 110%, rgba(37,99,235,.16), transparent 60%),
+           linear-gradient(180deg,#182238 0%,#0E1526 60%,#0A0F1C 100%); }
+  body::before { content:""; position:fixed; inset:0;
+         background-image:radial-gradient(circle, rgba(255,255,255,.045) 1px, transparent 1px);
+         background-size:26px 26px; pointer-events:none; }
+  .stage { position:relative; width:1920px; height:1080px; overflow:hidden; }
+
+  /* ambient light */
+  .glow { position:absolute; left:560px; top:-160px; width:900px; height:700px;
+          background:radial-gradient(ellipse at top, rgba(255,200,120,.22), transparent 70%); }
+  /* table */
+  .table { position:absolute; left:0; right:0; bottom:0; height:300px;
+           background:linear-gradient(180deg,#2A3550,#161D31); }
+  .table::before { content:""; position:absolute; top:0; left:0; right:0; height:14px;
+           background:#3B4766; }
+  /* props on the table — a bank letter and a red card */
+  .letter { position:absolute; left:240px; bottom:150px; width:340px; height:190px;
+            background:#E9ECF2; border-radius:8px; transform:rotate(-4deg);
+            box-shadow:0 18px 40px rgba(0,0,0,.5); }
+  .letter::before { content:""; position:absolute; left:24px; top:26px; right:24px; height:10px;
+            background:#C4CCDA; border-radius:5px; }
+  .letter::after { content:""; position:absolute; left:24px; top:56px; right:90px; height:70px;
+            background:repeating-linear-gradient(180deg,#D4DAE6 0 9px,transparent 9px 17px); }
+  .card { position:absolute; left:560px; bottom:170px; width:170px; height:106px;
+          background:linear-gradient(135deg,#E60023,#8E0015); border-radius:12px;
+          transform:rotate(6deg); box-shadow:0 16px 36px rgba(230,0,35,.25); }
+  .card::before { content:""; position:absolute; left:16px; top:20px; width:34px; height:24px;
+          background:linear-gradient(135deg,#F5C86B,#D9A83F); border-radius:4px; }
+  .card::after { content:"DBS"; position:absolute; right:14px; top:12px;
+          color:#fff; font:800 17px -apple-system,Helvetica,sans-serif; letter-spacing:1px; }
+
+  /* the HUD — real 600x600 footage as the lens projection */
+  .hud { position:absolute; right:150px; top:110px; width:560px; height:560px;
+         border-radius:46px; overflow:hidden;
+         transform:perspective(1400px) rotateY(-9deg);
+         box-shadow:0 40px 100px rgba(0,0,0,.65), 0 0 0 2px rgba(140,170,255,.28),
+                    0 0 60px rgba(120,160,255,.12); }
+  .hud video { width:100%; height:100%; display:block; }
+  .hudtag { position:absolute; right:170px; top:690px; color:#8fa3cc;
+            font:600 14px -apple-system,Helvetica,sans-serif; letter-spacing:.14em;
+            text-transform:uppercase; }
+  .hudtag b { color:#cfe0ff; }
+
+  /* neural band chip — appears when pinch matters */
+  .band { position:absolute; left:130px; bottom:380px; display:flex; align-items:center; gap:14px;
+          padding:16px 22px; border-radius:18px; background:rgba(20,28,48,.85);
+          border:1px solid rgba(140,170,255,.3); color:#cfe0ff;
+          font:700 19px -apple-system,Helvetica,sans-serif;
+          opacity:0; transition:opacity .5s ease; }
+  .band svg { flex:none; }
+
+  /* phone slides in when approval lives on the phone */
+  .mini { position:absolute; left:150px; bottom:60px; width:270px; padding:22px 20px;
+          background:#F4F4F2; color:#1B1B2F; border-radius:30px;
+          border:8px solid #05070C; box-shadow:0 24px 60px rgba(0,0,0,.6);
+          transform:translateY(320px); transition:transform .6s ease; }
+  .mini .pk { font:700 12px -apple-system,Helvetica,sans-serif; letter-spacing:.12em;
+              text-transform:uppercase; color:#6E6E78; margin-bottom:10px; }
+  .mini .pa { font:800 34px -apple-system,Helvetica,sans-serif; letter-spacing:-.5px; }
+  .mini .pr { font:500 14px/1.4 -apple-system,Helvetica,sans-serif; color:#6E6E78; margin-top:8px; }
+  .mini .pb { margin-top:16px; background:#E60023; color:#fff; border-radius:12px;
+              padding:12px; text-align:center; font:700 15px -apple-system,Helvetica,sans-serif; }
+
+  /* captions */
+  .meta { position:absolute; left:130px; top:150px; max-width:640px; }
+  .state { color:#fff; font:800 56px -apple-system,Helvetica,sans-serif; letter-spacing:-1px; min-height:66px; }
+  .sub { color:#93a0bd; font:500 23px/1.55 -apple-system,Helvetica,sans-serif; margin-top:18px; }
+  .rule { margin-top:40px; color:#ffb3a8; font:700 17px/1.5 -apple-system,Helvetica,sans-serif;
+          border-left:3px solid #E60023; padding-left:16px; }
 </style>
 </head>
 <body>
 <div class="stage">
-  <div class="glasses"><div class="lens"><div class="screen">
-    <video id="v" src="../../demo/glasses-run.webm" muted autoplay playsinline></video>
-  </div></div></div>
+  <div class="glow"></div>
+  <div class="table"></div>
+  <div class="letter"></div>
+  <div class="card"></div>
+
+  <div class="hud"><video id="v" src="../../demo/glasses-run.webm" muted autoplay playsinline></video></div>
+  <div class="hudtag">Wearer's view · <b>real HUD capture</b> · Meta Ray-Ban Display</div>
+
+  <div class="band" id="band">
+    <svg viewBox="0 0 180 90" width="72" height="36" fill="none" stroke="#A9B8FF" stroke-width="6" stroke-linecap="round"><rect x="10" y="30" width="160" height="30" rx="15"/><circle cx="60" cy="45" r="5" fill="#A9B8FF"/><circle cx="90" cy="45" r="5" fill="#A9B8FF"/><circle cx="120" cy="45" r="5" fill="#A9B8FF"/></svg>
+    Neural Band · pinch
+  </div>
+
+  <div class="mini" id="mini">
+    <div class="pk">On your phone</div>
+    <div class="pa">S$200.00</div>
+    <div class="pr"><strong>To Mum</strong> · PayNow ••••4521<br>Face ID to sign the draft hash</div>
+    <div class="pb">Approve</div>
+  </div>
+
   <div class="meta">
     <div class="state" id="st"></div>
     <div class="sub" id="sub"></div>
@@ -43,23 +106,27 @@
   </div>
 </div>
 <script>
-const CUES = [ // rec-run.mjs hops states every 3.2 s — same order
-  [0,     'Ambient',    'Lens dark until you speak. No balances ever linger on glass.'],
-  [3.2,   'Listening',  'Rolling transcript — the band pulses on each parsed entity.'],
-  [6.4,   'Clarify',    'Two payees named John — answer aloud or pinch to select.'],
-  [9.6,   'Draft card', 'S$200 to Mum, verified — the only forward path is your phone.'],
-  [12.8,  'Waiting',    'Phone is signing — the lens just waits.'],
-  [16.0,  'Sent',       'Confirmation glance, then it clears back to ambient.'],
-  [19.2,  'Frozen',     'Validator disagreed — said 200, drafted 2,000. Nothing moved.'],
-  [22.4,  'Scam pause', 'Steady amber hold — see your phone to continue.'],
+const CUES = [ // measured from glasses-run.webm — real state boundaries
+  [0,     'Ambient',     'Lens dark until you speak. No balances ever linger on glass.', false, false],
+  [3.5,   'Listening',   'Rolling transcript — the band pulses on each parsed entity.', false, false],
+  [7,     'Clarify',     'Two payees named John — answer aloud or pinch to select.', true, false],
+  [10.5,  'Draft card',  'S$200 to Mum, verified — the only forward path is your phone.', true, false],
+  [13.5,  'Waiting',     'Phone is signing — the lens just waits.', false, true],
+  [16.5,  'Sent',        'Confirmation glance, then it clears back to ambient.', false, true],
+  [19.5,  'Frozen',      'Validator disagreed — said 200, drafted 2,000. Nothing moved.', false, false],
+  [21.5,  'Scam pause',  'Steady amber hold — see your phone to continue.', false, true],
 ];
 const v = document.getElementById('v');
 const st = document.getElementById('st');
 const sub = document.getElementById('sub');
+const band = document.getElementById('band');
+const mini = document.getElementById('mini');
 v.addEventListener('timeupdate', () => {
   let cur = CUES[0];
   for (const c of CUES) if (v.currentTime >= c[0]) cur = c;
   if (st.textContent !== cur[1]) { st.textContent = cur[1]; sub.textContent = cur[2]; }
+  band.style.opacity = cur[3] ? 1 : 0;
+  mini.style.transform = cur[4] ? 'translateY(0)' : 'translateY(320px)';
 });
 v.play().catch(() => {});
 </script>
