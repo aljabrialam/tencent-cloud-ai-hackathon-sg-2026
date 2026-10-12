@@ -216,19 +216,43 @@ The innovation isn't a new app per device — it's **one signed-draft pipeline w
 
 ### Mock experiences per surface
 
-Each surface has a designed state flow, not a logo on a slide:
+Each surface has a designed state flow — and a shipping platform underneath, not a logo on a slide:
+
+<p><img src="design/surfaces/smartwatch.jpg" width="34%" alt="Apple Watch"></p>
+
+*Apple Watch — photo: FASTILY, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Apple_Watch_Series_9_1_2023-11-14.jpg) · all surface photos in [`design/surfaces/`](design/surfaces/ATTRIBUTION.md)*
 
 **Smartwatch** — glance, buzz, phone signs. Draft buzzes the wrist; no Pay button exists on a watch face:
 <p><img src="design/screens/mock-surf-watch.png" width="92%" alt="Smartwatch states — ambient complication, listening, draft card, sent, scam pause"></p>
 
+> **Feasible today:** watchOS complications + notifications and Wear OS Tiles already render bank cards on the wrist — our draft glance is a notification-shaped payload pushed from the companion app. No wearable payment credential needed because we never sign there.
+
+<p><img src="design/surfaces/in-car.png" width="42%" alt="CarPlay head unit in a car"></p>
+
+*CarPlay on an aftermarket head unit — photo: IShowSammy, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:CarPlay_displaying_music_in_Nissan.png)*
+
 **In-car** — audio-first while moving; the card only appears at standstill. Moving = no card, no scrolling, ever:
 <p><img src="design/screens/mock-surf-car.png" width="92%" alt="In-car IVI states — idle tile, listening, parked card, suppressed while moving, fraud alert"></p>
+
+> **Feasible today:** CarPlay and Android Auto already support audio/messaging app categories with strictly templated UI — "voice while moving, card at standstill" is literally the interaction model those templates enforce. digiVoice fits it, doesn't fight it.
+
+<p><img src="design/surfaces/smart-speaker.jpg" width="34%" alt="Amazon Echo Dot"></p>
+
+*Amazon Echo Dot — photo: Pittigrilli, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Amazon_Echo_Dot_(virtual_digital_assistant)_with_normal_coffee_mug_as_size_comparison.jpg)*
 
 **Smart speaker** — answers out loud, money on the phone. Sensitive answers bounce to a private surface; voice never authorises:
 <p><img src="design/screens/mock-surf-speaker.png" width="92%" alt="Smart speaker states — idle, listening ring, answers, bounce to phone, privacy redirect"></p>
 
+> **Feasible today:** Alexa Skills already do banking Q&A (several banks ship balance skills). What's missing industry-wide is a safe money-movement path — which is exactly our "bounce to the phone" rule: the speaker can only ever draft.
+
+<p><img src="design/surfaces/earbuds.jpg" width="34%" alt="AirPods beside an iPhone"></p>
+
+*AirPods — photo: Jaz King, [CC0](https://commons.wikimedia.org/wiki/File:AirPods_(Unsplash).jpg)*
+
 **Wireless earbuds** — the private channel. Whispered drafts and receipts, fraud warnings that interrupt your music — on earbuds people already own:
 <p><img src="design/screens/mock-surf-earbuds.png" width="92%" alt="Earbud states — connected, whispered draft, confirmation, fraud interrupt, controls"></p>
+
+> **Feasible today:** needs zero new hardware or APIs — it's TTS + notification audio over ordinary Bluetooth. Announce-style spoken notifications are already a platform feature on iOS/Android; we add the fraud-interrupt and the read-aloud card.
 
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
