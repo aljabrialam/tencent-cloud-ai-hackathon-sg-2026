@@ -1,4 +1,4 @@
-<h1><img src="design/brand/dbs-logo.svg" height="30" alt="DBS">&nbsp; digiVoice</h1>
+<h1><img src="design/brand/digivoice-logo.svg" height="40" alt="digiVoice">&nbsp; digiVoice &nbsp;·&nbsp; <img src="design/brand/dbs-logo.svg" height="26" alt="DBS"></h1>
 
 **Say "send two hundred to Mum for groceries, then buy DBS shares with half of what's left" — and a banking agent drafts it, a second model checks it, deterministic code decides what authorisation it needs, and nothing moves until you sign the exact draft with your face. The model never touches the money.**
 
