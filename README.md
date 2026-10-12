@@ -112,7 +112,7 @@ Full flow, trust boundaries and sequence diagrams: [`docs/business-flow.md`](doc
 
 ## What the user sees
 
-Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) (open in a browser); the screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md). High-fidelity reference renders generated with Sleek are in [`design/sleek/`](design/sleek/) (Home, Listening, Confirm, Receipt+Audit), and the mockup is mirrored as editable layers in Figma ([digiVoice — DCTA](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)). **All 10 screens are also generated as consistent-token React Native scaffolds via [Mokkoi](https://github.com/RHINOREX123/mokkoi-mcp-server)** (free, MIT-licensed MCP server — shared DBS token palette, built-in WCAG/touch-target checks) in [`design/mokkoi/`](design/mokkoi/), which is where `apps/mobile/` implementation starts.
+Nine screens, one card. The interactive mockup is live at **[aljabrialam.github.io/…/digivoice-app-mockup.html](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html)** (press **▶ Play demo path**); the screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md). It is also mirrored as editable layers in Figma ([digiVoice — DCTA](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)). **All 10 screens are generated as consistent-token React Native scaffolds via [Mokkoi](https://github.com/RHINOREX123/mokkoi-mcp-server)** (free, MIT-licensed MCP server — shared DBS token palette, built-in WCAG/touch-target checks) in [`design/mokkoi/`](design/mokkoi/), which is where `apps/mobile/` implementation starts.
 
 | # | Screen | What it proves |
 |---|---|---|
@@ -127,16 +127,24 @@ Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.
 | 8 | Receipt | What actually happened, link to audit |
 | 9 | Audit trail | "Why did the agent do this?" — timeline with rule ids and chain integrity |
 
-### Screens — digibank-faithful renders
+### Screens — digibank-faithful UI
 
 <p>
-  <img src="design/sleek/home.png" width="22%" alt="Home — digibank hero, accounts, mic FAB">
-  <img src="design/sleek/listening.png" width="22%" alt="Listening — waveform + live transcript">
-  <img src="design/sleek/confirm.png" width="22%" alt="Confirm — verified card, authorise with PIN">
-  <img src="design/sleek/receipt-audit.png" width="22%" alt="Receipt + Audit — ledger read-back, hash-chained trail">
+  <img src="design/screens/home.png" width="19%" alt="Home — digibank hero, accounts, mic FAB">
+  <img src="design/screens/listening.png" width="19%" alt="Listening — waveform + live transcript">
+  <img src="design/screens/clarify.png" width="19%" alt="Clarify — Which John?">
+  <img src="design/screens/confirm.png" width="19%" alt="Confirm — verified card, authorise with PIN">
+  <img src="design/screens/multi-intent.png" width="19%" alt="Multi-intent — two steps, one signature">
+</p>
+<p>
+  <img src="design/screens/frozen.png" width="19%" alt="Frozen — validator discrepancy halt">
+  <img src="design/screens/scam.png" width="19%" alt="Scam interstitial — cooling-off + hotline">
+  <img src="design/screens/authorise.png" width="19%" alt="Authorise — fingerprint + Face ID + OOB">
+  <img src="design/screens/receipt.png" width="19%" alt="Receipt — ledger read-back">
+  <img src="design/screens/audit.png" width="19%" alt="Audit trail — rule ids, chain intact">
 </p>
 
-The remaining five screens (Clarify, Multi-intent, Frozen, Scam, Authorise) are built to the same style in the [interactive mockup](design/digivoice-app-mockup.html) — open it in a browser and press **▶ Play demo path** to walk the whole flow. RN scaffolds for all 10 screens: [`design/mokkoi/`](design/mokkoi/).
+Rendered straight from the mockup (`design/screens/` — regenerated via headless Chrome against `design/digivoice-app-mockup.html`). RN scaffolds for all 10 screens: [`design/mokkoi/`](design/mokkoi/).
 
 ## Who it is for
 
@@ -202,7 +210,7 @@ Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — bot
 | Feature spec 001 | Done — quality checklist passed |
 | Business flow, use cases, UX screens, architecture, policy rules, demo script, submission checklist | Done — `docs/` |
 | Interactive mockup — 9 screens + glasses HUD | Done — `design/digivoice-app-mockup.html` · mirrored in Figma |
-| High-fidelity reference renders | Done — `design/sleek/` (4 core screens; remaining screens rebuilt in mockup) |
+| Per-screen PNGs of the mockup | Done — `design/screens/` (all 10 screens) |
 | RN screen scaffolds (Mokkoi, DBS tokens) | Done — `design/mokkoi/` (all 10 screens, consistent tokens + WCAG checks) |
 | Plan + tasks (Spec Kit) | In progress |
 | Shared types, policy engine + tests, mock bank, gateway | Planned |

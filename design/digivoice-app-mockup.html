@@ -414,6 +414,14 @@
 const phones=[...document.querySelectorAll('.phone')];
 const order=[0,1,3,7,8,9,1,2,3,5,6,7,8];
 let idx=0,timer=null;
+const shot=new URLSearchParams(location.search).get('shot');
+if(shot!==null){
+  document.querySelectorAll('h1,.sub,.bar,section').forEach(e=>e.style.display='none');
+  document.body.style.padding='24px 0';
+  const cells=[...document.querySelectorAll('.cell')];
+  cells.forEach((c,i)=>{c.style.display=i==+shot?'flex':'none'});
+}
+
 function go(i){phones.forEach(p=>p.classList.remove('active'));const p=phones[i];p.classList.add('active');p.parentElement.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
 function play(){idx=0;clearInterval(timer);timer=setInterval(()=>{if(idx>=order.length){clearInterval(timer);return;}go(order[idx++]);},1600);}
 document.getElementById('play').onclick=play;
