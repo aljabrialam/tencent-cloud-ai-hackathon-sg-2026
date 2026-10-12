@@ -8,19 +8,19 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 
 ---
 
-## Summary
+## Summary — the 30-second version
 
 | | |
 |---|---|
-| **Track / challenge** | Banking — DBS · Direct Conversational Transaction Agent (DCTA) · Scenario 1 |
-| **What it is** | A mobile app where you speak or type banking requests — transfers, bills, share purchases, several at once — and a zero-trust pipeline turns them into transactions you explicitly sign |
-| **Problem solved** | Natural-language banking is either dangerous (the model can call the transfer API) or useless (it just fills a form for you). digiVoice keeps the model useful — parse, decompose, resolve, ask — and structurally unable to execute |
-| **How** | Transcript → LLM drafts typed JSON → code resolves payees/accounts/formulas → an independent read-only LLM audits draft vs transcript → pure policy engine sets the authorisation tier → native confirmation card → biometric signs `sha256(draft)` → gateway accepts only valid signatures → ordered, idempotent execution → hash-chained audit |
-| **Core rule** | *The drafting model has no tools.* `LLMProvider.complete(prompt) → string`. There is no function it can call. Every number the user sees was computed by code from a symbolic formula the model emitted |
-| **Three stops** | **Freeze** (validator disagrees) · **Hold/Block** (policy: limits, velocity, KYC, new payee) · **Scam interstitial** (authority + urgency + new payee + large amount → cooling-off + hotline) |
-| **LLM** | Tencent Hunyuan primary; OpenAI / Anthropic behind the same adapter, switchable by config. Drafting and validation can use different vendors |
-| **Status** | Spec, constitution, business flow, UX screens, architecture and policy rules written · interactive mockup in `design/` · implementation in progress — see [Status](#status) |
-| **Stack** | Expo / React Native + TypeScript (mobile) · Node + TypeScript (agent service + mock bank) · zod schemas · vitest · Spec Kit (constitution → specify → plan → tasks → implement) |
+| **Track / challenge** | Banking — DBS · Direct Conversational Transaction Agent (DCTA) · Scenario 1 (voice-enabled payment with KYC and risk control) |
+| **The idea** | Speak or type any banking request — "send $200 to Mum, then buy DBS shares with half of what's left" — and a zero-trust pipeline turns it into a transaction **you** explicitly sign |
+| **The rule that defines us** | *The LLM has no tools.* It can only emit a typed draft. Deterministic code resolves it, a second model audits it, policy gates it, and only a biometric signature over the exact draft executes it. **The agent cannot move money — by construction, not by policy.** |
+| **The pipeline** | Voice → transcript → LLM drafts typed JSON → code resolves payees/accounts/formulas → independent LLM audits draft vs transcript → policy engine picks the auth tier → confirmation card → Face ID signs → gateway executes → hash-chained audit |
+| **When it stops** | **Freeze** (auditor disagrees) · **Hold/Block** (limits, velocity, KYC, new payee) · **Scam interstitial** (cooling-off + hotline) — all visible, all audited |
+| **Beyond the phone** | One agent, every surface — Meta glasses + Neural Band, watch, car, speaker, earbuds, web. **Wearables propose; only the phone approves.** The glasses HUD is a working app, not a slide: `apps/glasses-hud/` passes Meta's own test gate |
+| **Stack** | Expo/React Native + TS (mobile) · Node + TS (agent service, mock bank) · zod · vitest · Tencent ADP + Hunyuan + TRTC · Spec Kit |
+
+**📖 In a hurry? Start here:** [the problem](#the-problem) → [one worked example](#a-concrete-example) → [how it works](#how-it-works) → [every DBS requirement, answered](#mapping-to-the-dbs-challenge) → [the screens](#what-the-user-sees) → [wearables](#beyond-the-phone--wearables) → [vs what's out there](#whats-out-there--and-how-digivoice-differs) → [judge's index](#for-judges)
 
 ## The problem
 
@@ -110,9 +110,26 @@ Eleven principles hold this together; they are the project's [constitution](.spe
 
 Full flow, trust boundaries and sequence diagrams: [`docs/business-flow.md`](docs/business-flow.md) · components and types: [`docs/architecture.md`](docs/architecture.md).
 
+## Mapping to the DBS challenge
+
+Every requirement in the brief, answered — full bullet-by-bullet traceability (incl. all 10 judging dimensions) in [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md):
+
+| DBS asked for | digiVoice |
+|---|---|
+| Zero-UI multi-intent parsing → structured JSON drafts | Drafting LLM emits typed steps with symbolic formulas; resolver computes |
+| Dynamic ambiguity resolution | Clarify screen, one targeted question, never a default |
+| Dual-engine semantic discrepancy auditing | Independent read-only Validation LLM; discrepancy or timeout → frozen |
+| Deterministic HITL biometric authorisation | Native card + biometric signing `sha256(draft)`; edit invalidates |
+| Zero-trust API gateway | Gateway accepts only drafts with a valid device signature; model has no write path |
+| Adversarial prompt / injection shielding | Shield patterns, prompt isolation, inert rendering of free text |
+| Dynamic risk and velocity throttling | Policy rules `POL-TIER-*`, `POL-VEL-*`, `POL-NEWPAYEE-*`, OOB step-up |
+| Highly traceable and auditable | Hash-chained audit, in-app "Why did the agent do this?" |
+
+Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md).
+
 ## What the user sees
 
-Nine screens, one card. The interactive mockup is live at **[aljabrialam.github.io/…/digivoice-app-mockup.html](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html)** (press **▶ Play demo path**); the screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md). It is also mirrored as editable layers in Figma ([digiVoice — DCTA](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)). **All 10 screens are generated as consistent-token React Native scaffolds via [Mokkoi](https://github.com/RHINOREX123/mokkoi-mcp-server)** (free, MIT-licensed MCP server — shared DBS token palette, built-in WCAG/touch-target checks) in [`design/mokkoi/`](design/mokkoi/), which is where `apps/mobile/` implementation starts.
+Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) — clone and open it in a browser, press **▶ Play demo path** (GitHub Pages is off while the repo is private; hosting returns for Demo Day). The screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md). It is also mirrored as editable layers in Figma ([digiVoice — DCTA](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)). **All 10 screens are generated as consistent-token React Native scaffolds via [Mokkoi](https://github.com/RHINOREX123/mokkoi-mcp-server)** (free, MIT-licensed MCP server — shared DBS token palette, built-in WCAG/touch-target checks) in [`design/mokkoi/`](design/mokkoi/), which is where `apps/mobile/` implementation starts.
 
 | # | Screen | What it proves |
 |---|---|---|
@@ -260,6 +277,7 @@ Two real integration paths, both testable **without hardware**: a **Display Web 
 
 ## What's out there — and how digiVoice differs
 
+
 Voice banking and glasses payments already exist; the difference is the constraint architecture, not the surface.
 
 | Exists today | Their model | digiVoice's difference |
@@ -274,21 +292,6 @@ Voice banking and glasses payments already exist; the difference is the constrai
 | **Bank-side scam/risk engines** | Invisible back-end scoring | Made *visible and interruptive* — freeze on validator disagreement, named-reason scam interstitial with cooling-off and hotline, every stage hash-chained into an auditable "why did the agent do this?" |
 
 The claim isn't "first voice payment" or "first glasses payment" — it's **first transaction agent where the LLM cannot move money by construction**, extended to a surface you can't even see a confirmation screen on.
-
-## Mapping to the DBS challenge
-
-| DBS asked for | digiVoice |
-|---|---|
-| Zero-UI multi-intent parsing → structured JSON drafts | Drafting LLM emits typed steps with symbolic formulas; resolver computes |
-| Dynamic ambiguity resolution | Clarify screen, one targeted question, never a default |
-| Dual-engine semantic discrepancy auditing | Independent read-only Validation LLM; discrepancy or timeout → frozen |
-| Deterministic HITL biometric authorisation | Native card + biometric signing `sha256(draft)`; edit invalidates |
-| Zero-trust API gateway | Gateway accepts only drafts with a valid device signature; model has no write path |
-| Adversarial prompt / injection shielding | Shield patterns, prompt isolation, inert rendering of free text |
-| Dynamic risk and velocity throttling | Policy rules `POL-TIER-*`, `POL-VEL-*`, `POL-NEWPAYEE-*`, OOB step-up |
-| Highly traceable and auditable | Hash-chained audit, in-app "Why did the agent do this?" |
-
-Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md). **Full requirement-by-requirement traceability — every problem statement bullet, "should solve" item and judging dimension → mechanism + artifact: [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md).**
 
 ## For judges
 
