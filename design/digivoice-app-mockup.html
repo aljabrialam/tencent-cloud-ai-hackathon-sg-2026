@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>digiVoice — DCTA Mockup</title>
+<style>
+  :root{
+    --bg:#0B0F14; --surface:#121821; --surface2:#1A2230; --line:#263042;
+    --text:#E6EDF3; --muted:#8B949E; --brand:#E4002B; --ok:#00D492;
+    --warn:#D29922; --danger:#F85149; --info:#388BFD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#07090D;color:var(--text);font-family:-apple-system,"SF Pro Text",Inter,Segoe UI,Roboto,sans-serif;padding:32px 24px 80px}
+  h1{font-size:28px;letter-spacing:-.02em}
+  h1 b{color:var(--brand)}
+  .sub{color:var(--muted);margin:6px 0 28px;font-size:15px;max-width:820px;line-height:1.5}
+  .sub a{color:var(--info);text-decoration:none}
+  .bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 28px}
+  .btn{background:var(--surface2);border:1px solid var(--line);color:var(--text);font-size:14px;padding:9px 16px;border-radius:999px;cursor:pointer}
+  .btn:hover{border-color:var(--info)}
+  .btn.primary{background:var(--brand);border-color:var(--brand);font-weight:600}
+  .grid{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start}
+  .cell{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .cap{font-size:13px;color:var(--muted);text-align:center;max-width:210px;line-height:1.4}
+  .cap b{color:var(--text);display:block;font-size:14px;margin-bottom:2px}
+  .phone{width:220px;height:452px;border-radius:36px;background:#000;padding:10px;border:2px solid #2A3240;position:relative;transition:box-shadow .4s}
+  .phone .scr{width:100%;height:100%;border-radius:27px;background:var(--bg);overflow:hidden;display:flex;flex-direction:column;font-size:11px}
+  .phone.active{box-shadow:0 0 0 3px var(--ok),0 0 40px rgba(0,212,146,.35)}
+  .phone.hot{box-shadow:0 0 0 3px var(--warn),0 0 40px rgba(210,153,34,.35)}
+  .sbar{display:flex;justify-content:space-between;padding:8px 14px 4px;color:var(--muted);font-size:9px}
+  .pad{padding:8px 12px}
+  .h{font-size:15px;font-weight:700;padding:4px 12px 6px}
+  .muted{color:var(--muted)}
+  .tiny{font-size:8.5px;color:var(--muted)}
+  .row{display:flex;align-items:center;gap:8px}
+  .grow{flex:1}
+  .acct{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 10px;margin:0 12px 8px}
+  .acct .amt{font-size:15px;font-weight:700;margin-top:2px}
+  .acct.alt{opacity:.65}
+  .sec{font-size:9px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;padding:8px 12px 4px}
+  .rrow{display:flex;align-items:center;gap:8px;padding:7px 12px;border-top:1px solid var(--line)}
+  .pill{font-size:7.5px;font-weight:700;padding:2px 7px;border-radius:999px;letter-spacing:.03em}
+  .pill.ok{background:rgba(0,212,146,.15);color:var(--ok)}
+  .pill.gy{background:rgba(139,148,158,.15);color:var(--muted)}
+  .pill.rd{background:rgba(248,81,73,.15);color:var(--danger)}
+  .pill.wr{background:rgba(210,153,34,.15);color:var(--warn)}
+  .pill.bl{background:rgba(56,139,253,.15);color:var(--info)}
+  .av{width:22px;height:22px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:9px;flex:none}
+  .microw{padding:10px 12px 14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px;align-items:center}
+  .mic{width:46px;height:46px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 18px rgba(228,0,43,.45)}
+  .mic.alt{background:var(--surface2);box-shadow:none;border:1px solid var(--line)}
+  .typebar{background:var(--surface);border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:10px;padding:7px 12px;width:100%}
+  .tap-note{font-size:8px;color:var(--info)}
+  .wave{display:flex;gap:2.5px;align-items:flex-end;height:44px;justify-content:center;padding:4px}
+  .wave i{width:3px;background:var(--brand);border-radius:2px;animation:w 1s ease-in-out infinite}
+  .wave i:nth-child(odd){animation-delay:.15s}.wave i:nth-child(3n){animation-delay:.3s}.wave i:nth-child(4n){animation-delay:.45s}
+  @keyframes w{0%,100%{height:22%}50%{height:95%}}
+  .tsr{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 12px;font-size:12.5px;line-height:1.45}
+  .bubble{background:var(--surface2);border-radius:12px 12px 12px 3px;padding:8px 10px;margin:6px 12px;font-size:11px;line-height:1.4;max-width:85%}
+  .chip{border:1px solid var(--info);border-radius:10px;padding:8px 10px;margin:5px 12px;font-size:10.5px;cursor:pointer;background:rgba(56,139,253,.06)}
+  .chip.sel{border-color:var(--ok);background:rgba(0,212,146,.08)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 10px;overflow:hidden}
+  .card .ch{padding:8px 10px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:6px}
+  .frow{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border-bottom:1px solid var(--line);font-size:10.5px}
+  .frow:last-child{border:0}
+  .frow .k{color:var(--muted)}
+  .frow .v{text-align:right;font-weight:600}
+  .cta{background:var(--brand);color:#fff;font-weight:700;text-align:center;font-size:11px;border-radius:12px;padding:10px;margin:8px 10px 4px}
+  .cta.dis{background:var(--surface2);color:var(--muted)}
+  .ghost{color:var(--muted);text-align:center;font-size:10px;padding:6px}
+  .expiry{text-align:center;font-size:8.5px;color:var(--warn);padding:2px}
+  .banner{border-radius:12px;margin:0 10px 8px;padding:9px 10px;font-size:10px;line-height:1.45}
+  .banner.rd{background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.5)}
+  .banner.wr{background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.5)}
+  .cmp{display:flex;gap:8px;padding:6px 10px;font-size:10px;align-items:baseline}
+  .cmp .a{flex:1;color:var(--muted)}
+  .cmp .b{flex:1;font-weight:700;color:var(--danger)}
+  .step{display:flex;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);font-size:10.5px}
+  .step .n{width:16px;height:16px;border-radius:50%;background:var(--info);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
+  .fchip{display:inline-block;background:var(--surface2);border-radius:6px;padding:2px 6px;font-size:8.5px;color:var(--info);margin-top:3px}
+  .face{width:52px;height:52px;border-radius:50%;border:2px solid var(--ok);display:flex;align-items:center;justify-content:center;font-size:22px;margin:6px auto}
+  .code{display:flex;gap:5px;justify-content:center;margin:6px 0}
+  .code i{width:20px;height:26px;border:1.5px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;font-size:12px}
+  .hash{font-family:"SF Mono",Menlo,monospace;font-size:9.5px;color:var(--info);background:var(--surface2);border-radius:8px;padding:5px 8px;text-align:center}
+  .check{width:44px;height:44px;border-radius:50%;background:var(--ok);color:#06281D;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:14px auto 6px}
+  .tl{position:relative;margin:0 12px;padding-left:16px;font-size:9.5px}
+  .tl::before{content:"";position:absolute;left:4px;top:4px;bottom:4px;width:1.5px;background:var(--line)}
+  .tl .ev{position:relative;padding:4px 0}
+  .tl .ev::before{content:"";position:absolute;left:-15px;top:8px;width:8px;height:8px;border-radius:50%;background:var(--info)}
+  .tl .ev.ok::before{background:var(--ok)} .tl .ev.wr::before{background:var(--warn)} .tl .ev.rd::before{background:var(--danger)}
+  .glasses{width:460px;max-width:92vw;background:#05070A;border:1px solid #1C2530;border-radius:18px;padding:16px}
+  .hud{margin-top:10px;height:200px;border-radius:12px;background:linear-gradient(160deg,#0A1218 0%,#06131C 60%,#0A1A24 100%);border:1px solid rgba(56,139,253,.25);position:relative;overflow:hidden;padding:14px}
+  .hud .hcard{background:rgba(18,24,33,.85);border:1px solid rgba(0,212,146,.35);border-radius:10px;padding:10px 12px;font-size:11px;line-height:1.5;backdrop-filter:blur(2px)}
+  .hud .hmeta{position:absolute;top:10px;right:12px;font-size:8px;color:rgba(230,237,243,.5);letter-spacing:.15em}
+  .hud .wave{position:absolute;bottom:12px;left:14px;height:22px}
+  .hud .wave i{background:var(--info)}
+  .note{font-size:12px;color:var(--muted);max-width:920px;line-height:1.6;margin:26px 0}
+  .note b{color:var(--text)}
+  section{margin-top:34px}
+  h2{font-size:18px;margin-bottom:12px}
+  .concept-note{font-size:9px;color:var(--warn);text-align:center;margin-top:6px}
+</style>
+</head>
+<body>
+
+<h1>Say<b>Pay</b> — Direct Conversational Transaction Agent</h1>
+<p class="sub">
+  Speak a payment. A second model checks it. Code decides what it takes. You sign the exact draft.
+  DBS Banking Track · Tencent Cloud AI CAN DO IT Hackathon SG 2026 · <b>mock bank, simulated biometrics — labelled as such.</b>
+  <a href="?play=1">▶ Auto-play flow</a> · spec: <code>docs/ux-screens.md</code>
+</p>
+
+<div class="bar">
+  <button class="btn primary" id="play">▶ Play demo path</button>
+  <button class="btn" onclick="go(0)">Home</button>
+  <button class="btn" onclick="go(1)">Speak</button>
+  <button class="btn" onclick="go(2)">Clarify</button>
+  <button class="btn" onclick="go(3)">Confirm</button>
+  <button class="btn" onclick="go(4)">Multi-intent</button>
+  <button class="btn hot" onclick="go(5)">Frozen</button>
+  <button class="btn hot" onclick="go(6)">Scam</button>
+  <button class="btn" onclick="go(7)">Authorise</button>
+  <button class="btn" onclick="go(8)">Receipt</button>
+  <button class="btn" onclick="go(9)">Audit</button>
+</div>
+
+<div class="grid" id="grid">
+
+  <!-- 1 · HOME -->
+  <div class="cell"><div class="phone" data-i="0"><div class="scr">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="h">Good evening, Mei Ling <span class="pill bl" style="margin-left:4px">EN ▾</span></div>
+    <div class="acct"><div class="tiny">Multiplier ····1188</div><div class="amt">S$8,420.15</div></div>
+    <div class="acct alt"><div class="tiny">Savings ····2201</div><div class="amt">S$3,000.00</div></div>
+    <div class="sec">Recent</div>
+    <div class="rrow"><div class="av">M</div><div class="grow"><div>Mum</div><div class="tiny">groceries · 12 Sep</div></div><div><b>-S$120.00</b> <span class="pill ok">Sent</span></div></div>
+    <div class="rrow"><div class="av">H</div><div class="grow"><div>Helper</div><div class="tiny">salary · 1 Oct</div></div><div><b>-S$650.00</b> <span class="pill ok">Sent</span></div></div>
+    <div class="rrow"><div class="av">J</div><div class="grow"><div>John Tan</div><div class="tiny">you stopped this · 9 Oct</div></div><div><b>S$0.00</b> <span class="pill gy">Cancelled</span></div></div>
+    <div class="grow"></div>
+    <div class="microw"><div class="mic">🎙</div><div class="tiny">Tap to speak · no holding needed</div><div class="typebar">or type a request…</div></div>
+  </div></div><div class="cap"><b>1 · Home</b>Balances, recent with status, tap-to-talk mic</div></div>
+
+  <!-- 2 · LISTENING -->
+  <div class="cell"><div class="phone" data-i="1"><div class="scr">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="h">Listening…</div>
+    <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="tsr">"Send <b>two hundred</b> to <b>Mum</b> for <i>groceries</i>"</div>
+    <div class="tiny" style="padding:6px 12px">English · confidence 0.97 · tap ⬛ to stop</div>
+    <div class="grow"></div>
+    <div class="microw"><div class="mic alt">⬛</div><div class="tiny">Tap to stop — everything you say stays on this card</div></div>
+  </div></div><div class="cap"><b>2 · Listening</b>Transcript always visible — nothing hidden</div></div>
+
+  <!-- 3 · CLARIFY -->
+  <div class="cell"><div class="phone" data-i="2"><div class="scr">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="h">One question</div>
+    <div class="tiny" style="padding:0 12px">"Send fifty to John"</div>
+    <div class="bubble">I found two payees named <b>John</b>. Which one?</div>
+    <div class="chip sel"><b>John Tan</b> · PayNow ····4521<br><span class="tiny">last paid 12 Sep</span></div>
+    <div class="chip"><b>John Lim</b> · PayNow ····8892<br><span class="tiny">never paid</span></div>
+    <div class="chip">Neither of these</div>
+    <div class="bubble">And <b>fifty dollars — S$50.00</b>, correct?</div>
+    <div class="row" style="padding:0 12px"><div class="chip grow sel">Yes, S$50.00</div><div class="chip grow">No — type it</div></div>
+    <div class="tiny" style="padding:4px 12px">I ask. I never guess. ● ○</div>
+  </div></div><div class="cap"><b>3 · Clarify</b>One targeted question, distinguishing detail</div></div>
+
+  <!-- 4 · CONFIRM -->
+  <div class="cell"><div class="phone" data-i="3"><div class="scr">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="h">Confirm transfer</div>
+    <div class="card">
+      <div class="ch"><span class="pill ok">✓ Verified against what you said</span><span class="grow"></span><span class="tiny">🔊</span></div>
+      <div class="frow"><span class="k">Amount</span><span class="v">S$200.00<br><span class="tiny">two hundred dollars</span></span></div>
+      <div class="frow"><span class="k">To</span><span class="v">Mum<br><span class="tiny">PayNow ····4521</span></span></div>
+      <div class="frow"><span class="k">From</span><span class="v">Multiplier ····1188</span></div>
+      <div class="frow"><span class="k">Reference</span><span class="v">"groceries"</span></div>
+      <div class="frow"><span class="k">Balance after</span><span class="v">S$8,220.15</span></div>
+      <div class="frow"><span class="k">Requires</span><span class="v">PIN · <span class="tiny">rule POL-TIER-01</span></span></div>
+    </div>
+    <div class="cta">Authorise with PIN</div>
+    <div class="expiry">Card expires in 0:58 · tap any field to edit</div>
+    <div class="ghost">Cancel</div>
+  </div></div><div class="cap"><b>4 · Confirm</b>Every field, evidence, tier — before any button</div></div>
+
+  <!-- 5 · MULTI-STEP -->
+  <div class="cell"><div class="phone" data-i="4"><div class="scr">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="h">Confirm 2 steps</div>
+    <div class="card">
+      <div class="ch"><span class="pill ok">✓ Verified</span><span class="grow"></span><span class="tiny">🔊</span></div>
+      <div class="step"><div class="n">1</div><div><b>Transfer S$500.00</b><br><span class="tiny">Savings ····2201 → Mum</span></div></div>
+      <div class="step"><div class="n">2</div><div><b>Buy DBS (D05.SI) · S$1,250.00</b><br><span class="fchip">half of remaining S$2,500.00</span><br><span class="tiny">≈ 28 shares @ S$44.12 indicative</span></div></div>
+      <div class="frow"><span class="k">Requires</span><span class="v">Face ID · <span class="tiny">rule POL-TIER-03</span></span></div>
+    </div>
+    <div class="tiny" style="padding:6px 10px">Runs in order. If step 1 fails, step 2 will not run. The model wrote <i>half(remaining)</i> — code computed the number.</div>
+    <div class="cta">Authorise with Face ID</div>
+    <div class="expiry">Expires in 0:49</div>
+    <div class="ghost">Cancel</div>
+  </div></div><div class="cap"><b>5 · Multi-intent</b>Ordered steps, formula shown, one signature</div></div>
+
+  <!-- 6a · FROZEN -->
+  <div class="cell"><div class="phone hot" data-i="5"><div class="scr">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="h" style="color:var(--danger)">⛔ Frozen</div>
+    <div class="banner rd"><b>I may have misunderstood.</b><br>A second, independent agent compared the draft to what you said and found a difference. <b>Nothing was sent.</b></div>
+    <div class="card">
+      <div class="cmp"><span class="a">You said<br><b style="color:var(--text)">"two hundred"</b></span><span class="b">Draft shows<br>S$2,000.00</span></div>
+      <div class="frow"><span class="k">Field</span><span class="v" style="color:var(--danger)">amount</span></div>
+    </div>
+    <div class="tiny" style="padding:8px 10px">The authorise button is removed until this is resolved. The freeze is in your audit trail.</div>
+    <div class="cta">Say it again</div>
+    <div class="cta dis">Fix the amount to S$200.00</div>
+    <div class="ghost">Cancel — nothing sent</div>
+  </div></div><div class="cap"><b>6a · Frozen</b>Dual-engine check catches the mismatch</div></div>
+
+  <!-- 6b · SCAM -->
+  <div class="cell"><div class="phone hot" data-i="6"><div class="scr" style="background:#171207">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="h" style="color:var(--warn)">⚠ Pause. This looks like a scam.</div>
+    <div class="banner wr"><b>Why we're pausing</b> — your request has patterns scammers use:
+      <br>· mentions <b>police / authority</b><br>· says <b>"safe account"</b> and <b>"urgent"</b><br>· <b>new account number</b> spoken aloud<br>· large amount: <b>S$10,000.00</b></div>
+    <div class="cta" style="background:var(--warn);color:#211704">📞 Call DBS scam hotline 1800 339 6963</div>
+    <div class="cta dis">💬 Text a trusted person instead</div>
+    <div class="tiny" style="text-align:center;padding:6px 10px">Continuing anyway requires waiting 30 s,<br>then Face ID <b>and</b> a code sent to ····8821.</div>
+    <div class="cta dis">I understand — continue in 0:27</div>
+    <div class="ghost">Cancel — safest choice</div>
+  </div></div><div class="cap"><b>6b · Scam shield</b>Cooling-off + hotline before any card</div></div>
+
+  <!-- 7 · AUTHORISE -->
+  <div class="cell"><div class="phone" data-i="7"><div class="scr">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="h">Authorise</div>
+    <div class="tiny" style="padding:0 12px 6px">This code identifies <b>exactly</b> what you're approving. Any change = a new code = new signature.</div>
+    <div class="hash">a3f9 · 08c2 · b7e4 · 71c2</div>
+    <div class="face">🙂</div>
+    <div class="tiny" style="text-align:center">Face ID · simulated</div>
+    <div class="card" style="margin-top:8px">
+      <div class="frow"><span class="k">Step-up (POL-TIER-04)</span><span class="v">+ SMS code</span></div>
+      <div class="frow"><span class="k">Sent to</span><span class="v">····8821</span></div>
+    </div>
+    <div class="code"><i>4</i><i>2</i><i>7</i><i>·</i><i></i><i></i></div>
+    <div class="cta dis">Signed on this device ✓</div>
+    <div class="ghost">Cancel</div>
+  </div></div><div class="cap"><b>7 · Authorise</b>Sign hash(draft) — biometric + OOB tier</div></div>
+
+  <!-- 8 · RECEIPT -->
+  <div class="cell"><div class="phone" data-i="8"><div class="scr">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="check">✓</div>
+    <div class="h" style="text-align:center">Sent</div>
+    <div class="card">
+      <div class="frow"><span class="k">Amount</span><span class="v">S$200.00</span></div>
+      <div class="frow"><span class="k">To</span><span class="v">Mum ····4521</span></div>
+      <div class="frow"><span class="k">Ledger shows</span><span class="v">S$8,220.15<br><span class="tiny">read back, not assumed</span></span></div>
+      <div class="frow"><span class="k">Txn</span><span class="v">TXN-88214</span></div>
+      <div class="frow"><span class="k">Time</span><span class="v">12 Oct, 21:47:32</span></div>
+    </div>
+    <div class="cta" style="background:var(--surface2)">🔍 Why did the agent do this?</div>
+    <div class="ghost">Done</div>
+  </div></div><div class="cap"><b>8 · Receipt</b>Ledger-confirmed state, not submitted values</div></div>
+
+  <!-- 9 · AUDIT -->
+  <div class="cell"><div class="phone" data-i="9"><div class="scr">
+    <div class="sbar"><span>9:41</span><span>●●● ▮</span></div>
+    <div class="h">Why did the agent do this?</div>
+    <div class="pad"><span class="pill ok">⛓ Chain intact</span> <span class="pill bl">export ⤓</span></div>
+    <div class="tl">
+      <div class="ev ok"><b>Heard</b> · 21:46:58<br><span class="muted">"send two hundred to mum…" · en</span></div>
+      <div class="ev ok"><b>Drafted</b> · :59<br><span class="muted">transfer 200 → Mum · ADP/hunyuan</span></div>
+      <div class="ev ok"><b>Verified</b> · :00<br><span class="muted">draft = transcript · 2nd engine</span></div>
+      <div class="ev ok"><b>Policy</b> · :00<br><span class="muted">POL-TIER-01 → PIN · velocity ok</span></div>
+      <div class="ev ok"><b>Card shown</b> · :01<br><span class="muted">hash a3f9…71c2</span></div>
+      <div class="ev ok"><b>Signed</b> · :29<br><span class="muted">PIN · sig f9e1…</span></div>
+      <div class="ev ok"><b>Gateway</b> · :30<br><span class="muted">signature verified</span></div>
+      <div class="ev ok"><b>Executed</b> · :31<br><span class="muted">TXN-88214 · balance read back</span></div>
+    </div>
+  </div></div><div class="cap"><b>9 · Audit</b>Every stage, rule id, fingerprint — hash-chained</div></div>
+
+</div>
+
+<section>
+  <h2>Concept — Meta Ray-Ban Display + Neural Band <span class="pill wr">concept · not built</span></h2>
+  <div class="note">Same agent, same rules, hands-free. The glasses hear the request and show the card; <b>the signature still happens on the phone</b> — the concept inherits every guardrail instead of bypassing them. Integration path: Meta Wearables Device Access Toolkit (preview).</div>
+  <div class="glasses">
+    <div class="tiny">RIGHT LENS HUD · 600 nits · Meta Ray-Ban Display (concept render)</div>
+    <div class="hud">
+      <div class="hmeta">SAYPAY · EN</div>
+      <div class="hcard">
+        <b>"Pay Mum S$200 for groceries"</b><br>
+        S$200.00 → Mum ····4521 · verified ✓<br>
+        <span style="color:var(--warn)">Approve on your phone →</span>
+      </div>
+      <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="concept-note">Pinch (Neural Band) sends the card to the phone · over-limit or scam shows an amber "Paused — see your phone"</div>
+  </div>
+</section>
+
+<section>
+  <h2>Accessibility — built for the users who need this most</h2>
+  <div class="note">
+    <b>Tap-to-talk, never hold</b> (motor/tremor) · <b>read-aloud card before Authorise</b> (low vision) ·
+    <b>every status in words, never colour alone</b> · <b>transcript always visible</b> (Deaf users) ·
+    <b>17 pt+ type, AA contrast</b> · <b>one question at a time, plain words, amounts in digits and words</b> (cognitive) ·
+    <b>EN / 中文 / BM / தமிழ்</b> · the scam pause names the pattern and offers the hotline and a trusted contact —
+    designed for the people scammers target hardest.
+  </div>
+</section>
+
+<script>
+const phones=[...document.querySelectorAll('.phone')];
+const order=[0,1,3,7,8,9,1,2,3,5,6,7,8];
+let idx=0,timer=null;
+function go(i){phones.forEach(p=>p.classList.remove('active'));const p=phones[i];p.classList.add('active');p.parentElement.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+function play(){idx=0;clearInterval(timer);timer=setInterval(()=>{if(idx>=order.length){clearInterval(timer);return;}go(order[idx++]);},1600);}
+document.getElementById('play').onclick=play;
+if(location.search.includes('play'))setTimeout(play,600);
+</script>
+</body>
+</html>
