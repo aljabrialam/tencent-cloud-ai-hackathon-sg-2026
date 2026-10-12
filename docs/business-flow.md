@@ -1,6 +1,6 @@
 # Business Flow
 
-How a spoken sentence becomes a signed, executed, audited bank transaction in SayPay — and the
+How a spoken sentence becomes a signed, executed, audited bank transaction in digiVoice — and the
 three places where it is deliberately stopped.
 
 Source of truth for requirements: [`specs/001-conversational-transaction-agent/spec.md`](../specs/001-conversational-transaction-agent/spec.md).
@@ -92,7 +92,7 @@ signature bound to its exact bytes.
 ```mermaid
 sequenceDiagram
   participant C as Customer
-  participant APP as SayPay app
+  participant APP as digiVoice app
   participant SVC as Agent service
   participant L1 as Drafting LLM
   participant L2 as Validation LLM

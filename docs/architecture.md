@@ -1,6 +1,6 @@
 # Architecture
 
-Zero-trust agentic architecture for SayPay. The one-sentence version: **the model writes a draft;
+Zero-trust agentic architecture for digiVoice. The one-sentence version: **the model writes a draft;
 code decides; the human signs; the gateway only accepts signatures.**
 
 ## Components

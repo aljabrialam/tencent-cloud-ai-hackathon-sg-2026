@@ -20,10 +20,10 @@ Removed principles: none
 Follow-up TODOs: none
 -->
 
-# SayPay (DBS DCTA) Constitution
+# digiVoice (DBS DCTA) Constitution
 
 Project: Direct Conversational Transaction Agent (DCTA) for the DBS Banking Track,
-Tencent Cloud AI CAN DO IT Hackathon Singapore 2026. Working name: **SayPay**.
+Tencent Cloud AI CAN DO IT Hackathon Singapore 2026. Working name: **digiVoice**.
 
 ## Core Principles
 

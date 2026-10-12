@@ -1,6 +1,6 @@
 # UX Screens
 
-Screen-by-screen specification for the SayPay mobile app. This is the blueprint for the Figma
+Screen-by-screen specification for the digiVoice mobile app. This is the blueprint for the Figma
 mockups in `design/` and for the Expo implementation. Device frame: iPhone 15 (393 × 852 pt).
 
 ## Design principles
@@ -134,11 +134,38 @@ flowchart LR
   for LLM stages · rule ids for policy · signature fingerprint for authorisation · export icon.
 - **States** cancelled/frozen/blocked interactions show terminal reason at the bottom.
 
-## Accessibility
-- All text ≥ 17 pt body; dynamic type honoured.
-- Every actionable element ≥ 44 pt and labelled for screen readers.
-- Colour is never the only signal (icons + words on every status).
-- Read-aloud of the confirmation card available in all four languages.
+## Accessibility — design for the users who need this most
+
+The users a conversational banking agent helps most are the ones rigid menus exclude:
+elderly users, people with motor, visual, hearing, or cognitive disabilities — and they are
+also the most frequent scam targets. Inclusivity is load-bearing, not a stretch coat.
+
+| Need | Design answer |
+|---|---|
+| Motor / tremor | Voice-first path with **tap-to-start / tap-to-stop** (never hold-to-speak); 44 pt minimum targets; no precision gestures |
+| Low vision | Read-aloud of every confirmation card before Authorise enables; 17 pt+ body, WCAG AA contrast, scalable text without reflow breakage |
+| Blind | Full VoiceOver/TalkBack path; every status announced with words, never colour alone; draft fingerprint spoken |
+| Deaf / hard of hearing | Nothing exists only in audio: transcript always visible, read-aloud optional not required, hotline offers text path |
+| Cognitive | One question at a time, plain words ("Send", not "execute"), numbers always shown as digits *and* words on money amounts, no timers except the visible draft expiry |
+| Language | EN / 中文 / BM / தமிழ் for transcript, clarification, card and read-aloud |
+
+The scam interstitial is also an accessibility feature: the "pause and call a trusted person"
+option is designed for users whom scammers specifically target.
+
+## Concept — Meta Ray-Ban Display + Neural Band *(concept, not built)*
+
+Same agent, same rules, hands-free. The glasses are input and display only; the signature
+still happens on the phone.
+
+| Beat | HUD shows |
+|---|---|
+| 1 · Speak | "Pay Mum S$200 for groceries" — mic ring on, transcript rendered |
+| 2 · Draft | Card summary: S$200.00 → Mum · verified ✓ · "Approve on your phone" |
+| 3 · Block | Over-limit or scam → red/amber glance: "Paused — see your phone" |
+| 4 · Approve | Pinch (Neural Band) sends to phone; biometric + signature happen there |
+
+Integration path: Meta Wearables Device Access Toolkit (preview) when available; until then
+the HUD is a concept rendering, labelled as such everywhere.
 
 ## Copy rules
 - Plain words: "Send", "Pay", "Buy". No "execute", "initiate", "payload".

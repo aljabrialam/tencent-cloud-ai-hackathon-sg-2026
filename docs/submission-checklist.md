@@ -9,7 +9,7 @@ Handbook: https://tinyurl.com/SGHackathonHandbook
 - [ ] Project built with **CodeBuddy and/or WorkBuddy**
 - [ ] **≥ 3 screenshots / screen recordings of CodeBuddy or WorkBuddy chat logs** from the build,
       saved in `design/tool-proof/` and attached to the form
-- [ ] Project title: **SayPay**
+- [ ] Project title: **digiVoice**
 - [ ] Short blurb (< 10 words): *Speak a payment. Code decides. You sign.*
 - [ ] Project description covering:
   - [ ] Overview: target scenarios, users, value proposition (`docs/use-cases.md`)
@@ -23,7 +23,7 @@ Handbook: https://tinyurl.com/SGHackathonHandbook
 
 ## Tencent Cloud accounts (user action, before 13 Oct implementation)
 
-- [ ] **ADP**: register individual account → App Dev → create agent "SayPay Drafter" → publish →
+- [ ] **ADP**: register individual account → App Dev → create agent "digiVoice Drafter" → publish →
       copy **Experience URL** (shareable) and **AppKey** (secret → `apps/service/.env`).
       Guide: https://tinyurl.com/Hackathon-ADP-Guide · video: https://tinyurl.com/ADP-Training-Video
 - [ ] **TRTC**: register → Create Application → *Conversational AI* → copy **SDKAppID** +

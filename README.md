@@ -1,8 +1,8 @@
-# SayPay
+# digiVoice
 
 **Say "send two hundred to Mum for groceries, then buy DBS shares with half of what's left" — and a banking agent drafts it, a second model checks it, deterministic code decides what authorisation it needs, and nothing moves until you sign the exact draft with your face. The model never touches the money.**
 
-SayPay is a Direct Conversational Transaction Agent (DCTA) for the **Banking Track — DBS** at the Tencent Cloud AI CAN DO IT Hackathon Singapore 2026 (Scenario 1: voice-enabled payment and transaction with KYC and basic risk control). It takes the DBS brief literally: GenAI is a *generator of drafts, never an executor of funds*.
+digiVoice is a Direct Conversational Transaction Agent (DCTA) for the **Banking Track — DBS** at the Tencent Cloud AI CAN DO IT Hackathon Singapore 2026 (Scenario 1: voice-enabled payment and transaction with KYC and basic risk control). It takes the DBS brief literally: GenAI is a *generator of drafts, never an executor of funds*.
 
 Built 12–16 October 2026, solo, with Spec Kit, CodeBuddy and Tencent Cloud. Mock bank, mock biometrics, mock gateway — as the challenge permits. Nothing real is moved.
 
@@ -14,7 +14,7 @@ Built 12–16 October 2026, solo, with Spec Kit, CodeBuddy and Tencent Cloud. Mo
 |---|---|
 | **Track / challenge** | Banking — DBS · Direct Conversational Transaction Agent (DCTA) · Scenario 1 |
 | **What it is** | A mobile app where you speak or type banking requests — transfers, bills, share purchases, several at once — and a zero-trust pipeline turns them into transactions you explicitly sign |
-| **Problem solved** | Natural-language banking is either dangerous (the model can call the transfer API) or useless (it just fills a form for you). SayPay keeps the model useful — parse, decompose, resolve, ask — and structurally unable to execute |
+| **Problem solved** | Natural-language banking is either dangerous (the model can call the transfer API) or useless (it just fills a form for you). digiVoice keeps the model useful — parse, decompose, resolve, ask — and structurally unable to execute |
 | **How** | Transcript → LLM drafts typed JSON → code resolves payees/accounts/formulas → an independent read-only LLM audits draft vs transcript → pure policy engine sets the authorisation tier → native confirmation card → biometric signs `sha256(draft)` → gateway accepts only valid signatures → ordered, idempotent execution → hash-chained audit |
 | **Core rule** | *The drafting model has no tools.* `LLMProvider.complete(prompt) → string`. There is no function it can call. Every number the user sees was computed by code from a symbolic formula the model emitted |
 | **Three stops** | **Freeze** (validator disagrees) · **Hold/Block** (policy: limits, velocity, KYC, new payee) · **Scam interstitial** (authority + urgency + new payee + large amount → cooling-off + hotline) |
@@ -32,7 +32,7 @@ DBS's brief names five failure modes of conversational banking, and they are all
 4. **Menu friction.** Three simple tasks today means three multi-screen flows.
 5. **No non-repudiation.** A chat transcript is not a signed instruction.
 
-Most "AI banking" demos solve #4 by creating #1, #2 and #5. SayPay's design starts from the other end: what is the *smallest* thing the model is allowed to do, such that #1, #2 and #5 are impossible by construction, and #3 is handled by asking rather than guessing? The answer is: emit a typed draft, and nothing else.
+Most "AI banking" demos solve #4 by creating #1, #2 and #5. digiVoice's design starts from the other end: what is the *smallest* thing the model is allowed to do, such that #1, #2 and #5 are impossible by construction, and #3 is handled by asking rather than guessing? The answer is: emit a typed draft, and nothing else.
 
 ## A concrete example
 
@@ -131,7 +131,7 @@ Business value, personas and the eight use cases: [`docs/use-cases.md`](docs/use
 
 ## Mapping to the DBS challenge
 
-| DBS asked for | SayPay |
+| DBS asked for | digiVoice |
 |---|---|
 | Zero-UI multi-intent parsing → structured JSON drafts | Drafting LLM emits typed steps with symbolic formulas; resolver computes |
 | Dynamic ambiguity resolution | Clarify screen, one targeted question, never a default |

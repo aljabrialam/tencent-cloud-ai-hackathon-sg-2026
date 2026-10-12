@@ -1,4 +1,4 @@
-# Agent notes — SayPay (DBS DCTA)
+# Agent notes — digiVoice (DBS DCTA)
 
 ## Governing documents
 - Constitution: `.specify/memory/constitution.md` — read before any implementation. Principle I

@@ -1,4 +1,4 @@
-# Specification Quality Checklist: SayPay — Direct Conversational Transaction Agent
+# Specification Quality Checklist: digiVoice — Direct Conversational Transaction Agent
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-10-12

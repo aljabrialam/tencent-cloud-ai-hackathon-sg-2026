@@ -1,6 +1,6 @@
 # Business Use Cases
 
-Who uses SayPay, why DBS would ship it, and the concrete cases it must handle. Each case maps to a
+Who uses digiVoice, why DBS would ship it, and the concrete cases it must handle. Each case maps to a
 user story in the [spec](../specs/001-conversational-transaction-agent/spec.md).
 
 ## Personas
