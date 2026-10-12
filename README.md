@@ -112,7 +112,7 @@ Full flow, trust boundaries and sequence diagrams: [`docs/business-flow.md`](doc
 
 ## What the user sees
 
-Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) (open in a browser); the screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md). High-fidelity reference renders generated with Sleek are in [`design/sleek/`](design/sleek/) (Home, Listening, Confirm, Receipt+Audit), and the mockup is mirrored as editable layers in Figma ([digiVoice — DCTA](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)). Design tooling: Sleek (render references) + [Mokkoi](https://github.com/RHINOREX123/mokkoi-mcp-server) (MIT-licensed MCP server for React Native screen scaffolding with WCAG checks).
+Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) (open in a browser); the screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md). High-fidelity reference renders generated with Sleek are in [`design/sleek/`](design/sleek/) (Home, Listening, Confirm, Receipt+Audit), and the mockup is mirrored as editable layers in Figma ([digiVoice — DCTA](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)). **All 10 screens are also generated as consistent-token React Native scaffolds via [Mokkoi](https://github.com/RHINOREX123/mokkoi-mcp-server)** (free, MIT-licensed MCP server — shared DBS token palette, built-in WCAG/touch-target checks) in [`design/mokkoi/`](design/mokkoi/), which is where `apps/mobile/` implementation starts.
 
 | # | Screen | What it proves |
 |---|---|---|
@@ -142,7 +142,11 @@ Business value, personas and the eight use cases: [`docs/use-cases.md`](docs/use
 
 digiVoice extends the same zero-trust pipeline to **Meta Ray-Ban Display glasses + Neural Band**: the glasses' mics capture the request hands-free, the HUD shows a glanceable summary of the card, and the Neural Band pinch *forwards the draft to the phone* — where biometric + OOB still sign `sha256(draft)`. The glasses can propose; only the phone can approve. On a scam or frozen verdict the HUD shows an amber "Paused — see your phone".
 
-Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit. Details: [`docs/meta-wearable-concept.md`](docs/meta-wearable-concept.md).
+**The hands-free journey** (full stage-by-stage table + HUD rules in [`docs/meta-wearable-concept.md`](docs/meta-wearable-concept.md)): speak at the glasses on the MRT → transcript rolls in the HUD while the band micro-pulses on each parsed entity → clarify aloud ("Two Johns — say *Tan* or *Lim*?") or pinch to pick → card rises on the lens (`S$500.00 → Mum ····4521 ✓ verified · Approve on your phone →`) → **single-pinch sends it to the phone** → Face ID signs → green tick on the lens, receipt on the phone.
+
+**Neural Band gestures** — single pinch: forward/select · double pinch: dismiss · twist: scroll card · pinch-hold: repeat read-aloud. **Authorise is deliberately unmapped**: EMG can't prove *who* pinched, so the band can propose, never approve. **HUD rules** — one glanceable card, never an app; no Pay/Approve affordance on the lens; word + colour + icon for every state (never colour alone); auto-dismiss to ambient so balances never linger.
+
+Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
 ## Mapping to the DBS challenge
 
@@ -188,6 +192,7 @@ Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — bot
 | Business flow, use cases, UX screens, architecture, policy rules, demo script, submission checklist | Done — `docs/` |
 | Interactive mockup — 9 screens + glasses HUD | Done — `design/digivoice-app-mockup.html` · mirrored in Figma |
 | High-fidelity reference renders | Done — `design/sleek/` (4 core screens; remaining screens rebuilt in mockup) |
+| RN screen scaffolds (Mokkoi, DBS tokens) | Done — `design/mokkoi/` (all 10 screens, consistent tokens + WCAG checks) |
 | Plan + tasks (Spec Kit) | In progress |
 | Shared types, policy engine + tests, mock bank, gateway | Planned |
 | Expo app, LLM adapter, validator, shield | Planned |
