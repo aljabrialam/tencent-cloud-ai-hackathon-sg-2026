@@ -114,16 +114,16 @@ Full flow, trust boundaries and sequence diagrams: [`docs/business-flow.md`](doc
 
 Every requirement in the brief, answered — full bullet-by-bullet traceability (incl. all 10 judging dimensions) in [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md):
 
-| DBS asked for | digiVoice |
-|---|---|
-| Zero-UI multi-intent parsing → structured JSON drafts | Drafting LLM emits typed steps with symbolic formulas; resolver computes |
-| Dynamic ambiguity resolution | Clarify screen, one targeted question, never a default |
-| Dual-engine semantic discrepancy auditing | Independent read-only Validation LLM; discrepancy or timeout → frozen |
-| Deterministic HITL biometric authorisation | Native card + biometric signing `sha256(draft)`; edit invalidates |
-| Zero-trust API gateway | Gateway accepts only drafts with a valid device signature; model has no write path |
-| Adversarial prompt / injection shielding | Shield patterns, prompt isolation, inert rendering of free text |
-| Dynamic risk and velocity throttling | Policy rules `POL-TIER-*`, `POL-VEL-*`, `POL-NEWPAYEE-*`, OOB step-up |
-| Highly traceable and auditable | Hash-chained audit, in-app "Why did the agent do this?" |
+| DBS asked for | digiVoice | Where |
+|---|---|---|
+| Zero-UI multi-intent parsing → structured JSON drafts | Drafting LLM emits typed steps with symbolic formulas; resolver computes | [prompt contract](specs/001-conversational-transaction-agent/contracts/llm-prompts.md) · [`IntentStep`/`Formula`](specs/001-conversational-transaction-agent/data-model.md) |
+| Dynamic ambiguity resolution | Clarify screen, one targeted question, never a default | [screen 3](docs/ux-screens.md#3--clarify) · [`Ambiguity`](specs/001-conversational-transaction-agent/data-model.md) |
+| Dual-engine semantic discrepancy auditing | Independent read-only Validation LLM; discrepancy or timeout → frozen | [validator contract](specs/001-conversational-transaction-agent/contracts/llm-prompts.md#validator--llmprovidercompletevalidatesystem-validateuser--verdict) · [policy](docs/policy-rules.md#dual-engine-validation) |
+| Deterministic HITL biometric authorisation | Native card + biometric signing `sha256(draft)`; edit invalidates | [auth tiers](docs/policy-rules.md#authorisation-tiers) · [screen 7](docs/ux-screens.md#7--authorise) |
+| Zero-trust API gateway | Gateway accepts only drafts with a valid device signature; model has no write path | [API contract](specs/001-conversational-transaction-agent/contracts/service-api.md) · [error contract](specs/001-conversational-transaction-agent/contracts/service-api.md#error-contract) |
+| Adversarial prompt / injection shielding | Shield patterns, prompt isolation, inert rendering of free text | [shield patterns](docs/policy-rules.md#shield-patterns-pre-draft) |
+| Dynamic risk and velocity throttling | Policy rules `POL-TIER-*`, `POL-VEL-*`, `POL-NEWPAYEE-*`, OOB step-up | [rule table](docs/policy-rules.md#rules) |
+| Highly traceable and auditable | Hash-chained audit, in-app "Why did the agent do this?" | [`AuditEntry` chain](specs/001-conversational-transaction-agent/data-model.md#auditentry) · [screen 9](docs/ux-screens.md#9--audit-trail--why-did-the-agent-do-this) |
 
 Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md).
 
@@ -216,22 +216,19 @@ digiVoice extends the same zero-trust pipeline to **Meta Ray-Ban Display glasses
 
 *Left: real Toolkit render · Right: additive-display composite over a live scene — both produced by Meta's own test harness.*
 
-### One agent, many surfaces — car, speaker, earbuds
+### One agent, many surfaces — watch, web, speaker, earbuds, car
 
 The innovation isn't a new app per device — it's **one signed-draft pipeline with many mouths and ears**. Every surface proposes; the phone approves.
 
-<p><img src="design/screens/surfaces-all.png" width="90%" alt="In-car, smart speaker and earbuds surface cards"></p>
+<p><img src="design/screens/surfaces-all.png" width="90%" alt="Smartwatch, web, smart speaker, earbuds and in-car surface cards"></p>
 
 | Surface | What it's for | Its hard rule |
 |---|---|---|
-| **In-car** (CarPlay / Android Auto / IVI) | "Pay my parking fee" · "How much did I spend on fuel this month?" | Audio-first while moving; the card only appears at standstill; **never scrolling, typing, or authorising while driving** |
+| **Smartwatch** | Draft glance on the wrist — amount, payee, "approve on your phone" | A watch face never carries a Pay button — **the wrist can show, never sign** |
+| **Web / desktop** | Full transaction review on the big screen — chat transcript + card side-by-side inside digibank web | The browser view is display + draft capture only — **the phone remains the sole signer even on a logged-in desktop session** |
 | **Smart speaker / home assistant** | Bills due, scheduled transfers, spend questions | Sensitive answers gated by voice-match or a phone ping; **voice is identity-weak — spoken approval is never accepted** |
 | **Wireless earbuds** | Private read-aloud of drafts and receipts, real-time fraud warnings that interrupt media | Works with any earbuds — no special hardware; **PINs and card numbers are never spoken into the mic** |
-| **Web / desktop** | Full transaction review on the big screen — chat transcript + card side-by-side inside digibank web | The browser view is display + draft capture only — **the phone remains the sole signer even on a logged-in desktop session** |
-
-<p><img src="design/screens/surface-web.png" width="90%" alt="digiVoice on digibank web — chat transcript plus confirmation card, approve on your phone"></p>
-
-### Mock experiences per surface
+| **In-car** (CarPlay / Android Auto / IVI) | "Pay my parking fee" · "How much did I spend on fuel this month?" | Audio-first while moving; the card only appears at standstill; **never scrolling, typing, or authorising while driving** |
 
 Each surface has a designed state flow — and a shipping platform underneath, not a logo on a slide:
 
@@ -244,14 +241,10 @@ Each surface has a designed state flow — and a shipping platform underneath, n
 
 > **Feasible today:** watchOS complications + notifications and Wear OS Tiles already render bank cards on the wrist — our draft glance is a notification-shaped payload pushed from the companion app. No wearable payment credential needed because we never sign there.
 
-<p><img src="design/surfaces/in-car.png" width="42%" alt="CarPlay head unit in a car"></p>
+**Web / desktop** — the big-screen review surface. Chat transcript beside the confirmation card, inside the digibank web shell — and the approve hand-off still points at the phone:
+<p><img src="design/screens/surface-web.png" width="90%" alt="digiVoice on digibank web — chat transcript plus confirmation card, approve on your phone"></p>
 
-*CarPlay on an aftermarket head unit — photo: IShowSammy, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:CarPlay_displaying_music_in_Nissan.png)*
-
-**In-car** — audio-first while moving; the card only appears at standstill. Moving = no card, no scrolling, ever:
-<p><img src="design/screens/mock-surf-car.png" width="92%" alt="In-car IVI states — idle tile, listening, parked card, suppressed while moving, fraud alert"></p>
-
-> **Feasible today:** CarPlay and Android Auto already support audio/messaging app categories with strictly templated UI — "voice while moving, card at standstill" is literally the interaction model those templates enforce. digiVoice fits it, doesn't fight it.
+> **Feasible today:** digibank web already exists as a channel — digiVoice is a chat panel + the same draft card component. Signing stays on the enrolled phone, so desktop adds no new trust boundary.
 
 <p><img src="design/surfaces/smart-speaker.jpg" width="34%" alt="Amazon Echo Dot"></p>
 
@@ -270,6 +263,15 @@ Each surface has a designed state flow — and a shipping platform underneath, n
 <p><img src="design/screens/mock-surf-earbuds.png" width="92%" alt="Earbud states — connected, whispered draft, confirmation, fraud interrupt, controls"></p>
 
 > **Feasible today:** needs zero new hardware or APIs — it's TTS + notification audio over ordinary Bluetooth. Announce-style spoken notifications are already a platform feature on iOS/Android; we add the fraud-interrupt and the read-aloud card.
+
+<p><img src="design/surfaces/in-car.png" width="42%" alt="CarPlay head unit in a car"></p>
+
+*CarPlay on an aftermarket head unit — photo: IShowSammy, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:CarPlay_displaying_music_in_Nissan.png)*
+
+**In-car** — audio-first while moving; the card only appears at standstill. Moving = no card, no scrolling, ever:
+<p><img src="design/screens/mock-surf-car.png" width="92%" alt="In-car IVI states — idle tile, listening, parked card, suppressed while moving, fraud alert"></p>
+
+> **Feasible today:** CarPlay and Android Auto already support audio/messaging app categories with strictly templated UI — "voice while moving, card at standstill" is literally the interaction model those templates enforce. digiVoice fits it, doesn't fight it.
 
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
