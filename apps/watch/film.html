@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin:0; background:#0d1117; display:flex; align-items:center; justify-content:center; height:100vh; overflow:hidden; }
+  .stage { display:flex; align-items:center; gap:90px; }
+  .watch {
+    width: 460px; height: 550px; border-radius: 96px;
+    background: #000;
+    border: 16px solid #1c1c1e;
+    box-shadow: 0 0 0 4px #3a3a3c, 0 30px 90px rgba(0,0,0,.85);
+    position: relative; overflow: hidden; flex-shrink:0;
+  }
+  .watch::before { /* crown */
+    content:""; position:absolute; right:-18px; top:120px; width:11px; height:62px;
+    background:#2c2c2e; border-radius:4px; z-index:5;
+  }
+  .screen { position:absolute; inset:0; }
+  .screen img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .7s ease; }
+  .screen img.on { opacity:1; }
+  .meta { max-width:520px; }
+  .state { color:#fff; font:800 44px -apple-system,Helvetica,sans-serif; letter-spacing:-.5px; min-height:54px; }
+  .sub { color:#8a8a93; font:500 19px/1.5 -apple-system,Helvetica,sans-serif; margin-top:14px; }
+  .rule { margin-top:34px; color:#ffb3a8; font:700 15px/1.5 -apple-system,Helvetica,sans-serif;
+          border-left:3px solid #E60023; padding-left:14px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="watch"><div class="screen" id="scr"></div></div>
+  <div class="meta">
+    <div class="state" id="st"></div>
+    <div class="sub" id="sub"></div>
+    <div class="rule">A watch face never carries a Pay button — the wrist can show, never sign.</div>
+  </div>
+</div>
+<script>
+const STATES = [
+  ['ambient','Ambient','Lens dark until you speak — the complication shows the last draft.'],
+  ['listening','Listening','Rolling transcript on the wrist, mirrored from the phone session.'],
+  ['draft','Draft ready','Amount, payee and one instruction: approve on your phone.'],
+  ['sent','Sent','Confirmation glance — then it auto-dismisses.'],
+  ['paused','Paused','Scam-shield hold renders the same amber state everywhere.'],
+];
+const HOLD = 2800;
+const scr = document.getElementById('scr');
+const st = document.getElementById('st');
+const sub = document.getElementById('sub');
+const imgs = STATES.map(([s]) => {
+  const im = document.createElement('img');
+  im.src = 'Renders/watch-' + s + '.png';
+  scr.appendChild(im);
+  return im;
+});
+let i = 0;
+function show(n) {
+  imgs.forEach((im, k) => im.classList.toggle('on', k === n));
+  st.textContent = STATES[n][1];
+  sub.textContent = STATES[n][2];
+}
+show(0);
+setInterval(() => { i = (i + 1) % STATES.length; show(i); }, HOLD);
+</script>
+</body>
+</html>

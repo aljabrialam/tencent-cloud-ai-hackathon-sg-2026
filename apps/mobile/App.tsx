@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { T } from './src/theme';
 import { Stage, DEMO_PATHS } from './src/mock';
@@ -15,8 +15,10 @@ import { Audit } from './src/screens/Audit';
 
 const SCENARIOS = Object.keys(DEMO_PATHS);
 
-const qs = typeof window !== 'undefined' ? window.location.search : '';
-const AUTO = /[?&]auto=1/.test(qs);
+const qs =
+  typeof window !== 'undefined' && window.location ? window.location.search : '';
+const IS_NATIVE = qs === '';
+const AUTO = /[?&]auto=1/.test(qs) || IS_NATIVE; // native demo devices self-walk
 const BARE = /[?&]bare=1/.test(qs);
 
 export default function App() {
@@ -41,7 +43,7 @@ export default function App() {
   const pickScenario = (name: string) => { setScenario(name); setIdx(0); };
 
   return (
-    <SafeAreaView style={s.c}>
+    <View style={s.c}>
       <StatusBar style="dark" />
       {/* demo chrome — not part of the product UI; ?bare=1 hides it for screenshots */}
       {!BARE && (
@@ -74,12 +76,12 @@ export default function App() {
         {stage === 'receipt' && <Receipt onAudit={() => go('audit')} onHome={() => setIdx(0)} />}
         {stage === 'audit' && <Audit onHome={() => setIdx(0)} />}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const s = StyleSheet.create({
-  c: { flex: 1, backgroundColor: T.bg },
+  c: { flex: 1, backgroundColor: T.bg, paddingTop: Platform.OS === 'ios' ? 59 : 24 },
   chrome: { paddingHorizontal: 14, paddingTop: 8, paddingBottom: 8, borderBottomWidth: 1, borderBottomColor: T.line, backgroundColor: T.bg },
   chromeLbl: { fontSize: 11, fontWeight: '700', color: T.muted, marginBottom: 7, fontFamily: 'Courier' },
   chromeRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
