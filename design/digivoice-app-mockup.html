@@ -192,6 +192,18 @@
   .bandrow{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
   .banditem{display:flex;flex-direction:column;align-items:center;gap:8px;width:150px}
   .banditem .capw{font-size:9px;color:#6E6E78;text-align:center;line-height:1.4}
+  .surfrow{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+  .surf{width:290px;background:#fff;border-radius:20px;box-shadow:0 12px 32px rgba(23,39,51,.09);overflow:hidden}
+  .surf .shead{padding:14px 16px;display:flex;align-items:center;gap:10px;color:#fff}
+  .surf .shead .sic{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:16px}
+  .surf .shead .st{font-size:13.5px;font-weight:700}
+  .surf .shead .ss{font-size:9px;opacity:.85}
+  .surf .sbody{padding:14px 16px;font-size:11px;color:var(--text);line-height:1.55}
+  .surf .sq{background:var(--surface);border-radius:10px;padding:8px 11px;margin:6px 0;font-style:italic;color:#44525D}
+  .surf .sans{background:#F0F7FF;border-left:3px solid var(--blue);border-radius:8px;padding:8px 11px;margin:6px 0}
+  .surf .sans.amber{background:#FFF7E8;border-left-color:var(--warn)}
+  .surf .snever{font-size:9.5px;color:var(--err);font-weight:700;padding:10px 16px;border-top:1px dashed var(--border);background:#FFF8F7}
+  .surf .stag{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 16px 12px}
   .note{font-size:12.5px;color:#6E6E78;max-width:940px;line-height:1.65;margin:24px 0}
   .note b{color:var(--text)}
   section{margin-top:40px}
@@ -479,6 +491,49 @@
   </div>
 </section>
 
+<section id="surfaces">
+  <h2>One agent, many surfaces <span class="pill wr">car · speaker · earbuds — same pipeline</span></h2>
+  <div class="note">The innovation isn't a new app per device — it's <b>one signed-draft pipeline with many mouths and ears</b>. Every surface proposes; the phone still approves. Each surface keeps only the senses it can use safely.</div>
+  <div class="surfrow">
+
+    <div class="surf"><div class="shead" style="background:linear-gradient(135deg,#172733,#0C151C)"><div class="sic">🚗</div><div><div class="st">In-car assistant</div><div class="ss">carplay / android auto / ivi</div></div></div>
+      <div class="sbody">
+        <div class="sq">"Pay my parking fee"</div>
+        <div class="sans">"Parking S$4.20 at Block 12A — I'll draft it now. Tap approve on your phone when you're parked."</div>
+        <div class="sq">"How much did I spend on fuel this month?"</div>
+        <div class="sans">"S$212.60 across 6 fills — that's spoken, not shown."</div>
+      </div>
+      <div class="stag">driver-safe rules</div>
+      <div class="sbody" style="padding-top:0">Audio-first while moving · card appears only at standstill · local payment rules respected (e.g. LTA parking)</div>
+      <div class="snever">✕ Never: scrolling, typing, or authorise while driving</div>
+    </div>
+
+    <div class="surf"><div class="shead" style="background:linear-gradient(135deg,#D62300,#FF4724)"><div class="sic">🔊</div><div><div class="st">Smart speaker</div><div class="ss">home assistant surface</div></div></div>
+      <div class="sbody">
+        <div class="sq">"What bills are due this week?"</div>
+        <div class="sans">"Two: Singtel S$45 on Thursday, SP S$89 Friday."</div>
+        <div class="sq">"Pay the Singtel bill now"</div>
+        <div class="sans amber">"I've sent a draft to your phone — it needs your Face ID. I can't take approval out loud."</div>
+      </div>
+      <div class="stag">privacy rules</div>
+      <div class="sbody" style="padding-top:0">Balances/sensitive answers only after voice-match or phone ping · no amounts spoken in shared rooms by default</div>
+      <div class="snever">✕ Never: spoken authorisation — voice is identity-weak</div>
+    </div>
+
+    <div class="surf"><div class="shead" style="background:linear-gradient(135deg,#0077CC,#005B9E)"><div class="sic">🎧</div><div><div class="st">Wireless earbuds</div><div class="ss">private audio channel</div></div></div>
+      <div class="sbody">
+        <div class="sans">"Draft ready — two hundred dollars to Mum. Sending to your phone."</div>
+        <div class="sans">"Sent. S$200.00 to Mum, Tuesday 14:31."</div>
+        <div class="sans amber">"Fraud alert — this looks like a scam call pattern. Paused; check your phone."</div>
+      </div>
+      <div class="stag">private channel</div>
+      <div class="sbody" style="padding-top:0">Confirmations whispered, not shown · fraud warnings interrupt media in real time · works with any earbuds — no special hardware</div>
+      <div class="snever">✕ Never: PIN or card numbers spoken through the mic</div>
+    </div>
+
+  </div>
+</section>
+
 <section>
   <h2>Accessibility — built for the users who need this most</h2>
   <div class="note">
@@ -495,16 +550,16 @@ const phones=[...document.querySelectorAll('.phone')];
 const order=[0,1,3,7,8,9,1,2,3,5,6,7,8];
 let idx=0,timer=null;
 const qs=new URLSearchParams(location.search);
-const shot=qs.get('shot'),wshot=qs.get('wshot'),bshot=qs.get('bshot');
-if(shot!==null||wshot!==null||bshot!==null){
+const shot=qs.get('shot'),wshot=qs.get('wshot'),bshot=qs.get('bshot'),ashot=qs.get('ashot');
+if(shot!==null||wshot!==null||bshot!==null||ashot!==null){
   document.body.style.padding='24px 0';
-  const sel=shot!==null?'.cell':wshot!==null?'.wcell':'.banditem';
-  const i=+(shot??wshot??bshot);
+  const sel=shot!==null?'.cell':wshot!==null?'.wcell':ashot!==null?'.surf':'.banditem';
+  const i=+(shot??wshot??bshot??ashot);
   const cells=[...document.querySelectorAll(sel)];
-  const target=bshot==='all'?document.querySelector('.bandrow'):cells[i];
+  const target=bshot==='all'?document.querySelector('.bandrow'):ashot==='all'?document.querySelector('.surfrow'):cells[i];
   document.querySelectorAll('section').forEach(s=>{s.style.display=s.contains(target)?'':'none'});
   document.querySelectorAll('h1,.sub,.bar,section h2,section .note').forEach(e=>e.style.display='none');
-  if(bshot!=='all')cells.forEach((c,j)=>{c.style.display=j==i?'flex':'none'});
+  if(bshot!=='all'&&ashot!=='all')cells.forEach((c,j)=>{c.style.display=j==i?'flex':'none'});
   if(sel!=='.cell')document.getElementById('grid').style.display='none';
 }
 

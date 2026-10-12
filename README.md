@@ -199,6 +199,18 @@ digiVoice extends the same zero-trust pipeline to **Meta Ray-Ban Display glasses
 
 *Left: real Toolkit render · Right: additive-display composite over a live scene — both produced by Meta's own test harness.*
 
+### One agent, many surfaces — car, speaker, earbuds
+
+The innovation isn't a new app per device — it's **one signed-draft pipeline with many mouths and ears**. Every surface proposes; the phone approves.
+
+<p><img src="design/screens/surfaces-all.png" width="90%" alt="In-car, smart speaker and earbuds surface cards"></p>
+
+| Surface | What it's for | Its hard rule |
+|---|---|---|
+| **In-car** (CarPlay / Android Auto / IVI) | "Pay my parking fee" · "How much did I spend on fuel this month?" | Audio-first while moving; the card only appears at standstill; **never scrolling, typing, or authorising while driving** |
+| **Smart speaker / home assistant** | Bills due, scheduled transfers, spend questions | Sensitive answers gated by voice-match or a phone ping; **voice is identity-weak — spoken approval is never accepted** |
+| **Wireless earbuds** | Private read-aloud of drafts and receipts, real-time fraud warnings that interrupt media | Works with any earbuds — no special hardware; **PINs and card numbers are never spoken into the mic** |
+
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
 **Meta references** — [Wearables Developer Portal](https://wearables.developer.meta.com/) · [Device Access Toolkit](https://wearables.developer.meta.com/docs/develop/dat/getting-started-toolkit) ([iOS](https://github.com/facebook/meta-wearables-dat-ios) / [Android](https://github.com/facebook/meta-wearables-dat-android)) · [Mock Device Kit](https://wearables.developer.meta.com/docs/develop/dat/mock-device-kit/) · [Web Apps for Ray-Ban Display](https://github.com/facebook/meta-wearables-webapp) ([setup](https://wearables.developer.meta.com/docs/develop/webapps/setup)) · [Meta Ray-Ban Display](https://www.meta.com/ai-glasses/meta-ray-ban-display/) · [Meta Neural Band](https://www.meta.com/ai-glasses/accessories/neural-band/) · [Meta EMG research](https://www.meta.com/emerging-tech/emg-wearable-technology/)
