@@ -32,9 +32,14 @@ flowchart TB
   end
 
   subgraph LLM["LLM providers (pluggable)"]
+    ADP["Tencent ADP agent<br/><small>AppKey · SSE · JSON-only prompt</small>"]
     HY["Tencent Hunyuan"]
     OA["OpenAI"]
     AN["Anthropic"]
+  end
+  subgraph TRTC["Tencent TRTC"]
+    TASR["ASR (sentence)"]
+    TTTS["TTS (read-aloud)"]
   end
 
   MIC --> API --> ASR --> SHIELD --> DRAFT --> SCHEMA --> RESOLVE
@@ -43,8 +48,10 @@ flowchart TB
   VALID --> UI
   POLICY --> UI
   UI --> BIO --> KEY -->|"sign(sha256(draft))"| GW --> CORE
-  DRAFT -. "adapter" .-> HY & OA & AN
-  VALID -. "adapter" .-> HY & OA & AN
+  DRAFT -. "adapter" .-> ADP & HY & OA & AN
+  VALID -. "adapter (different engine)" .-> HY & OA & AN
+  ASR -.-> TASR
+  UI -. "read-aloud" .-> TTTS
   API --> AUDIT
   GW --> AUDIT
   DRAFT -. "no path" .- GW
@@ -119,12 +126,26 @@ Served to the app for the "Why did the agent do this?" screen. Secrets never ent
 
 ## Tencent Cloud usage (for the "use of AI" criterion)
 
-| Need | Tencent product | Fallback |
-|---|---|---|
-| Drafting / validation LLM | Hunyuan via OpenAI-compatible endpoint | OpenAI / Anthropic through the same adapter |
-| Speech-to-text | Tencent Cloud ASR | on-device / typed input |
-| Text-to-speech (read-aloud) | Tencent Cloud TTS | `expo-speech` |
-| Build tooling | CodeBuddy (code), WorkBuddy (planning), Miora (visual assets) | — |
+| Need | Tencent product | How it is wired | Fallback |
+|---|---|---|---|
+| **Drafting Agent** | **ADP** (Agent Development Platform) — published agent, called by AppKey over SSE (`wss.lke.tencentcloud.com/adp/v2/chat`); `ConversationId` per draft session, `VisitorId` per customer | `ADPProvider implements LLMProvider`. Agent is prompted to return **JSON only**; our zod schema is still the gate. Experience URL lets judges watch it *draft* | Hunyuan / OpenAI / Anthropic via the same adapter |
+| **Validation Agent** | Hunyuan (OpenAI-compatible endpoint) | A *different* engine from the drafter, so "dual-engine" is literal | OpenAI / Anthropic |
+| Speech-to-text | **TRTC standalone ASR** — Node SDK, sentence recognition, `bigmodel` engine, `lang` en/zh | Expo records WAV (16 kHz mono) → service → ASR → transcript shown to user | typed input |
+| Text-to-speech (read-aloud card) | **TRTC TTS** — `TextToSpeech` API, WAV/MP3, cloud `SecretId/SecretKey` | Service synthesises card text → app plays | `expo-speech` |
+| Build tooling | CodeBuddy (code), WorkBuddy (planning), Miora (visual assets) | screenshots in `design/tool-proof/` | — |
+
+**Deliberately not used:** ADP workflows/tool-calling and TRTC *real-time AI conversation*
+(ASR→LLM→TTS end-to-end). Both let the model act or answer directly, which bypasses the
+deterministic zone and violates constitution Principle I. ADP returns drafts; TRTC returns
+text and audio; nothing else.
+
+Credentials (`ADP_APP_KEY`, `TRTC_SDK_APP_ID`, `TRTC_SDK_SECRET_KEY`, `TENCENT_SECRET_ID`,
+`TENCENT_SECRET_KEY`, model keys) live in `apps/service/.env` only. `SDKSecretKey` (ASR) and
+cloud `SecretKey` (TTS) are different keys and are not interchangeable.
+
+References: ADP Chat API (see hackathon ADP guide §6), TRTC ASR SDK
+<https://github.com/Tencent-RTC/trtc-asr-sdk-nodejs>, TTS API <https://trtc.io/document/80010>,
+docs index <https://trtc.io/llms/conversational-ai.txt>.
 
 ## Repository layout (planned)
 

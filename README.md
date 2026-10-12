@@ -153,9 +153,12 @@ Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md).
 
 | Need | Product |
 |---|---|
-| Drafting and validation LLM | Hunyuan (OpenAI-compatible endpoint) behind `LLMProvider` |
-| Speech-to-text / text-to-speech | Tencent Cloud ASR / TTS (fallback: typed input, `expo-speech`) |
+| Drafting Agent | **ADP** published agent called by AppKey (SSE), prompted to return JSON only; the Experience URL lets judges watch it draft. Behind `LLMProvider` with Hunyuan / OpenAI / Anthropic as alternatives |
+| Validation Agent | **Hunyuan** — a different engine from the drafter, so "dual-engine" is literal |
+| Speech-to-text / text-to-speech | **TRTC** standalone ASR (Node SDK) and TTS API (fallback: typed input, `expo-speech`) |
 | Build | CodeBuddy (code generation, screenshots in `design/tool-proof/`), WorkBuddy (planning), Miora (cover and visual assets) |
+
+Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — both let the model act or answer directly, which would bypass the deterministic zone.
 
 ## Status
 

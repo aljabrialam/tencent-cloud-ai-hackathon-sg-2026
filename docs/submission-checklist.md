@@ -21,6 +21,18 @@ Handbook: https://tinyurl.com/SGHackathonHandbook
 - [ ] State the chosen case study at the start of the presentation: *Banking Track — DBS DCTA,
       Scenario 1*
 
+## Tencent Cloud accounts (user action, before 13 Oct implementation)
+
+- [ ] **ADP**: register individual account → App Dev → create agent "SayPay Drafter" → publish →
+      copy **Experience URL** (shareable) and **AppKey** (secret → `apps/service/.env`).
+      Guide: https://tinyurl.com/Hackathon-ADP-Guide · video: https://tinyurl.com/ADP-Training-Video
+- [ ] **TRTC**: register → Create Application → *Conversational AI* → copy **SDKAppID** +
+      **SDKSecretKey** (ASR) → Access Keys → **SecretId/SecretKey** (TTS). Free 10,000 credit-min/month.
+      Quickstart: https://tinyurl.com/Hackathon-TRTC-Quickstart · support: Telegram group in the quickstart
+- [ ] Hunyuan / OpenAI / Anthropic API key for the Validation Agent
+- [ ] Screenshot ADP console (agent config + publish page, **AppKey masked**) and TRTC console
+      → `design/tool-proof/` (extra evidence of Tencent tool usage)
+
 ## Optional (bonus)
 
 - [ ] Demo video 5–8 min: overview · core agent features · build reflection with

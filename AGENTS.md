@@ -17,8 +17,15 @@
   `expo-design-system` as routed. Tokens live in `docs/ux-screens.md`.
 - Service: Node + TypeScript, `zod`, `vitest`. Money is integer cents. Policy engine is pure
   and test-first.
-- LLM: `LLMProvider` adapter — Hunyuan (OpenAI-compatible), OpenAI, Anthropic. Keys in `.env`
-  (gitignored); never in the mobile bundle.
+- LLM: `LLMProvider` adapter — ADP (drafting; AppKey + SSE, JSON-only prompt), Hunyuan
+  (validation; OpenAI-compatible), OpenAI, Anthropic. Keys in `apps/service/.env` (gitignored);
+  never in the mobile bundle. Do NOT use ADP tool-calling or TRTC real-time AI conversation
+  (they bypass the deterministic zone — constitution Principle I).
+- Voice: TRTC standalone ASR (Node SDK, `TRTC_ASR_SDK_APP_ID` + `TRTC_ASR_SECRET_KEY`,
+  16 kHz mono PCM/WAV) and TTS API (cloud `SecretId/SecretKey`). Docs index:
+  https://trtc.io/llms/conversational-ai.txt — append `.md` to trtc.io doc URLs for raw markdown.
+  The `@tencent-rtc/trtc-agent-skills` package targets web Conversational-AI scenarios and
+  writes `.claude/` hooks; not installed — read the two docs above directly instead.
 - Figma: remote MCP `figma` configured (user scope). User's seat is View — cannot
   `create_new_file`; ask the user for a file URL, then `use_figma` to build screens.
   Always load `skill://figma/figma-use/SKILL.md` and `figma-generate-design` first.
