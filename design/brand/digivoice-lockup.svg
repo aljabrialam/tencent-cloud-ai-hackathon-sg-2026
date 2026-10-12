@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 96" width="340" height="96">
   <rect x="4" y="4" width="88" height="88" rx="22" fill="#f33"/>
   <g fill="#fff">
-    <rect x="16" y="42" width="11" height="24" rx="5.5"/>
-    <rect x="28" y="50" width="11" height="24" rx="5.5"/>
-    <rect x="40" y="58" width="11" height="24" rx="5.5"/>
-    <rect x="52" y="48" width="11" height="24" rx="5.5"/>
-    <rect x="64" y="32" width="11" height="24" rx="5.5"/>
-    <rect x="76" y="18" width="11" height="24" rx="5.5"/>
+    <rect x="12.5" y="42" width="11" height="24" rx="5.5"/>
+    <rect x="24.5" y="50" width="11" height="24" rx="5.5"/>
+    <rect x="36.5" y="58" width="11" height="24" rx="5.5"/>
+    <rect x="48.5" y="48" width="11" height="24" rx="5.5"/>
+    <rect x="60.5" y="32" width="11" height="24" rx="5.5"/>
+    <rect x="72.5" y="18" width="11" height="24" rx="5.5"/>
   </g>
   <text x="112" y="62" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
         font-size="44" fill="#172733">digi<tspan font-weight="700">Voice</tspan></text>

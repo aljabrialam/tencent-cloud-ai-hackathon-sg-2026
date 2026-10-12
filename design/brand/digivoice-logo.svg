@@ -4,11 +4,11 @@
   <!-- waveform bars tracing a checkmark: dip then a long confident rise —
        your voice, verified -->
   <g fill="#fff">
-    <rect x="16" y="42" width="11" height="24" rx="5.5"/>
-    <rect x="28" y="50" width="11" height="24" rx="5.5"/>
-    <rect x="40" y="58" width="11" height="24" rx="5.5"/>
-    <rect x="52" y="48" width="11" height="24" rx="5.5"/>
-    <rect x="64" y="32" width="11" height="24" rx="5.5"/>
-    <rect x="76" y="18" width="11" height="24" rx="5.5"/>
+    <rect x="12.5" y="42" width="11" height="24" rx="5.5"/>
+    <rect x="24.5" y="50" width="11" height="24" rx="5.5"/>
+    <rect x="36.5" y="58" width="11" height="24" rx="5.5"/>
+    <rect x="48.5" y="48" width="11" height="24" rx="5.5"/>
+    <rect x="60.5" y="32" width="11" height="24" rx="5.5"/>
+    <rect x="72.5" y="18" width="11" height="24" rx="5.5"/>
   </g>
 </svg>
