@@ -24,6 +24,17 @@ Over-limit or scam verdict → HUD shows amber/red "Paused — see your phone". 
 glasses can approve money movement. This mirrors Glance's glasses rule: approval stays on the
 phone.
 
+### Why not the smartwatch model
+
+Apple Pay on Apple Watch, Google Wallet on Wear OS (incl. Pixel Watch Express pay), and Garmin Pay
+all make the **watch itself the payment instrument** — a tokenized card in secure hardware,
+authorised by wrist presence + a double-click (or nothing at all, in Express pay's case). That is
+the right design for *terminal-amount taps*; it is the wrong authority boundary for an agent that
+takes instructions. digiVoice deliberately stores **no payment credential on any wearable** — a
+stolen watch or a spoofed gesture cannot move money, because there is nothing on the wrist to steal
+and no verb to trigger. The same applies to the **web surface**: a browser view of the confirmation
+card is display-only; the phone holds the signing key.
+
 ## The experience, stage by stage
 
 What Mei Ling actually sees, hears, and does — glasses on face, Neural Band on wrist, phone
