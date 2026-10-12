@@ -216,19 +216,7 @@ digiVoice extends the same zero-trust pipeline to **Meta Ray-Ban Display glasses
 
 *Left: real Toolkit render · Right: additive-display composite over a live scene — both produced by Meta's own test harness.*
 
-### One agent, many surfaces — watch, web, speaker, earbuds, car
-
-The innovation isn't a new app per device — it's **one signed-draft pipeline with many mouths and ears**. Every surface proposes; the phone approves.
-
-<p><img src="design/screens/surfaces-all.png" width="90%" alt="Smartwatch, web, smart speaker, earbuds and in-car surface cards"></p>
-
-| Surface | What it's for | Its hard rule |
-|---|---|---|
-| **Smartwatch** | Draft glance on the wrist — amount, payee, "approve on your phone" | A watch face never carries a Pay button — **the wrist can show, never sign** |
-| **Web / desktop** | Full transaction review on the big screen — chat transcript + card side-by-side inside digibank web | The browser view is display + draft capture only — **the phone remains the sole signer even on a logged-in desktop session** |
-| **Smart speaker / home assistant** | Bills due, scheduled transfers, spend questions | Sensitive answers gated by voice-match or a phone ping; **voice is identity-weak — spoken approval is never accepted** |
-| **Wireless earbuds** | Private read-aloud of drafts and receipts, real-time fraud warnings that interrupt media | Works with any earbuds — no special hardware; **PINs and card numbers are never spoken into the mic** |
-| **In-car** (CarPlay / Android Auto / IVI) | "Pay my parking fee" · "How much did I spend on fuel this month?" | Audio-first while moving; the card only appears at standstill; **never scrolling, typing, or authorising while driving** |
+### Mock experiences per surface
 
 Each surface has a designed state flow — and a shipping platform underneath, not a logo on a slide:
 
@@ -276,6 +264,20 @@ Each surface has a designed state flow — and a shipping platform underneath, n
 <p><img src="design/screens/mock-surf-car.png" width="92%" alt="In-car IVI states — idle tile, listening, parked card, suppressed while moving, fraud alert"></p>
 
 > **Feasible today:** CarPlay and Android Auto already support audio/messaging app categories with strictly templated UI — "voice while moving, card at standstill" is literally the interaction model those templates enforce. digiVoice fits it, doesn't fight it.
+
+### One agent, many surfaces — watch, web, speaker, earbuds, car
+
+The innovation isn't a new app per device — it's **one signed-draft pipeline with many mouths and ears**. Every surface proposes; the phone approves.
+
+<p><img src="design/screens/surfaces-all.png" width="90%" alt="Smartwatch, web, smart speaker, earbuds and in-car surface cards"></p>
+
+| Surface | What it's for | Its hard rule |
+|---|---|---|
+| **Smartwatch** | Draft glance on the wrist — amount, payee, "approve on your phone" | A watch face never carries a Pay button — **the wrist can show, never sign** |
+| **Web / desktop** | Full transaction review on the big screen — chat transcript + card side-by-side inside digibank web | The browser view is display + draft capture only — **the phone remains the sole signer even on a logged-in desktop session** |
+| **Smart speaker / home assistant** | Bills due, scheduled transfers, spend questions | Sensitive answers gated by voice-match or a phone ping; **voice is identity-weak — spoken approval is never accepted** |
+| **Wireless earbuds** | Private read-aloud of drafts and receipts, real-time fraud warnings that interrupt media | Works with any earbuds — no special hardware; **PINs and card numbers are never spoken into the mic** |
+| **In-car** (CarPlay / Android Auto / IVI) | "Pay my parking fee" · "How much did I spend on fuel this month?" | Audio-first while moving; the card only appears at standstill; **never scrolling, typing, or authorising while driving** |
 
 Two real integration paths, both testable **without hardware**: a **Display Web App** (`apps/glasses-hud/`, HTTPS-hosted, runs in the Meta Ray-Ban Display Simulator) and the **Device Access Toolkit** with Mock Device Kit.
 
