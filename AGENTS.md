@@ -29,12 +29,16 @@
 - Figma: remote MCP `figma` configured (user scope). User's seat is View — cannot
   `create_new_file`; ask the user for a file URL, then `use_figma` to build screens.
   Always load `skill://figma/figma-use/SKILL.md` and `figma-generate-design` first.
-- Demo video (Day 4): `openscreen-demo` skill installed globally. Needs the OpenScreen desktop
-  app (https://getopenscreen.com/download/) and its MCP registered:
-  `devin mcp add -s user openscreen -- /Applications/Openscreen.app/Contents/MacOS/Openscreen mcp`
-  then grant Screen Recording permission to Devin. Storyboard = `docs/demo-script.md` beats.
-  Record the Expo app via iOS Simulator window (clean, no notifications), or screen-mirror the
-  phone. Cap (cap.so) skipped — remote MCP is read-only and overlaps OpenScreen.
+- Demo video (Day 4): `openscreen-demo` skill installed globally. OpenScreen 2.0.0 installed
+  at `/Applications/Openscreen.app`. NOTE: the stdio `mcp` subcommand exists only on `main`,
+  not in v2.0.0 — use the CLI instead:
+  `/usr/bin/env -u ELECTRON_RUN_AS_NODE /Applications/Openscreen.app/Contents/MacOS/Openscreen
+  record --window "<window title>" --duration 60 --project take.openscreen` then
+  `export -o demo.mp4 --auto-zoom`. ELECTRON_RUN_AS_NODE must be unset or the binary runs as
+  plain node. Requires macOS Screen Recording permission — open the app once and grant it
+  (sources will fail with "Failed to get sources" until granted). Optional: AI settings →
+  MCP server gives local HTTP editing tools. Storyboard = `docs/demo-script.md` beats; record
+  the Expo app via iOS Simulator window. Cap (cap.so) skipped.
 - Maestro: add one YAML flow for the demo path once screens 1–9 exist (Day 3). Not before.
 - Skipped on purpose for the hackathon: GitHub MCP (use `gh`), EAS Build/Submit (Expo Go
   suffices), Sentry.
