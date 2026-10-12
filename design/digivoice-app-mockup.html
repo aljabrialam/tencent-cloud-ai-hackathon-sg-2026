@@ -221,6 +221,32 @@
   .webframe .wcard .wamt{font-size:22px;font-weight:800;color:var(--navy)}
   .webframe .wcard .wrow{display:flex;justify-content:space-between;font-size:10.5px;padding:6px 0;border-top:1px solid var(--border);color:#44525D}
   .webframe .wcard .wlock{margin-top:10px;background:var(--surface);border-radius:9px;padding:8px 10px;font-size:10px;color:var(--warntext);font-weight:600}
+  .webframe .wcard .wlock.ok{background:#EAF7EF;color:#0E6B34}
+  .webframe .wcard .wlock.stop{background:#FFF4E0;color:#8A5200}
+  .webframe .wbanner{border-radius:9px;padding:7px 10px;font-size:10px;font-weight:700;margin-bottom:8px}
+  .webframe .wbanner.fr{background:#FFF4E0;color:#8A5200}
+  .webframe .wbanner.sc{background:#FDEBE9;color:#B3261E}
+  .webframe .wchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .webframe .wchip{background:#fff;border:1.5px solid var(--red);color:var(--red);border-radius:999px;padding:4px 10px;font-size:10px;font-weight:700}
+  .webframe .waudit{font-size:10px;color:#44525D}
+  .webframe .waudit .arow{display:flex;gap:8px;padding:5px 0;border-top:1px solid var(--border);align-items:baseline}
+  .webframe .waudit .arow b{color:var(--navy);font-family:ui-monospace,monospace;font-size:9px;white-space:nowrap}
+  .webframe .waudit .arow .ok{color:var(--ok);font-weight:800}
+
+  /* compact variant for multi-state strips */
+  .webframe.sm{width:452px}
+  .webframe.sm .wbody{grid-template-columns:104px 1fr;min-height:220px}
+  .webframe.sm .wnav{padding:12px 0}
+  .webframe.sm .wnav .wlogo{padding:0 12px 9px;font-size:11px}
+  .webframe.sm .wnav .wi{padding:6px 12px;font-size:9px}
+  .webframe.sm .wmain{padding:12px 14px;gap:10px}
+  .webframe.sm .wchat .wbubble{font-size:9px;padding:7px 9px;margin-bottom:6px}
+  .webframe.sm .wcard{padding:10px}
+  .webframe.sm .wcard .wamt{font-size:16px}
+  .webframe.sm .wcard .wrow{font-size:8.5px;padding:4px 0}
+  .webframe.sm .wcard .wlock{font-size:8.5px;padding:6px 8px}
+  .webframe.sm .wbanner{font-size:8.5px}
+  .webframe.sm .wchip{font-size:8.5px;padding:3px 8px}
 
   /* per-surface device mockups */
   .devrow{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;margin-top:8px}
@@ -765,6 +791,87 @@
       <div class="cap"><b>E4 · Controls</b>Two gestures, no secrets spoken</div></div>
 
   </div>
+</section>
+
+<section id="surf-web">
+  <h2>Web / digibank desktop — review big, sign on phone <span class="pill wr">display + draft capture only</span></h2>
+  <div class="note">The same session on the big screen: chat transcript beside the card inside the digibank web shell. Everything the phone can show, the web can show — <b>except the one button that matters</b>. Signing stays on the enrolled device, so a logged-in desktop session adds no new trust boundary.</div>
+  <div class="devrow">
+
+    <div class="devcell"><div class="webframe sm">
+      <div class="wbar"><i></i><i></i><i></i><div class="wurl">internet-banking.dbs.com.sg/digivoice</div></div>
+      <div class="wbody">
+        <div class="wnav"><div class="wlogo">digibank</div><div class="wi on">digiVoice</div><div class="wi">Accounts</div><div class="wi">Pay &amp; Transfer</div><div class="wi">digiWealth</div><div class="wi">Audit</div></div>
+        <div class="wmain">
+          <div class="wchat">
+            <div class="wbubble mine">"Pay Mum $200 for groceries"</div>
+            <div class="wbubble">Draft created and verified — S$200.00 to Mum, ending 4521. Sent to your phone.</div>
+          </div>
+          <div class="wcard"><div class="wamt">S$200.00</div>
+            <div class="wrow"><span>To</span><b>Mum ····4521 ✓</b></div>
+            <div class="wrow"><span>Draft</span><b>a3f9·08c2</b></div>
+            <div class="wlock">🔒 Approve on your phone</div>
+          </div>
+        </div>
+      </div>
+    </div><div class="cap"><b>1 · Draft</b>Chat transcript + verified card, side by side</div></div>
+
+    <div class="devcell"><div class="webframe sm">
+      <div class="wbar"><i></i><i></i><i></i><div class="wurl">internet-banking.dbs.com.sg/digivoice</div></div>
+      <div class="wbody">
+        <div class="wnav"><div class="wlogo">digibank</div><div class="wi on">digiVoice</div><div class="wi">Accounts</div><div class="wi">Pay &amp; Transfer</div><div class="wi">digiWealth</div><div class="wi">Audit</div></div>
+        <div class="wmain">
+          <div class="wchat">
+            <div class="wbubble mine">"Send fifty to John"</div>
+            <div class="wbubble">Two payees named John — which one?
+              <div class="wchips"><span class="wchip">John Tan ····4521</span><span class="wchip">John Lim ····8892</span></div>
+            </div>
+          </div>
+          <div class="wcard"><div class="wamt" style="font-size:13px;color:var(--muted)">Draft paused</div>
+            <div class="wrow"><span>Waiting on</span><b>payee choice</b></div>
+            <div class="wrow"><span>Default</span><b>none — never guessed</b></div>
+            <div class="wlock ok">One question, explicit answer</div>
+          </div>
+        </div>
+      </div>
+    </div><div class="cap"><b>2 · Clarify</b>Ambiguity asked, never defaulted</div></div>
+
+    <div class="devcell"><div class="webframe sm">
+      <div class="wbar"><i></i><i></i><i></i><div class="wurl">internet-banking.dbs.com.sg/digivoice</div></div>
+      <div class="wbody">
+        <div class="wnav"><div class="wlogo">digibank</div><div class="wi on">digiVoice</div><div class="wi">Accounts</div><div class="wi">Pay &amp; Transfer</div><div class="wi">digiWealth</div><div class="wi">Audit</div></div>
+        <div class="wmain">
+          <div class="wchat">
+            <div class="wbanner fr">FROZEN — validator flagged a mismatch</div>
+            <div class="wbubble">You said <b>S$200</b> — the draft showed <b>S$2,000</b>. Nothing was sent.</div>
+          </div>
+          <div class="wcard"><div class="wamt" style="text-decoration:line-through;color:#B3261E">S$2,000.00</div>
+            <div class="wrow"><span>Status</span><b>Frozen · Authorise absent</b></div>
+            <div class="wrow"><span>Audit</span><b>VAL-MISMATCH logged</b></div>
+            <div class="wlock stop">Say it again or edit to restart</div>
+          </div>
+        </div>
+      </div>
+    </div><div class="cap"><b>3 · Frozen</b>Validator mismatch — no approve path shown</div></div>
+
+    <div class="devcell"><div class="webframe sm">
+      <div class="wbar"><i></i><i></i><i></i><div class="wurl">internet-banking.dbs.com.sg/digivoice/audit</div></div>
+      <div class="wbody">
+        <div class="wnav"><div class="wlogo">digibank</div><div class="wi">digiVoice</div><div class="wi">Accounts</div><div class="wi">Pay &amp; Transfer</div><div class="wi">digiWealth</div><div class="wi on">Audit</div></div>
+        <div class="wmain" style="grid-template-columns:1fr">
+          <div class="waudit">
+            <div class="arow"><b>#0042</b><span>You said — <i>"pay mum $200"</i> <span class="ok">✓</span></span></div>
+            <div class="arow"><b>#0043</b><span>Draft a3f9·08c2 created <span class="ok">✓</span></span></div>
+            <div class="arow"><b>#0044</b><span>Validator agreed — no discrepancy <span class="ok">✓</span></span></div>
+            <div class="arow"><b>#0045</b><span>Signed on device · Face ID <span class="ok">✓</span></span></div>
+            <div class="arow"><b>#0046</b><span>Executed · TXN-88214 · chain intact <span class="ok">✓</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div><div class="cap"><b>4 · Audit</b>"Why did the agent do this?" — hash-chained trail</div></div>
+
+  </div>
+  <div class="concept-note">Every web state mirrors a phone state — draft, clarify, frozen, audit. What the web never renders: an Authorise button.</div>
 </section>
 
 <section>

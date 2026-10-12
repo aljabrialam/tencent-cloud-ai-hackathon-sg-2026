@@ -234,7 +234,7 @@ Each surface has a designed state flow — and a shipping platform underneath, n
 
 <p><img src="design/surfaces/smartwatch.jpg" width="34%" alt="Apple Watch"></p>
 
-*Apple Watch — photo: FASTILY, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Apple_Watch_Series_9_1_2023-11-14.jpg) · all surface photos in [`design/surfaces/`](design/surfaces/ATTRIBUTION.md)*
+*Apple Watch — photo: Jens Kreuter / Unsplash, [CC0](https://commons.wikimedia.org/wiki/File:Apple_watch_on_side_(Unsplash).jpg) · all surface photos in [`design/surfaces/`](design/surfaces/ATTRIBUTION.md)*
 
 **Smartwatch** — glance, buzz, phone signs. Draft buzzes the wrist; no Pay button exists on a watch face:
 <p><img src="design/screens/mock-surf-watch.png" width="92%" alt="Smartwatch states — ambient complication, listening, draft card, sent, scam pause"></p>
@@ -242,13 +242,13 @@ Each surface has a designed state flow — and a shipping platform underneath, n
 > **Feasible today:** watchOS complications + notifications and Wear OS Tiles already render bank cards on the wrist — our draft glance is a notification-shaped payload pushed from the companion app. No wearable payment credential needed because we never sign there.
 
 **Web / desktop** — the big-screen review surface. Chat transcript beside the confirmation card, inside the digibank web shell — and the approve hand-off still points at the phone:
-<p><img src="design/screens/surface-web.png" width="90%" alt="digiVoice on digibank web — chat transcript plus confirmation card, approve on your phone"></p>
+<p><img src="design/screens/mock-surf-web.png" width="92%" alt="digiVoice web states — draft, clarify, frozen, audit inside digibank web"></p>
 
 > **Feasible today:** digibank web already exists as a channel — digiVoice is a chat panel + the same draft card component. Signing stays on the enrolled phone, so desktop adds no new trust boundary.
 
 <p><img src="design/surfaces/smart-speaker.jpg" width="34%" alt="Amazon Echo Dot"></p>
 
-*Amazon Echo Dot — photo: Pittigrilli, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Amazon_Echo_Dot_(virtual_digital_assistant)_with_normal_coffee_mug_as_size_comparison.jpg)*
+*Amazon Echo Dot — photo: Focal Foto, [CC BY 2.0](https://commons.wikimedia.org/wiki/File:Alexa_Amazon_Echo_Dot_3rd_Gen_Smart_Speaker_-_Sandstone_Fabric_(Creative_Commons)_(51048461088).jpg)*
 
 **Smart speaker** — answers out loud, money on the phone. Sensitive answers bounce to a private surface; voice never authorises:
 <p><img src="design/screens/mock-surf-speaker.png" width="92%" alt="Smart speaker states — idle, listening ring, answers, bounce to phone, privacy redirect"></p>
@@ -257,16 +257,16 @@ Each surface has a designed state flow — and a shipping platform underneath, n
 
 <p><img src="design/surfaces/earbuds.jpg" width="34%" alt="AirPods beside an iPhone"></p>
 
-*AirPods — photo: Jaz King, [CC0](https://commons.wikimedia.org/wiki/File:AirPods_(Unsplash).jpg)*
+*AirPods Pro — photo: Hajoon0102, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:AirPods_Pro_(2nd_generation).jpg)*
 
 **Wireless earbuds** — the private channel. Whispered drafts and receipts, fraud warnings that interrupt your music — on earbuds people already own:
 <p><img src="design/screens/mock-surf-earbuds.png" width="92%" alt="Earbud states — connected, whispered draft, confirmation, fraud interrupt, controls"></p>
 
 > **Feasible today:** needs zero new hardware or APIs — it's TTS + notification audio over ordinary Bluetooth. Announce-style spoken notifications are already a platform feature on iOS/Android; we add the fraud-interrupt and the read-aloud card.
 
-<p><img src="design/surfaces/in-car.png" width="42%" alt="CarPlay head unit in a car"></p>
+<p><img src="design/surfaces/in-car.jpg" width="42%" alt="CarPlay head unit in a car"></p>
 
-*CarPlay on an aftermarket head unit — photo: IShowSammy, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:CarPlay_displaying_music_in_Nissan.png)*
+*CarPlay on a VW ID.4 dashboard — photo: [CC0](https://commons.wikimedia.org/wiki/File:2023_Volkswagen_ID.4_running_wireless_CarPlay.jpg)*
 
 **In-car** — audio-first while moving; the card only appears at standstill. Moving = no card, no scrolling, ever:
 <p><img src="design/screens/mock-surf-car.png" width="92%" alt="In-car IVI states — idle tile, listening, parked card, suppressed while moving, fraud alert"></p>
