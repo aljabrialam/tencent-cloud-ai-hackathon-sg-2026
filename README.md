@@ -288,7 +288,7 @@ The claim isn't "first voice payment" or "first glasses payment" — it's **firs
 | Dynamic risk and velocity throttling | Policy rules `POL-TIER-*`, `POL-VEL-*`, `POL-NEWPAYEE-*`, OOB step-up |
 | Highly traceable and auditable | Hash-chained audit, in-app "Why did the agent do this?" |
 
-Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md).
+Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md). **Full requirement-by-requirement traceability — every problem statement bullet, "should solve" item and judging dimension → mechanism + artifact: [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md).**
 
 ## For judges
 
@@ -296,6 +296,7 @@ Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md).
 |---|---|
 | **Demo script** | [`docs/demo-script.md`](docs/demo-script.md) — 3-minute beat sheet: success, multi-intent, clarify, freeze, scam, audit |
 | **Spec** | [`specs/001-conversational-transaction-agent/spec.md`](specs/001-conversational-transaction-agent/spec.md) — 8 user stories, 18 functional requirements, 8 measurable success criteria |
+| **Requirements map** | [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md) — every DCTA brief bullet → mechanism → artifact, incl. the 10 judging dimensions |
 | **Constitution** | [`.specify/memory/constitution.md`](.specify/memory/constitution.md) |
 | **Submission checklist** | [`docs/submission-checklist.md`](docs/submission-checklist.md) — mandatory items incl. CodeBuddy/WorkBuddy proof |
 
