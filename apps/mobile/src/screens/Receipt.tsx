@@ -1,46 +1,50 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { T } from '../theme';
 import { DRAFT, fmt } from '../mock';
+import { TopBar } from './chrome';
 
 export function Receipt({ onAudit, onHome, draft = DRAFT }: { onAudit: () => void; onHome: () => void; draft?: typeof DRAFT }) {
   return (
     <View style={s.c}>
-      <View style={s.check}><Text style={s.checkT}>✓</Text></View>
-      <Text style={s.h}>Sent</Text>
-      <Text style={s.amt}>{fmt(draft.amountCents)}</Text>
-      <Text style={s.to}>to {draft.to} ····{draft.toLast4}</Text>
-      <View style={s.card}>
-        <View style={s.row}><Text style={s.rowL}>Transaction</Text><Text style={s.rowV}>TXN-88214</Text></View>
-        <View style={s.row}><Text style={s.rowL}>Draft</Text><Text style={s.rowV}>{draft.id}</Text></View>
-        <View style={s.row}><Text style={s.rowL}>Signed</Text><Text style={s.rowV}>Face ID · this device</Text></View>
-        <View style={s.row}><Text style={s.rowL}>Reference</Text><Text style={s.rowV}>{draft.ref}</Text></View>
-        <View style={s.row}><Text style={s.rowL}>Audit chain</Text><Text style={[s.rowV, { color: T.ok }]}>intact ✓</Text></View>
-      </View>
-      <View style={{ flex: 1 }} />
-      <TouchableOpacity style={s.cta} onPress={onAudit} accessibilityRole="button">
-        <Text style={s.ctaT}>Why did the agent do this? — audit</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={s.sec} onPress={onHome} accessibilityRole="button">
-        <Text style={s.secT}>Back to home</Text>
-      </TouchableOpacity>
+      <TopBar />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={s.check}><Text style={s.checkT}>✓</Text></View>
+        <Text style={s.h}>Sent</Text>
+        <Text style={s.hsub}>{fmt(draft.amountCents)} to {draft.to} is on its way</Text>
+        <View style={s.card}>
+          <View style={s.frow}><Text style={s.fk}>Amount</Text><Text style={s.fv}>{fmt(draft.amountCents)}</Text></View>
+          <View style={s.frow}><Text style={s.fk}>To</Text><Text style={s.fv}>{draft.to} ····{draft.toLast4}</Text></View>
+          <View style={s.frow}><Text style={s.fk}>Txn</Text><Text style={s.fv}>TXN-88214</Text></View>
+          <View style={[s.frow, { borderBottomWidth: 0 }]}><Text style={s.fk}>Time</Text><Text style={s.fv}>Today, 21:47:32</Text></View>
+        </View>
+        <View style={s.ledger}>
+          <Text style={s.ledgerT}>👁 <Text style={{ fontWeight: '800' }}>Ledger shows {fmt(draft.balanceAfter)}</Text> — read back, not assumed.</Text>
+        </View>
+        <TouchableOpacity style={s.cta} onPress={onAudit} accessibilityRole="button">
+          <Text style={s.ctaT}>🔍 Why did the agent do this?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onHome} accessibilityRole="button">
+          <Text style={s.ghost}>Done</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 }
 
 const s = StyleSheet.create({
-  c: { flex: 1, backgroundColor: T.bg, padding: 20, alignItems: 'center' },
-  check: { width: 72, height: 72, borderRadius: 36, backgroundColor: T.ok, alignItems: 'center', justifyContent: 'center', marginTop: 20 },
-  checkT: { color: '#fff', fontSize: 34, fontWeight: '800' },
-  h: { fontSize: 22, fontWeight: '800', color: T.text, marginTop: 16 },
-  amt: { fontSize: 40, fontWeight: '300', color: T.text, marginTop: 8 },
-  to: { fontSize: 15, color: T.muted, marginTop: 4, marginBottom: 22 },
-  card: { backgroundColor: T.surface, borderRadius: 20, padding: 18, width: '100%' },
-  row: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8, gap: 12 },
-  rowL: { fontSize: 12, color: T.muted },
-  rowV: { fontSize: 13, fontWeight: '700', color: T.text },
-  cta: { backgroundColor: T.navy, borderRadius: 16, paddingVertical: 17, alignItems: 'center', width: '100%' },
-  ctaT: { color: '#fff', fontSize: 15, fontWeight: '800' },
-  sec: { marginTop: 10, paddingVertical: 12 },
-  secT: { color: T.muted, fontSize: 14, fontWeight: '600' },
+  c: { flex: 1, backgroundColor: T.bg },
+  check: { width: 58, height: 58, borderRadius: 29, backgroundColor: T.okText, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginTop: 18, shadowColor: T.ok, shadowOpacity: 0.35, shadowRadius: 9, shadowOffset: { width: 0, height: 6 } },
+  checkT: { color: '#fff', fontSize: 26, fontWeight: '800' },
+  h: { fontSize: 21, fontWeight: '800', color: T.text, textAlign: 'center', marginTop: 8 },
+  hsub: { fontSize: 11, color: T.muted, textAlign: 'center', marginTop: 2, marginBottom: 10 },
+  card: { backgroundColor: T.surface, borderRadius: T.radius, marginHorizontal: 14, overflow: 'hidden' },
+  frow: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 14, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: T.line },
+  fk: { fontSize: 10, color: T.muted },
+  fv: { fontSize: 11, fontWeight: '700', color: T.text },
+  ledger: { backgroundColor: T.okWash, borderWidth: 1, borderColor: '#BFE8D0', borderRadius: 16, marginHorizontal: 14, marginTop: 8, padding: 12 },
+  ledgerT: { fontSize: 10, color: T.text },
+  cta: { backgroundColor: T.navy, borderRadius: 999, paddingVertical: 14, marginHorizontal: 16, marginTop: 12, alignItems: 'center' },
+  ctaT: { color: '#fff', fontSize: 11, fontWeight: '800' },
+  ghost: { textAlign: 'center', fontSize: 11, fontWeight: '600', color: T.text, paddingVertical: 10 },
 });

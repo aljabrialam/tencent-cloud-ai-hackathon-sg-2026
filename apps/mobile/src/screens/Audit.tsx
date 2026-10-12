@@ -1,55 +1,60 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { T } from '../theme';
-import { AUDIT } from '../mock';
+import { AUDITS, AuditEv } from '../mock';
+import { TopBar } from './chrome';
 
-type Entry = { id: string; ev: string; ok: boolean };
+const DOT: Record<string, string> = { ok: T.ok, wr: T.warn, rd: T.err };
 
-export function Audit({ onHome, entries = AUDIT }: { onHome: () => void; entries?: Entry[] }) {
+export function Audit({ onHome, entries }: { onHome: () => void; entries?: AuditEv[] }) {
+  const evs = entries ?? AUDITS['Happy path'];
   return (
     <View style={s.c}>
-      <Text style={s.tag}>AUDIT TRAIL</Text>
+      <TopBar />
       <Text style={s.h}>Why did the agent do this?</Text>
-      <Text style={s.sub}>Every step — hash-chained. Tamper with one entry and the chain breaks.</Text>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-        {entries.map((e, i) => (
-          <View key={e.id} style={s.row}>
-            <View style={s.left}>
-              <View style={[s.dot, !e.ok && { backgroundColor: T.err }, i === entries.length - 1 && e.ok && { backgroundColor: T.ok }]} />
-              {i < entries.length - 1 && <View style={s.stem} />}
-            </View>
-            <View style={s.card}>
-              <Text style={s.evT}>{e.ev}</Text>
-              <Text style={s.evId}>{e.id}</Text>
+      <View style={s.pills}>
+        <View style={s.pillOk}><Text style={s.pillOkT}>⛓ Chain intact</Text></View>
+        <View style={s.pillBl}><Text style={s.pillBlT}>export ⤓</Text></View>
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false} style={s.tl}>
+        <View style={s.line} />
+        {evs.map((e, i) => (
+          <View key={i} style={s.ev}>
+            <View style={[s.dot, { backgroundColor: DOT[e.t ?? 'ok'] }]} />
+            <View style={{ flex: 1 }}>
+              <View style={s.evTop}>
+                <Text style={s.evV}>{e.v}</Text>
+                <Text style={s.evTm}>{e.tm}</Text>
+              </View>
+              <Text style={s.evD}>{e.d}</Text>
             </View>
           </View>
         ))}
-        <View style={s.chainOk}>
-          <Text style={s.chainOkT}>✓ chain verified — {entries.length} entries</Text>
-        </View>
-        <View style={{ height: 20 }} />
+        <View style={{ height: 14 }} />
       </ScrollView>
       <TouchableOpacity style={s.cta} onPress={onHome} accessibilityRole="button">
-        <Text style={s.ctaT}>Back to home</Text>
+        <Text style={s.ctaT}>Done</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
 const s = StyleSheet.create({
-  c: { flex: 1, backgroundColor: T.bg, padding: 20 },
-  tag: { fontSize: 11, letterSpacing: 1.2, fontWeight: '800', color: T.navy },
-  h: { fontSize: 24, fontWeight: '800', color: T.text, marginTop: 6 },
-  sub: { fontSize: 13, color: T.muted, lineHeight: 19, marginTop: 6, marginBottom: 18 },
-  row: { flexDirection: 'row', gap: 12 },
-  left: { alignItems: 'center', width: 16 },
-  dot: { width: 10, height: 10, borderRadius: 5, backgroundColor: T.navy, marginTop: 16 },
-  stem: { flex: 1, width: 2, backgroundColor: T.line },
-  card: { flex: 1, backgroundColor: T.surface, borderRadius: 14, padding: 13, marginBottom: 10 },
-  evT: { fontSize: 13, color: T.text, lineHeight: 19 },
-  evId: { fontSize: 10, color: T.faint, fontFamily: 'Courier', marginTop: 5 },
-  chainOk: { alignItems: 'center', marginTop: 6 },
-  chainOkT: { fontSize: 12, fontWeight: '700', color: T.ok },
-  cta: { backgroundColor: T.navy, borderRadius: 16, paddingVertical: 16, alignItems: 'center' },
-  ctaT: { color: '#fff', fontSize: 15, fontWeight: '800' },
+  c: { flex: 1, backgroundColor: T.bg },
+  h: { fontSize: 18, fontWeight: '800', color: T.text, paddingHorizontal: 16, paddingTop: 8 },
+  pills: { flexDirection: 'row', gap: 8, paddingHorizontal: 14, paddingVertical: 8 },
+  pillOk: { backgroundColor: T.okWash, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4 },
+  pillOkT: { fontSize: 9, fontWeight: '700', color: T.okText },
+  pillBl: { backgroundColor: T.blueWash, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4 },
+  pillBlT: { fontSize: 9, fontWeight: '700', color: T.blue },
+  tl: { marginHorizontal: 16, paddingLeft: 18 },
+  line: { position: 'absolute', left: 5, top: 6, bottom: 6, width: 1.5, backgroundColor: T.line },
+  ev: { flexDirection: 'row', paddingVertical: 5 },
+  dot: { position: 'absolute', left: -16, top: 9, width: 8, height: 8, borderRadius: 4 },
+  evTop: { flexDirection: 'row', justifyContent: 'space-between' },
+  evV: { fontSize: 11, fontWeight: '800', color: T.text },
+  evTm: { fontSize: 8, color: T.faint },
+  evD: { fontSize: 10, color: T.muted, marginTop: 1, lineHeight: 14 },
+  cta: { backgroundColor: T.navy, borderRadius: 999, paddingVertical: 14, marginHorizontal: 16, marginBottom: 10, alignItems: 'center' },
+  ctaT: { color: '#fff', fontSize: 11, fontWeight: '800' },
 });

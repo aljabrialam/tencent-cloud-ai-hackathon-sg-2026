@@ -1,84 +1,105 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { T } from '../theme';
 import { DRAFT, MULTI_STEPS, fmt } from '../mock';
+import { TopBar } from './chrome';
 
-const Row = ({ l, v, big }: { l: string; v: string; big?: boolean }) => (
-  <View style={s.row}>
-    <Text style={s.rowL}>{l}</Text>
-    <Text style={[s.rowV, big && s.rowBig]}>{v}</Text>
-  </View>
-);
+function Row({ k, v, children }: { k: string; v?: string; children?: React.ReactNode }) {
+  return (
+    <View style={s.frow}>
+      <Text style={s.k}>{k}</Text>
+      {v ? <Text style={s.v}>{v}</Text> : children}
+    </View>
+  );
+}
 
 export function Confirm({ onAuthorise, multi = false, draft = DRAFT }: { onAuthorise: () => void; multi?: boolean; draft?: typeof DRAFT }) {
+  const method = multi ? 'Face ID' : draft.method;
   return (
     <View style={s.c}>
-      <Text style={s.tag}>READY TO AUTHORISE</Text>
-      <Text style={s.h}>Check this before I send it</Text>
-      {multi ? (
+      <TopBar />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Text style={s.h}>{multi ? 'Confirm 2 steps' : 'Confirm payment'}</Text>
+        <Text style={s.hsub}>{multi ? 'One request, two actions — one signature.' : 'Check the details before you authorise.'}</Text>
         <View style={s.card}>
-          <View style={s.badgeRow}><View style={s.vb}><Text style={s.vbT}>✓ Validated — both steps agreed</Text></View></View>
-          {MULTI_STEPS.map(st => (
-            <View key={st.n} style={s.step}>
-              <View style={s.stepN}><Text style={s.stepNT}>{st.n}</Text></View>
-              <View style={{ flex: 1 }}>
-                <Text style={s.stepLbl}>{st.label}</Text>
-                <Text style={s.stepDet}>{st.detail}</Text>
-              </View>
-            </View>
-          ))}
-          <View style={s.div} />
-          <Row l="Source" v={draft.from} />
-          <Row l="Policy tier" v="Combined — biometric" />
-          <Row l="Expires" v="60 s" />
-        </View>
-      ) : (
-        <View style={s.card}>
-          <View style={s.badgeRow}><View style={s.vb}><Text style={s.vbT}>✓ Validation model agreed</Text></View></View>
-          <Row l="Payee" v={`${draft.to} ····${draft.toLast4}`} />
-          <Row l="Amount" v={`${fmt(draft.amountCents)} — ${draft.amountWords}`} big />
-          <Row l="From" v={draft.from} />
-          <Row l="Balance after" v={fmt(draft.balanceAfter)} />
-          <Row l="Reference" v={draft.ref} />
-          <Row l="Policy tier" v={draft.tier} />
-          <View style={s.div} />
-          <View style={s.hashRow}>
-            <Text style={s.hash}>draft {draft.id} · expires {draft.expiresIn}s</Text>
-            <Text style={s.hashSub}>Edit anything? It needs a fresh draft.</Text>
+          <View style={s.ch}>
+            <View style={s.vb}><Text style={s.vbT}>✓ {multi ? 'Verified' : 'Verified against what you said'}</Text></View>
+            <View style={s.spk}><Text style={{ fontSize: 12 }}>🔊</Text></View>
           </View>
+          {multi ? (
+            <>
+              {MULTI_STEPS.map(st => (
+                <View key={st.n} style={s.step}>
+                  <View style={s.sn}><Text style={s.snT}>{st.n}</Text></View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={s.stepT}>{st.title}</Text>
+                    {st.chip && <View style={s.fchip}><Text style={s.fchipT}>{st.chip}</Text></View>}
+                    <Text style={s.stepSub}>{st.sub}</Text>
+                  </View>
+                </View>
+              ))}
+              <View style={s.reqrow}><View style={s.ric}><Text style={s.ricT}>◉</Text></View><Text style={s.reqT}>Requires Face ID</Text><View style={s.rulechip}><Text style={s.rulechipT}>Rule POL-TIER-03</Text></View></View>
+            </>
+          ) : (
+            <>
+              <View style={s.amtblock}>
+                <Text style={s.k}>Amount</Text>
+                <Text style={s.big}>{fmt(draft.amountCents)}</Text>
+                <Text style={s.words}>{draft.amountWords}</Text>
+              </View>
+              <Row k="To"><View style={{ alignItems: 'flex-end' }}><Text style={s.v}>{draft.to}</Text><Text style={s.vSub}>{draft.toDetail}</Text></View></Row>
+              <Row k="From" v={draft.from} />
+              <Row k="Reference" v={draft.ref} />
+              <Row k="Balance after" v={fmt(draft.balanceAfter)} />
+              <View style={s.reqrow}><View style={s.ric}><Text style={s.ricT}>◉</Text></View><Text style={s.reqT}>{draft.tier}</Text><View style={s.rulechip}><Text style={s.rulechipT}>{draft.rule}</Text></View></View>
+            </>
+          )}
         </View>
-      )}
-      <View style={{ flex: 1 }} />
-      <TouchableOpacity style={s.cta} onPress={onAuthorise} accessibilityRole="button" accessibilityLabel="Authorise with Face ID">
-        <Text style={s.ctaT}>Hold to authorise · Face ID</Text>
-      </TouchableOpacity>
-      <Text style={s.foot}>Only this device can sign. Your glasses and watch can show this card — they can't approve it.</Text>
+        {multi && (
+          <Text style={s.note}>Runs in order. If step 1 fails, step 2 will not run. The model wrote <Text style={{ fontStyle: 'italic' }}>half(remaining)</Text> — code computed the number.</Text>
+        )}
+        <TouchableOpacity style={s.cta} onPress={onAuthorise} accessibilityRole="button">
+          <Text style={s.ctaT}>🔒 AUTHORISE WITH {method.toUpperCase()}</Text>
+        </TouchableOpacity>
+        <Text style={s.ghost}>Cancel</Text>
+        <Text style={s.expiry}>◷ Card expires in 0:{multi ? 49 : draft.expiresIn} · tap any field to edit</Text>
+      </ScrollView>
     </View>
   );
 }
 
 const s = StyleSheet.create({
-  c: { flex: 1, backgroundColor: T.bg, padding: 20 },
-  tag: { fontSize: 11, letterSpacing: 1.2, fontWeight: '800', color: T.red },
-  h: { fontSize: 24, fontWeight: '800', color: T.text, marginTop: 6, marginBottom: 18 },
-  card: { backgroundColor: T.surface, borderRadius: 20, padding: 18, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 6 } },
-  badgeRow: { marginBottom: 12 },
-  vb: { alignSelf: 'flex-start', backgroundColor: T.okWash, borderRadius: 999, paddingHorizontal: 11, paddingVertical: 5 },
-  vbT: { fontSize: 11, fontWeight: '700', color: T.ok },
-  row: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8, gap: 12 },
-  rowL: { fontSize: 12, color: T.muted },
-  rowV: { fontSize: 13, fontWeight: '700', color: T.text, textAlign: 'right', flex: 1 },
-  rowBig: { fontSize: 15 },
-  step: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 9 },
-  stepN: { width: 28, height: 28, borderRadius: 14, backgroundColor: T.navy, alignItems: 'center', justifyContent: 'center' },
-  stepNT: { color: '#fff', fontSize: 13, fontWeight: '800' },
-  stepLbl: { fontSize: 14, fontWeight: '700', color: T.text },
-  stepDet: { fontSize: 12, color: T.muted, marginTop: 1 },
-  div: { height: 1, backgroundColor: T.line, marginVertical: 8 },
-  hashRow: {},
-  hash: { fontSize: 11, color: T.muted, fontFamily: 'Courier' },
-  hashSub: { fontSize: 11, color: T.warnText, marginTop: 4 },
-  cta: { backgroundColor: T.red, borderRadius: 16, paddingVertical: 17, alignItems: 'center' },
-  ctaT: { color: '#fff', fontSize: 16, fontWeight: '800' },
-  foot: { textAlign: 'center', fontSize: 11, color: T.muted, marginTop: 12, lineHeight: 16 },
+  c: { flex: 1, backgroundColor: T.bg },
+  h: { fontSize: 21, fontWeight: '800', color: T.text, paddingHorizontal: 16, paddingTop: 10 },
+  hsub: { fontSize: 11, color: T.muted, paddingHorizontal: 16, paddingBottom: 8, marginTop: 2 },
+  card: { backgroundColor: T.surface, borderRadius: T.radius, marginHorizontal: 14, marginVertical: 6, overflow: 'hidden' },
+  ch: { paddingHorizontal: 14, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: T.line, flexDirection: 'row', alignItems: 'center' },
+  vb: { backgroundColor: T.okText, borderRadius: 999, paddingHorizontal: 11, paddingVertical: 5 },
+  vbT: { color: '#fff', fontSize: 10, fontWeight: '700' },
+  spk: { width: 28, height: 28, borderRadius: 14, backgroundColor: T.redWash, alignItems: 'center', justifyContent: 'center', marginLeft: 'auto' },
+  amtblock: { paddingHorizontal: 14, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: T.line },
+  k: { fontSize: 10, color: T.muted },
+  big: { fontSize: 30, fontWeight: '800', color: T.text, letterSpacing: -0.5, marginTop: 2 },
+  words: { fontSize: 11, color: T.muted, fontStyle: 'italic', marginTop: 1 },
+  frow: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 14, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: T.line },
+  v: { fontSize: 11, fontWeight: '700', color: T.text, textAlign: 'right' },
+  vSub: { fontSize: 9, color: T.muted, marginTop: 1 },
+  reqrow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 14, paddingVertical: 10, backgroundColor: '#FAFAF8' },
+  ric: { width: 20, height: 20, borderRadius: 10, backgroundColor: T.redWash, alignItems: 'center', justifyContent: 'center' },
+  ricT: { fontSize: 10, color: T.red },
+  reqT: { fontSize: 10, fontWeight: '700', color: T.text },
+  rulechip: { marginLeft: 'auto', backgroundColor: '#EFEFED', borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4 },
+  rulechipT: { fontSize: 9, color: T.muted, fontWeight: '600' },
+  step: { flexDirection: 'row', gap: 10, paddingHorizontal: 14, paddingVertical: 11, borderBottomWidth: 1, borderBottomColor: T.line },
+  sn: { width: 18, height: 18, borderRadius: 9, backgroundColor: T.blue, alignItems: 'center', justifyContent: 'center', marginTop: 1 },
+  snT: { color: '#fff', fontSize: 9, fontWeight: '700' },
+  stepT: { fontSize: 11, fontWeight: '700', color: T.text },
+  stepSub: { fontSize: 9, color: T.muted, marginTop: 2 },
+  fchip: { backgroundColor: T.warnWash, borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3, marginTop: 4, alignSelf: 'flex-start' },
+  fchipT: { fontSize: 9, fontWeight: '700', color: T.warnText },
+  note: { fontSize: 9, color: T.muted, lineHeight: 14, paddingHorizontal: 16, paddingVertical: 4 },
+  cta: { backgroundColor: T.red, borderRadius: 999, paddingVertical: 14, marginHorizontal: 16, marginTop: 10, alignItems: 'center', shadowColor: T.red, shadowOpacity: 0.3, shadowRadius: 7, shadowOffset: { width: 0, height: 4 } },
+  ctaT: { color: '#fff', fontSize: 12, fontWeight: '800', letterSpacing: 0.6 },
+  ghost: { textAlign: 'center', fontSize: 11, fontWeight: '600', color: T.text, paddingVertical: 10 },
+  expiry: { textAlign: 'center', fontSize: 9, color: T.warnText, fontWeight: '600', paddingBottom: 12 },
 });

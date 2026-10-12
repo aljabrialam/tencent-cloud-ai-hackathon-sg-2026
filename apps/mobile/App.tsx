@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { T } from './src/theme';
-import { Stage, DEMO_PATHS, AUDITS, AUDIT, TRANSCRIPTS, DRAFTS } from './src/mock';
+import { Stage, DEMO_PATHS, AUDITS, TRANSCRIPTS, DRAFTS } from './src/mock';
 import { Home } from './src/screens/Home';
 import { Listening } from './src/screens/Listening';
 import { Clarify } from './src/screens/Clarify';
@@ -84,7 +84,7 @@ export default function App() {
         {stage === 'scam' && <Scam onDone={next} />}
         {stage === 'authorise' && <Authorise draft={DRAFTS[scenario]} onDone={next} />}
         {stage === 'receipt' && <Receipt draft={DRAFTS[scenario]} onAudit={() => go('audit')} onHome={() => setIdx(0)} />}
-        {stage === 'audit' && <Audit entries={AUDITS[scenario] ?? AUDIT} onHome={() => setIdx(0)} />}
+        {stage === 'audit' && <Audit entries={AUDITS[scenario]} onHome={() => setIdx(0)} />}
       </View>
     </View>
   );
