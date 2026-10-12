@@ -3,18 +3,18 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { T } from '../theme';
 import { DRAFT, fmt } from '../mock';
 
-export function Receipt({ onAudit, onHome }: { onAudit: () => void; onHome: () => void }) {
+export function Receipt({ onAudit, onHome, draft = DRAFT }: { onAudit: () => void; onHome: () => void; draft?: typeof DRAFT }) {
   return (
     <View style={s.c}>
       <View style={s.check}><Text style={s.checkT}>✓</Text></View>
       <Text style={s.h}>Sent</Text>
-      <Text style={s.amt}>{fmt(DRAFT.amountCents)}</Text>
-      <Text style={s.to}>to {DRAFT.to} ····{DRAFT.toLast4}</Text>
+      <Text style={s.amt}>{fmt(draft.amountCents)}</Text>
+      <Text style={s.to}>to {draft.to} ····{draft.toLast4}</Text>
       <View style={s.card}>
         <View style={s.row}><Text style={s.rowL}>Transaction</Text><Text style={s.rowV}>TXN-88214</Text></View>
-        <View style={s.row}><Text style={s.rowL}>Draft</Text><Text style={s.rowV}>{DRAFT.id}</Text></View>
+        <View style={s.row}><Text style={s.rowL}>Draft</Text><Text style={s.rowV}>{draft.id}</Text></View>
         <View style={s.row}><Text style={s.rowL}>Signed</Text><Text style={s.rowV}>Face ID · this device</Text></View>
-        <View style={s.row}><Text style={s.rowL}>Reference</Text><Text style={s.rowV}>{DRAFT.ref}</Text></View>
+        <View style={s.row}><Text style={s.rowL}>Reference</Text><Text style={s.rowV}>{draft.ref}</Text></View>
         <View style={s.row}><Text style={s.rowL}>Audit chain</Text><Text style={[s.rowV, { color: T.ok }]}>intact ✓</Text></View>
       </View>
       <View style={{ flex: 1 }} />

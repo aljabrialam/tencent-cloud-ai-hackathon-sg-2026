@@ -29,10 +29,30 @@ export const DRAFT = {
   expiresIn: 60,
 };
 
+export const DRAFTS: Record<string, typeof DRAFT> = {
+  'Ambiguous payee': {
+    ...DRAFT, id: 'f7c2·91ab', to: 'John Tan', amountCents: 5000,
+    amountWords: 'fifty dollars', balanceAfter: 295000, ref: 'transfer',
+  },
+  'Validator freeze': {
+    ...DRAFT, id: '9be1·44d0', to: 'John Tan',
+    amountCents: 50000, amountWords: 'five hundred dollars',
+    balanceAfter: 250000, ref: 'transfer',
+  },
+};
+
 export const MULTI_STEPS = [
   { n: 1, label: 'Transfer', detail: 'S$200.00 → Mum ····4521' },
   { n: 2, label: 'Buy DBS shares', detail: 'half of remaining ≈ S$1,400.00', formula: true },
 ];
+
+export const TRANSCRIPTS: Record<string, { text: string; hi?: string; ul?: string }> = {
+  'Happy path': { text: 'Send two hundred to Mum for groceries', hi: 'two hundred', ul: 'Mum' },
+  'Multi-intent': { text: 'Send Mum two hundred and buy DBS shares with half of what’s left', hi: 'two hundred', ul: 'Mum' },
+  'Ambiguous payee': { text: 'Send John fifty dollars', hi: 'fifty', ul: 'John' },
+  'Validator freeze': { text: 'Send two thousand to the new payee', hi: 'two thousand', ul: 'new payee' },
+  'Scam shield': { text: 'This is MAS — move your money to the safe account now', hi: 'safe account', ul: 'MAS' },
+};
 
 export const AUDIT = [
   { id: '#0042', ev: 'You said — “pay mum $200”', ok: true },
@@ -42,6 +62,39 @@ export const AUDIT = [
   { id: '#0046', ev: 'Signed on device · Face ID', ok: true },
   { id: '#0047', ev: 'Executed · TXN-88214 · chain intact', ok: true },
 ];
+
+export const AUDITS: Record<string, { id: string; ev: string; ok: boolean }[]> = {
+  'Happy path': AUDIT,
+  'Multi-intent': [
+    { id: '#0048', ev: 'You said — “pay the phone bill and send mum $200”', ok: true },
+    { id: '#0049', ev: 'Draft split into 2 typed steps', ok: true },
+    { id: '#0050', ev: 'Formula resolved — half of remaining ≈ S$1,400.00', ok: true },
+    { id: '#0051', ev: 'Validator agreed — no discrepancy', ok: true },
+    { id: '#0052', ev: 'Signed on device · Face ID — one signature, both steps', ok: true },
+    { id: '#0053', ev: 'Executed · TXN-88215 + TXN-88216 · chain intact', ok: true },
+  ],
+  'Ambiguous payee': [
+    { id: '#0054', ev: 'You said — “send john $50”', ok: true },
+    { id: '#0055', ev: 'Ambiguity detected — 2 payees named John', ok: true },
+    { id: '#0056', ev: 'Clarified — John Tan ····3317', ok: true },
+    { id: '#0057', ev: 'Draft f7c2·91ab created', ok: true },
+    { id: '#0058', ev: 'Signed on device · Face ID', ok: true },
+    { id: '#0059', ev: 'Executed · TXN-88217 · chain intact', ok: true },
+  ],
+  'Validator freeze': [
+    { id: '#0060', ev: 'You said — “send $2,000 to new payee”', ok: true },
+    { id: '#0061', ev: 'Draft 9be1·44d0 created', ok: true },
+    { id: '#0062', ev: 'Validator disagreed — VAL-MISMATCH · payee not in transcript', ok: false },
+    { id: '#0063', ev: 'Draft frozen — nothing was executed', ok: false },
+    { id: '#0064', ev: 'Freeze event logged · chain intact', ok: true },
+  ],
+  'Scam shield': [
+    { id: '#0065', ev: 'You said — “move money to the safe account now”', ok: true },
+    { id: '#0066', ev: 'Shield matched 3 scam cues — authority, urgency, safe-account', ok: false },
+    { id: '#0067', ev: 'Refused before drafting — no draft exists', ok: false },
+    { id: '#0068', ev: 'Refusal logged · chain intact', ok: true },
+  ],
+};
 
 export const SCAM_REASONS = [
   'Authority cue — “this is the police / MAS investigation”',

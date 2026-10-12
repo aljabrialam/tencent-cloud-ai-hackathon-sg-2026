@@ -10,7 +10,7 @@ const Row = ({ l, v, big }: { l: string; v: string; big?: boolean }) => (
   </View>
 );
 
-export function Confirm({ onAuthorise, multi = false }: { onAuthorise: () => void; multi?: boolean }) {
+export function Confirm({ onAuthorise, multi = false, draft = DRAFT }: { onAuthorise: () => void; multi?: boolean; draft?: typeof DRAFT }) {
   return (
     <View style={s.c}>
       <Text style={s.tag}>READY TO AUTHORISE</Text>
@@ -28,22 +28,22 @@ export function Confirm({ onAuthorise, multi = false }: { onAuthorise: () => voi
             </View>
           ))}
           <View style={s.div} />
-          <Row l="Source" v={DRAFT.from} />
+          <Row l="Source" v={draft.from} />
           <Row l="Policy tier" v="Combined — biometric" />
           <Row l="Expires" v="60 s" />
         </View>
       ) : (
         <View style={s.card}>
           <View style={s.badgeRow}><View style={s.vb}><Text style={s.vbT}>✓ Validation model agreed</Text></View></View>
-          <Row l="Payee" v={`${DRAFT.to} ····${DRAFT.toLast4}`} />
-          <Row l="Amount" v={`${fmt(DRAFT.amountCents)} — ${DRAFT.amountWords}`} big />
-          <Row l="From" v={DRAFT.from} />
-          <Row l="Balance after" v={fmt(DRAFT.balanceAfter)} />
-          <Row l="Reference" v={DRAFT.ref} />
-          <Row l="Policy tier" v={DRAFT.tier} />
+          <Row l="Payee" v={`${draft.to} ····${draft.toLast4}`} />
+          <Row l="Amount" v={`${fmt(draft.amountCents)} — ${draft.amountWords}`} big />
+          <Row l="From" v={draft.from} />
+          <Row l="Balance after" v={fmt(draft.balanceAfter)} />
+          <Row l="Reference" v={draft.ref} />
+          <Row l="Policy tier" v={draft.tier} />
           <View style={s.div} />
           <View style={s.hashRow}>
-            <Text style={s.hash}>draft {DRAFT.id} · expires {DRAFT.expiresIn}s</Text>
+            <Text style={s.hash}>draft {draft.id} · expires {draft.expiresIn}s</Text>
             <Text style={s.hashSub}>Edit anything? It needs a fresh draft.</Text>
           </View>
         </View>

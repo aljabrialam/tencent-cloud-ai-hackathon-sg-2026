@@ -4,7 +4,29 @@ import { T } from '../theme';
 
 const BARS = [6, 16, 26, 12, 22, 9, 18, 28, 10, 20, 7, 15];
 
-export function Listening({ onStop }: { onStop: () => void }) {
+function marked(text: string, hi?: string, ul?: string) {
+  if (!hi && !ul) return <Text style={s.tsrT}>{text} ▌</Text>;
+  const parts: React.ReactNode[] = [];
+  let rest = text, k = 0;
+  const take = (sub: string | undefined, style: object) => {
+    if (!sub) return;
+    const i = rest.indexOf(sub);
+    if (i < 0) return;
+    if (i > 0) parts.push(rest.slice(0, i));
+    parts.push(<Text key={k++} style={style}>{sub}</Text>);
+    rest = rest.slice(i + sub.length);
+  };
+  // apply whichever marker appears first in the remaining text
+  while (rest.length) {
+    const ih = hi ? rest.indexOf(hi) : -1;
+    const iu = ul ? rest.indexOf(ul) : -1;
+    if (ih < 0 && iu < 0) { parts.push(rest); break; }
+    if (ih >= 0 && (iu < 0 || ih < iu)) take(hi, s.b); else take(ul, s.u);
+  }
+  return <Text style={s.tsrT}>{parts} ▌</Text>;
+}
+
+export function Listening({ onStop, transcript }: { onStop: () => void; transcript?: { text: string; hi?: string; ul?: string } }) {
   const anims = useRef(BARS.map(() => new Animated.Value(0.3))).current;
   useEffect(() => {
     const loops = anims.map((a, i) =>
@@ -33,7 +55,9 @@ export function Listening({ onStop }: { onStop: () => void }) {
           <Text style={s.tsrLblT}>LIVE TRANSCRIPT</Text>
           <Text style={s.tsrOk}>✓ Clear</Text>
         </View>
-        <Text style={s.tsrT}>Send <Text style={s.b}>two hundred</Text> to <Text style={s.u}>Mum</Text> for groceries ▌</Text>
+        {transcript
+          ? marked(transcript.text, transcript.hi, transcript.ul)
+          : <Text style={s.tsrT}>Send <Text style={s.b}>two hundred</Text> to <Text style={s.u}>Mum</Text> for groceries ▌</Text>}
       </View>
       <Text style={s.tiny}>English · confidence 0.97 · tap to stop</Text>
       <View style={{ flex: 1 }} />

@@ -3,18 +3,20 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { T } from '../theme';
 import { AUDIT } from '../mock';
 
-export function Audit({ onHome }: { onHome: () => void }) {
+type Entry = { id: string; ev: string; ok: boolean };
+
+export function Audit({ onHome, entries = AUDIT }: { onHome: () => void; entries?: Entry[] }) {
   return (
     <View style={s.c}>
       <Text style={s.tag}>AUDIT TRAIL</Text>
       <Text style={s.h}>Why did the agent do this?</Text>
       <Text style={s.sub}>Every step — hash-chained. Tamper with one entry and the chain breaks.</Text>
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-        {AUDIT.map((e, i) => (
+        {entries.map((e, i) => (
           <View key={e.id} style={s.row}>
             <View style={s.left}>
-              <View style={[s.dot, i === AUDIT.length - 1 && { backgroundColor: T.ok }]} />
-              {i < AUDIT.length - 1 && <View style={s.stem} />}
+              <View style={[s.dot, !e.ok && { backgroundColor: T.err }, i === entries.length - 1 && e.ok && { backgroundColor: T.ok }]} />
+              {i < entries.length - 1 && <View style={s.stem} />}
             </View>
             <View style={s.card}>
               <Text style={s.evT}>{e.ev}</Text>
@@ -23,7 +25,7 @@ export function Audit({ onHome }: { onHome: () => void }) {
           </View>
         ))}
         <View style={s.chainOk}>
-          <Text style={s.chainOkT}>✓ chain verified — {AUDIT.length} entries</Text>
+          <Text style={s.chainOkT}>✓ chain verified — {entries.length} entries</Text>
         </View>
         <View style={{ height: 20 }} />
       </ScrollView>

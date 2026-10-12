@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { T } from './src/theme';
-import { Stage, DEMO_PATHS } from './src/mock';
+import { Stage, DEMO_PATHS, AUDITS, AUDIT, TRANSCRIPTS, DRAFTS } from './src/mock';
 import { Home } from './src/screens/Home';
 import { Listening } from './src/screens/Listening';
 import { Clarify } from './src/screens/Clarify';
@@ -19,7 +19,7 @@ const qs =
   typeof window !== 'undefined' && window.location ? window.location.search : '';
 const IS_NATIVE = qs === '';
 const AUTO = /[?&]auto=1/.test(qs) || IS_NATIVE; // native demo devices self-walk
-const BARE = /[?&]bare=1/.test(qs);
+const BARE = /[?&]bare=1/.test(qs) || IS_NATIVE; // and never show demo chrome
 
 export default function App() {
   const scnMatch = qs.match(/[?&]scn=(\d)/);
@@ -76,15 +76,15 @@ export default function App() {
 
       <View style={{ flex: 1 }}>
         {stage === 'home' && <Home onMic={() => go('listening')} />}
-        {stage === 'listening' && <Listening onStop={next} />}
+        {stage === 'listening' && <Listening transcript={TRANSCRIPTS[scenario]} onStop={next} />}
         {stage === 'clarify' && <Clarify onPick={next} />}
-        {stage === 'confirm' && <Confirm onAuthorise={next} />}
+        {stage === 'confirm' && <Confirm draft={DRAFTS[scenario]} onAuthorise={next} />}
         {stage === 'confirm-multi' && <Confirm multi onAuthorise={next} />}
         {stage === 'frozen' && <Frozen onAudit={() => go('audit')} />}
         {stage === 'scam' && <Scam onDone={next} />}
-        {stage === 'authorise' && <Authorise onDone={next} />}
-        {stage === 'receipt' && <Receipt onAudit={() => go('audit')} onHome={() => setIdx(0)} />}
-        {stage === 'audit' && <Audit onHome={() => setIdx(0)} />}
+        {stage === 'authorise' && <Authorise draft={DRAFTS[scenario]} onDone={next} />}
+        {stage === 'receipt' && <Receipt draft={DRAFTS[scenario]} onAudit={() => go('audit')} onHome={() => setIdx(0)} />}
+        {stage === 'audit' && <Audit entries={AUDITS[scenario] ?? AUDIT} onHome={() => setIdx(0)} />}
       </View>
     </View>
   );

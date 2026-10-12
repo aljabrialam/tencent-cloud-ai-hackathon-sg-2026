@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Animated } from 'react-native';
 import { T } from '../theme';
 import { DRAFT, fmt } from '../mock';
 
-export function Authorise({ onDone }: { onDone: () => void }) {
+export function Authorise({ onDone, draft = DRAFT }: { onDone: () => void; draft?: typeof DRAFT }) {
   const pulse = useRef(new Animated.Value(1)).current;
   useEffect(() => {
     const loop = Animated.loop(
@@ -20,11 +20,11 @@ export function Authorise({ onDone }: { onDone: () => void }) {
   return (
     <View style={s.c}>
       <Text style={s.tag}>SIGNING ON DEVICE</Text>
-      <Text style={s.h}>Face ID to send {fmt(DRAFT.amountCents)}</Text>
+      <Text style={s.h}>Face ID to send {fmt(draft.amountCents)}</Text>
       <View style={s.card}>
         <Text style={s.lbl}>WHAT IS BEING SIGNED</Text>
-        <Text style={s.hash}>sha256(draft {DRAFT.id})</Text>
-        <Text style={s.hash}>to={DRAFT.to} ····{DRAFT.toLast4} · amt={DRAFT.amountCents}c</Text>
+        <Text style={s.hash}>sha256(draft {draft.id})</Text>
+        <Text style={s.hash}>to={draft.to} ····{draft.toLast4} · amt={draft.amountCents}c</Text>
         <View style={s.div} />
         <Text style={s.note}>The signature binds this exact draft. If anything changes, this signature dies with it.</Text>
       </View>
