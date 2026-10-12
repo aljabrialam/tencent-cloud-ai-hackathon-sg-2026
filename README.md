@@ -22,6 +22,25 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 
 **📖 In a hurry? Start here:** [the problem](#the-problem) → [one worked example](#a-concrete-example) → [how it works](#how-it-works) → [every DBS requirement, answered](#mapping-to-the-dbs-challenge) → [the screens](#what-the-user-sees) → [wearables](#beyond-the-phone--wearables) → [vs what's out there](#whats-out-there--and-how-digivoice-differs) → [judge's index](#for-judges)
 
+## Demo
+
+**▶ Watch the full demo: [youtu.be/K-hxJaWUQCc](https://youtu.be/K-hxJaWUQCc)** — one signed-draft pipeline across phone, glasses, watch and web, including the validator-freeze and scam-shield stops.
+
+| Segment | What you're watching | File |
+|---|---|---|
+| Phone | Real iOS Simulator screen capture — the native app walks all five scenarios itself (happy → multi-intent → ambiguous → freeze → scam) | [`demo/phone-film.mp4`](demo/phone-film.mp4) · raw run [`demo/mobile-all.mp4`](demo/mobile-all.mp4) |
+| Meta Ray-Ban Display | Wearer-view scene over real 600×600 HUD app captures — draft card, "approve on your phone", Neural Band pinch | [`demo/glasses-film.mp4`](demo/glasses-film.mp4) |
+| Smartwatch | Compiled SwiftUI renders in a bezel (no watchOS runtime on this machine) — glance, buzz, phone signs | [`demo/watch-film.mp4`](demo/watch-film.mp4) |
+| Web | digibank web shell + speaker / earbuds / in-car future-surface sims | [`demo/web-app.mp4`](demo/web-app.mp4) |
+| Consolidated | All of the above, stitched at 1920×1080 | [`demo/digivoice-demo.mp4`](demo/digivoice-demo.mp4) · voice-over cue sheet [`demo/narration.md`](demo/narration.md) |
+
+**Interactive demos** — open in a browser, they auto-play:
+
+- [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) — the full product mockup (phone, watch, HUD, surfaces) · press **▶ Play demo path**
+- [`apps/mobile/film.html`](apps/mobile/film.html) — phone film (real simulator footage + per-scenario captions)
+- [`apps/glasses-hud/film.html`](apps/glasses-hud/film.html) — glasses film (wearer-view scene, real HUD capture)
+- [`apps/watch/film.html`](apps/watch/film.html) — watch film (compiled SwiftUI renders in bezel)
+
 ## The problem
 
 DBS's brief names five failure modes of conversational banking, and they are all real:
@@ -129,7 +148,7 @@ Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md).
 
 ## What the user sees
 
-Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) — clone and open it in a browser, press **▶ Play demo path** (GitHub Pages is off while the repo is private; hosting returns for Demo Day). The screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md). It is also mirrored as editable layers in Figma ([digiVoice — DCTA](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)). **All 10 screens are generated as consistent-token React Native scaffolds via [Mokkoi](https://github.com/RHINOREX123/mokkoi-mcp-server)** (free, MIT-licensed MCP server — shared DBS token palette, built-in WCAG/touch-target checks) in [`design/mokkoi/`](design/mokkoi/), which is where `apps/mobile/` implementation starts.
+Nine screens, one card. The interactive mockup is [`design/digivoice-app-mockup.html`](design/digivoice-app-mockup.html) — clone and open it in a browser, press **▶ Play demo path**. The screen-by-screen spec is [`docs/ux-screens.md`](docs/ux-screens.md). It is also mirrored as editable layers in Figma ([digiVoice — DCTA](https://www.figma.com/design/ucRZT8Lm4sExcuxWT0crPZ)). **All 10 screens are generated as consistent-token React Native scaffolds via [Mokkoi](https://github.com/RHINOREX123/mokkoi-mcp-server)** (free, MIT-licensed MCP server — shared DBS token palette, built-in WCAG/touch-target checks) in [`design/mokkoi/`](design/mokkoi/), which is where `apps/mobile/` implementation starts.
 
 | # | Screen | What it proves |
 |---|---|---|
