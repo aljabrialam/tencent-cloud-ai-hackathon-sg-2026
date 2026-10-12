@@ -1,23 +1,18 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.0.0 → 1.1.0
-Bump rationale: MINOR — three principles added (IV Verification After Action,
-VIII State Outside the Agent, VII Honest Simulation), Principle V extended
-with evidence-in-UI, Principle IX merged with Demo Primacy. No existing
-principle removed or redefined.
+Version change: 1.1.0 → 1.2.0
+Bump rationale: MINOR — two principles added (X Multi-Agent Separation of
+Duties, XI Disruptive Reach), Technology Constraints extended with the agent
+topology. No existing principle removed or redefined.
 
 Modified principles:
-  - V Audit Trail → extended: UI must show evidence, not model prose
-  - VI Simplicity → merged into IX Demo Primacy & Ruthless Simplicity
+  - Technology & Security Constraints → extended: named agent roles added
 Added principles:
-  - IV Verification After Action (adapted from Antabay II)
-  - VII Honest Simulation (adapted from Antabay V)
-  - VIII State Outside the Agent (adapted from Antabay VI)
-  - Evidence-over-assertion folded into V (adapted from Rewind X)
-  - Demo primacy folded into IX (adapted from Rewind I)
+  - X Multi-Agent Separation of Duties
+  - XI Disruptive Reach
 Removed principles: none
-Follow-up TODOs: none
+Follow-up TODOs: reflect the agent topology in docs/architecture.md
 -->
 
 # digiVoice (DBS DCTA) Constitution
@@ -107,6 +102,46 @@ narrative ("speak → see exactly what will happen → authorise → audit")? By
 there MUST exist one runnable path from input to executed mock transaction (vertical
 slice). YAGNI applies to everything else; P3 features are cut first.
 
+### X. Multi-Agent Separation of Duties
+The system is a society of narrow agents, not one model asked to be careful. Roles MUST
+be distinct, schema-bounded, and non-overlapping:
+
+| Agent | Engine | Authority | Boundary |
+|---|---|---|---|
+| **Drafting Agent** | Tencent ADP (Hunyuan-class) | Parse speech/text → typed `TransactionIntent` JSON | No tools, no state, no execution |
+| **Validation Agent** | Hunyuan — a *different* engine | Compare draft vs transcript; verdict + field diffs only | Read-only, cannot edit the draft |
+| **Policy Engine** | None — deterministic code | Authorisation tier, limits, scam verdict | Pure function, unit-tested first |
+| **Clarifier** | Drafting engine, targeted re-prompt | One question at a time | Cannot resolve ambiguity itself |
+| **Executor/Auditor** | None — deterministic code | Signed-draft execution, ledger read-back, hash chain | Rejects anything unsigned |
+
+No agent MAY both propose and approve an action. Agent-to-agent communication passes
+typed artifacts (drafts, verdicts), never conversational trust. A single-model collapse
+of these roles is a constitution violation under Principle I.
+
+**Rationale**: "Dual-engine" is only credible if the validator is a genuinely different
+model that could not share the drafter's failure mode. Separation of duties is how banks
+prevent single-point fraud internally — we apply the same control inside the AI tier.
+
+### XI. Disruptive Reach — Every Choice Serves the Disruption
+This project is not "a chatbot bolted onto banking". The thesis is that conversational,
+zero-trust agency restructures who banking serves and how trust is produced:
+
+- **Interaction disruption** — declared intent replaces menu navigation. Multi-intent
+  utterances that today need three flows become one signed act. Every screen MUST show
+  why this is better than the existing app flow, not just different.
+- **Market disruption** — the excluded become first-class users: elderly, low-literacy,
+  motor/visual/cognitive disability, non-English speakers, and scam-targeted customers.
+  An inclusive path is a design requirement, not a feature tier.
+- **Trust disruption** — safety is the product, not the friction. Scam interception,
+  dual-engine validation, and the signed-draft audit are demoed as *value*, not as error
+  handling.
+- **Surface disruption** — the phone stops being the only surface. Wearables (Ray-Ban
+  Display via Web Apps/DAT) extend the same zero-trust pipeline hands-free while
+  authorisation stays anchored to the phone.
+
+Any design proposal that reduces digiVoice to "chat UI on the existing flow" MUST be
+rejected in review: it abandons the thesis and scores nothing on innovation.
+
 ## Technology & Security Constraints
 
 - Mobile client: React Native with Expo (TypeScript). Must run via Expo Go on a real
@@ -116,9 +151,11 @@ slice). YAGNI applies to everything else; P3 features are cut first.
   cents; floating point MUST NOT be used for money.
 - LLM access goes through a single `LLMProvider` adapter interface with interchangeable
   implementations for Tencent ADP (drafting), Hunyuan (validation), OpenAI, and
-  Anthropic, selectable via configuration. Prompts request structured JSON output
-  validated against the `TransactionIntent` schema; invalid output is rejected and
-  retried or escalated to a clarifying question, never partially executed.
+  Anthropic, selectable via configuration. Per Principle X, the Drafting Agent and
+  Validation Agent MUST resolve to different provider implementations — never two
+  wrappers around the same model. Prompts request structured JSON output validated
+  against the `TransactionIntent` schema; invalid output is rejected and retried or
+  escalated to a clarifying question, never partially executed.
 - Secrets live in environment variables (`.env`, gitignored). Never committed, never
   logged, never shipped in the mobile bundle.
 - Tencent Cloud tooling (ADP, TRTC, CodeBuddy, WorkBuddy, Miora) usage MUST be
@@ -147,4 +184,4 @@ expanded guidance, PATCH for clarifications). Every `plan.md` MUST include a Con
 Check that explicitly confirms Principles I–V; any deviation MUST be listed in the plan's
 Complexity Tracking table with justification. Reviews MUST verify compliance before merge.
 
-**Version**: 1.1.0 | **Ratified**: 2026-10-12 | **Last Amended**: 2026-10-12
+**Version**: 1.2.0 | **Ratified**: 2026-10-12 | **Last Amended**: 2026-10-12

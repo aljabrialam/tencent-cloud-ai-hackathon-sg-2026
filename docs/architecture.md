@@ -3,6 +3,19 @@
 Zero-trust agentic architecture for digiVoice. The one-sentence version: **the model writes a draft;
 code decides; the human signs; the gateway only accepts signatures.**
 
+## Agent roles (constitution Principle X)
+
+| Agent | Engine | Authority | Boundary |
+|---|---|---|---|
+| Drafting Agent | Tencent ADP (Hunyuan-class) | Parse → typed `TransactionIntent` JSON | No tools, no state, no execution |
+| Validation Agent | Hunyuan (different engine) | Draft-vs-transcript verdict + diffs | Read-only, cannot edit the draft |
+| Policy Engine | deterministic code | Auth tier, limits, scam verdict | Pure function, test-first |
+| Clarifier | drafting engine, targeted re-prompt | One question at a time | Cannot self-resolve ambiguity |
+| Executor/Auditor | deterministic code | Signed-draft execution, read-back, hash chain | Rejects anything unsigned |
+
+Agents communicate through **typed artifacts** (drafts, verdicts), never conversational trust.
+No agent both proposes and approves.
+
 ## Components
 
 ```mermaid
