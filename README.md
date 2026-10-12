@@ -4,7 +4,7 @@
 
 digiVoice is a Direct Conversational Transaction Agent (DCTA) for the **Banking Track — DBS** at the Tencent Cloud AI CAN DO IT Hackathon Singapore 2026 (Scenario 1: voice-enabled payment and transaction with KYC and basic risk control). It takes the DBS brief literally: GenAI is a *generator of drafts, never an executor of funds*.
 
-Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock biometrics, mock gateway — as the challenge permits. Nothing real is moved.
+Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock biometrics, mock gateway.
 
 ---
 
