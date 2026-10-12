@@ -17,7 +17,7 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 | **The rule that defines us** | *The LLM has no tools.* It can only emit a typed draft. Deterministic code resolves it, a second model audits it, policy gates it, and only a biometric signature over the exact draft executes it. **The agent cannot move money — by construction, not by policy.** |
 | **The pipeline** | Voice → transcript → LLM drafts typed JSON → code resolves payees/accounts/formulas → independent LLM audits draft vs transcript → policy engine picks the auth tier → confirmation card → Face ID signs → gateway executes → hash-chained audit |
 | **When it stops** | **Freeze** (auditor disagrees) · **Hold/Block** (limits, velocity, KYC, new payee) · **Scam interstitial** (cooling-off + hotline) — all visible, all audited |
-| **Beyond the phone** | One agent, every surface — Meta glasses + Neural Band, watch, car, speaker, earbuds, web. **Wearables propose; only the phone approves.** The glasses HUD is a working app, not a slide: `apps/glasses-hud/` passes Meta's own test gate |
+| **Beyond the phone** | One agent, every surface — Meta glasses + Neural Band, watch, car, speaker, earbuds, web. **Wearables propose; only the phone approves.** Two surfaces are real compiled code, not slides: `apps/glasses-hud/` passes Meta's own test gate; `apps/watch/` compiles for arm64 watchOS |
 | **Stack** | Expo/React Native + TS (mobile) · Node + TS (agent service, mock bank) · zod · vitest · Tencent ADP + Hunyuan + TRTC · Spec Kit |
 
 **📖 In a hurry? Start here:** [the problem](#the-problem) → [one worked example](#a-concrete-example) → [how it works](#how-it-works) → [every DBS requirement, answered](#mapping-to-the-dbs-challenge) → [the screens](#what-the-user-sees) → [wearables](#beyond-the-phone--wearables) → [vs what's out there](#whats-out-there--and-how-digivoice-differs) → [judge's index](#for-judges)
@@ -239,6 +239,10 @@ Each surface has a designed state flow — and a shipping platform underneath, n
 **Smartwatch** — glance, buzz, phone signs. Draft buzzes the wrist; no Pay button exists on a watch face:
 <p><img src="design/screens/mock-surf-watch.png" width="92%" alt="Smartwatch states — ambient complication, listening, draft card, sent, scam pause"></p>
 
+**Running code — not just mockups:** `apps/watch/` is a real SwiftUI watchOS app — all five states implemented as a compiled state machine. The same sources **compile for arm64 watchOS 11.5** (`libdigivoice-watchos.dylib` in the repo) and render every state to PNG from actual code. Evidence: [`apps/watch/TEST-EVIDENCE.md`](apps/watch/TEST-EVIDENCE.md) — renders below are compiler output, not mockups:
+
+<p><img src="apps/watch/Renders/watch-strip.png" width="92%" alt="Rendered watchOS states — ambient, listening, draft, sent, paused"></p>
+
 > **Feasible today:** watchOS complications + notifications and Wear OS Tiles already render bank cards on the wrist — our draft glance is a notification-shaped payload pushed from the companion app. No wearable payment credential needed because we never sign there.
 
 **Web / desktop** — the big-screen review surface. Chat transcript beside the confirmation card, inside the digibank web shell — and the approve hand-off still points at the phone:
@@ -341,7 +345,7 @@ Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — bot
 specs/      Feature specs, plans, tasks
 docs/       Business flow · use cases · UX screens · architecture · policy rules · demo script · checklist
 design/     Figma exports, cover image, tool-usage proof
-apps/       mobile (Expo) · service (Node) · glasses-hud (Display Web App)
+apps/       mobile (Expo) · service (Node) · glasses-hud (Display Web App) · watch (SwiftUI watchOS)
 packages/   shared types, schemas, policy
 ```
 
