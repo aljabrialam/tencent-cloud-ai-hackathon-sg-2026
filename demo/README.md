@@ -1,11 +1,12 @@
 # demo/ — recorded evidence per surface
 
-Real captures of running code, not mockups. Consolidation into one
-narrated demo video happens in the edit pass — these are the clean source clips.
+Real captures of running code, not mockups. `digivoice-demo.mp4` (2:55,
+1920×1080) stitches all four surfaces with title cards; `narration.md`
+is the voice-over cue sheet matched to that timeline.
 
 | Clip | Surface | How it was captured |
 |---|---|---|
-| `mobile-native.mp4` | Expo app | **Native dev build** on iPhone 16 Pro sim (iOS 18.6): `xcodebuild … Debug-iphonesimulator` → `xcrun simctl install/launch` → `xcrun simctl io booted recordVideo`. The app self-walks the happy path (native has no URL params, so auto-play is on by default on-device). 1206×2622, ~66 s — covers ~2 full loops; trim one loop in the edit. |
+| `mobile-all.mp4` | Expo app | **Native dev build** on iPhone 16 Pro sim (iOS 18.6): `xcrun simctl io booted recordVideo`. On-device auto-play cycles **all five scenarios** in order (happy → multi-intent → ambiguous → validator freeze → scam shield), 84 s, 1206×2622. |
 | `glasses-hud.mp4` | Meta Ray-Ban Display | Playwright `recordVideo` at exactly 600×600 against `apps/glasses-hud` `vite preview` (:4175), driven by `apps/glasses-hud/rec-glasses.mjs` — clicks through Capture → Review → Stopped groups, Escape for the toolkit's `useBackNavigation`. Upscaled lanczos to 1200×1200 (the MRBD toolkit renders at its fixed 600×600 device size). |
 | `watch-film.mp4` | Smartwatch | Playwright `recordVideo` at 1920×1080 of `apps/watch/film.html` — the bezel renders are the real compiled SwiftUI views (`apps/watch/Renders/watch-*.png`); no watchOS sim runtime is installed, so this is the honest capture path. |
 | `web-app.mp4` | digibank web + future surfaces | Playwright `recordVideo` at 1920×1080 against `apps/web` `vite preview` (:4174): transcript + draft → clarify → frozen → audit, then speaker phone-ping, earbud read-aloud + fraud interrupt, car moving/standstill. |

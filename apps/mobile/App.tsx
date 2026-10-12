@@ -28,12 +28,22 @@ export default function App() {
   const path = DEMO_PATHS[scenario];
   const stage: Stage = path[idx];
 
-  // ?auto=1 — walk the path on a timer for screen recording
+  // auto mode — walk the path on a timer for screen recording; on native
+  // there are no URL params, so wrap-around advances to the next scenario
   useEffect(() => {
     if (!AUTO) return;
-    const t = setInterval(() => setIdx(i => (i + 1) % path.length), 3200);
+    const t = setInterval(() => {
+      setIdx(i => {
+        if (i + 1 < path.length) return i + 1;
+        if (IS_NATIVE) {
+          const next = SCENARIOS[(SCENARIOS.indexOf(scenario) + 1) % SCENARIOS.length];
+          setScenario(next);
+        }
+        return 0;
+      });
+    }, 3200);
     return () => clearInterval(t);
-  }, [path.length]);
+  }, [path.length, scenario]);
 
   const go = (s: Stage) => {
     const i = path.indexOf(s);
