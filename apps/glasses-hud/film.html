@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin:0; background:#0d1117; display:flex; align-items:center; justify-content:center; height:100vh; overflow:hidden; }
+  .stage { display:flex; align-items:center; gap:90px; }
+  .glasses { position:relative; flex-shrink:0; width:640px; height:640px; }
+  .glasses::before { /* temple arm hint */
+    content:""; position:absolute; left:-46px; top:80px; width:44px; height:14px;
+    background:#2c2c2e; border-radius:7px 0 0 7px;
+  }
+  .glasses::after { /* brow line hint */
+    content:""; position:absolute; left:0; right:0; top:-26px; height:26px;
+    border-radius:60px 60px 0 0; background:linear-gradient(180deg,#3a3a3c,#1c1c1e);
+  }
+  .lens {
+    width: 640px; height: 640px; border-radius: 60px;
+    background: #000;
+    border: 10px solid #242428;
+    box-shadow: 0 0 0 3px #3a3a3c, 0 30px 90px rgba(0,0,0,.85),
+                inset 0 0 80px rgba(90,140,255,.05);
+    position: relative; overflow: hidden;
+  }
+  .screen { position:absolute; inset:0; }
+  .screen img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .7s ease; }
+  .screen img.on { opacity:1; }
+  .meta { max-width:520px; }
+  .state { color:#fff; font:800 44px -apple-system,Helvetica,sans-serif; letter-spacing:-.5px; min-height:54px; }
+  .sub { color:#8a8a93; font:500 19px/1.5 -apple-system,Helvetica,sans-serif; margin-top:14px; }
+  .rule { margin-top:34px; color:#ffb3a8; font:700 15px/1.5 -apple-system,Helvetica,sans-serif;
+          border-left:3px solid #E60023; padding-left:14px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="glasses"><div class="lens"><div class="screen" id="scr"></div></div></div>
+  <div class="meta">
+    <div class="state" id="st"></div>
+    <div class="sub" id="sub"></div>
+    <div class="rule">The lens proposes — it never signs. Approval lives on the phone.</div>
+  </div>
+</div>
+<script>
+const STATES = [
+  ['ambient','Ambient','Lens dark until you speak. No balances ever linger on glass.'],
+  ['listening','Listening','Rolling transcript — the band pulses on each parsed entity.'],
+  ['clarify','Clarify','Two payees named John — answer aloud or pinch to select.'],
+  ['card','Draft card','S$200 to Mum, verified — the only forward path is your phone.'],
+  ['waiting','Waiting','Phone is signing — the lens just waits.'],
+  ['sent','Sent','Confirmation glance, then it clears back to ambient.'],
+  ['frozen','Frozen','Validator disagreed — said 200, drafted 2,000. Nothing moved.'],
+  ['scam','Scam pause','Steady amber hold — see your phone to continue.'],
+];
+const HOLD = 2800;
+const scr = document.getElementById('scr');
+const st = document.getElementById('st');
+const sub = document.getElementById('sub');
+const imgs = STATES.map(([s]) => {
+  const im = document.createElement('img');
+  im.src = 'Renders/hud-' + s + '.png';
+  scr.appendChild(im);
+  return im;
+});
+let i = 0;
+function show(n) {
+  imgs.forEach((im, k) => im.classList.toggle('on', k === n));
+  st.textContent = STATES[n][1];
+  sub.textContent = STATES[n][2];
+}
+show(0);
+setInterval(() => { i = (i + 1) % STATES.length; show(i); }, HOLD);
+</script>
+</body>
+</html>

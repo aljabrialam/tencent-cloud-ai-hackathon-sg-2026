@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin:0; background:#0d1117; display:flex; align-items:center; justify-content:center; height:100vh; overflow:hidden; }
+  .stage { display:flex; align-items:center; gap:90px; }
+  .phone {
+    width: 420px; height: 865px; border-radius: 72px;
+    background: #000;
+    border: 14px solid #1c1c1e;
+    box-shadow: 0 0 0 4px #3a3a3c, 0 30px 90px rgba(0,0,0,.85);
+    position: relative; overflow: hidden; flex-shrink:0;
+  }
+  .phone::before { /* dynamic island */
+    content:""; position:absolute; left:50%; transform:translateX(-50%); top:14px;
+    width:110px; height:32px; background:#000; border-radius:18px; z-index:6;
+  }
+  .phone::after { /* side button */
+    content:""; position:absolute; right:-16px; top:200px; width:8px; height:90px;
+    background:#2c2c2e; border-radius:4px; z-index:5;
+  }
+  .screen { position:absolute; inset:0; }
+  .screen img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .7s ease; }
+  .screen img.on { opacity:1; }
+  .meta { max-width:520px; }
+  .state { color:#fff; font:800 44px -apple-system,Helvetica,sans-serif; letter-spacing:-.5px; min-height:54px; }
+  .sub { color:#8a8a93; font:500 19px/1.5 -apple-system,Helvetica,sans-serif; margin-top:14px; }
+  .rule { margin-top:34px; color:#ffb3a8; font:700 15px/1.5 -apple-system,Helvetica,sans-serif;
+          border-left:3px solid #E60023; padding-left:14px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone"><div class="screen" id="scr"></div></div>
+  <div class="meta">
+    <div class="state" id="st"></div>
+    <div class="sub" id="sub"></div>
+    <div class="rule">Only this device can authorise — every draft, one signature.</div>
+  </div>
+</div>
+<script>
+const STATES = [
+  ['home','Home','Digibank shell — balances, actions, recent activity. The mic starts every request.'],
+  ['listening','Listening','Live transcript on-device. The model only hears — it never acts.'],
+  ['confirm','Confirm','Typed draft: amount, payee, policy tier, hash. Verified against what you said.'],
+  ['authorise','Authorise','PIN or Face ID signs the draft hash on this device — nowhere else.'],
+  ['receipt','Sent','Receipt reads the ledger back — never assumed.'],
+  ['audit','Audit trail','Every step hash-chained: heard, drafted, verified, signed, executed.'],
+  ['multi','Multi-intent','Two intents, one utterance — code resolves "half of what\'s left".'],
+  ['clarify','Ambiguous payee','Two payees named John — one targeted question. It never guesses.'],
+  ['frozen','Validator freeze','You said two hundred; the draft showed two thousand. Nothing sent.'],
+  ['scam','Scam shield','Authority + urgency + new account — refused before any draft exists.'],
+];
+const HOLD = 3000;
+const scr = document.getElementById('scr');
+const st = document.getElementById('st');
+const sub = document.getElementById('sub');
+const imgs = STATES.map(([s]) => {
+  const im = document.createElement('img');
+  im.src = 'Renders/phone-' + s + '.png';
+  scr.appendChild(im);
+  return im;
+});
+let i = 0;
+function show(n) {
+  imgs.forEach((im, k) => im.classList.toggle('on', k === n));
+  st.textContent = STATES[n][1];
+  sub.textContent = STATES[n][2];
+}
+show(0);
+setInterval(() => { i = (i + 1) % STATES.length; show(i); }, HOLD);
+</script>
+</body>
+</html>
