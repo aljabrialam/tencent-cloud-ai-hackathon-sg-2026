@@ -6,6 +6,8 @@
 
 **One pipeline across phone, glasses, watch and web** · [youtu.be/K-hxJaWUQCc](https://youtu.be/K-hxJaWUQCc)
 
+**Try it live** — [product mockup](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html) · [phone film](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html) · [glasses film](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html) · [watch film](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html)
+
 </div>
 
 ### Speak a payment. Code decides. You sign.
