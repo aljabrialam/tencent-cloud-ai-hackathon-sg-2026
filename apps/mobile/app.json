@@ -12,6 +12,7 @@
       "bundleIdentifier": "com.anonymous.digivoice"
     },
     "android": {
+      "package": "com.anonymous.digivoice",
       "adaptiveIcon": {
         "backgroundColor": "#E60023",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -22,6 +23,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "30a501c8-bef3-4868-8dd6-4c02d434e459"
+      }
+    },
+    "owner": "aljabrialam"
   }
 }

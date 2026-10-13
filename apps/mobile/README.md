@@ -9,6 +9,24 @@ Real Expo / React Native app (SDK 54, TypeScript). Two modes:
   shield → LLM draft → resolver → validator → policy → device signature →
   gateway → hash-chained audit.
 
+## Native build — EAS (real .apk / .ipa)
+
+Android APK for judges/testers on real phones:
+
+```sh
+npx eas-cli build --platform android --profile preview   # → shareable install link
+npx eas-cli build:list                                    # get the artifact URL
+```
+
+EAS project: [`@aljabrialam/digivoice`](https://expo.dev/accounts/aljabrialam/projects/digivoice).
+The `preview` profile bakes `EXPO_PUBLIC_API_URL` to the deployed service, so
+the installed app runs `LIVE` out of the box. iOS needs a paid Apple Developer
+account (ad-hoc/TestFlight) — skipped for judging.
+
+Real-device cloud testing (TestMu AI, BrowserStack, …): upload the APK artifact
+to run it on a physical cloud device — useful for real-device evidence, but it
+is a testing platform, not hosting; judges get the EAS install link instead.
+
 ## Deployed — no install needed
 
 **https://digivoice-mobile.vercel.app** — the same app, exported for web and served
