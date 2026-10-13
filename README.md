@@ -20,7 +20,7 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 | **The pipeline** | Voice → transcript → LLM drafts typed JSON → code resolves payees/accounts/formulas → independent LLM audits draft vs transcript → policy engine picks the auth tier → confirmation card → Face ID signs → gateway executes → hash-chained audit |
 | **When it stops** | **Freeze** (auditor disagrees) · **Hold/Block** (limits, velocity, KYC, new payee) · **Scam interstitial** (cooling-off + hotline) — all visible, all audited |
 | **Beyond the phone** | One agent, every surface — Meta glasses + Neural Band, watch, car, speaker, earbuds, web. **Wearables propose; only the phone approves.** Four surfaces are real runnable code, not slides: `apps/mobile/` (Expo, all demo paths), `apps/web/` (digibank web + future-surface sims), `apps/glasses-hud/` passes Meta's own test gate, `apps/watch/` compiles for arm64 watchOS |
-| **Stack** | Expo/React Native + TS (mobile) · Node + TS (agent service, mock bank) · zod · vitest · Tencent ADP + Hunyuan + TRTC · Spec Kit |
+| **Stack** | FE: Expo/React Native · React+Vite (glasses) · SwiftUI (watch) · BE: Node+TS, zod, Ed25519 · AI: ADP drafts, Hunyuan validates, TRTC ASR/TTS · [full stack ↓](#tech-stack) |
 | **Demo** | ▶ [Watch the full demo](https://youtu.be/K-hxJaWUQCc) — one pipeline across phone, glasses, watch and web |
 
 **📖 In a hurry? Start here:** [the problem](#the-problem) → [one worked example](#a-concrete-example) → [how it works](#how-it-works) → [every DBS requirement, answered](#mapping-to-the-dbs-challenge) → [the screens](#what-the-user-sees) → [wearables](#beyond-the-phone--wearables) → [vs what's out there](#whats-out-there--and-how-digivoice-differs) → [judge's index](#for-judges)
@@ -43,6 +43,40 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 - [**Phone film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html) — real simulator footage + per-scenario captions
 - [**Glasses film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html) — wearer-view scene, real HUD capture
 - [**Watch film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html) — compiled SwiftUI renders in bezel
+
+## Tech stack
+
+### Frontend — one pipeline, four real clients
+
+| Surface | Stack | Where |
+|---|---|---|
+| **Mobile (signing surface)** | Expo SDK 54 · React Native 0.81 · React 19 · TypeScript 5.9 · `react-native-web` for the browser demo · in-app Ed25519 signing (`node:crypto`-compatible impl in `src/signing.ts`) · eslint-config-expo | `apps/mobile/` |
+| **Meta Ray-Ban Display** | React 19 · Vite · TypeScript · `@wearables-ui-toolkit/mrbd` + icons (Meta's official UI Toolkit — passes Meta's own test gate) | `apps/glasses-hud/` |
+| **Apple Watch** | SwiftUI · watchOS · compiles to `arm64` dylib via `build.sh` | `apps/watch/` |
+| **Web / digibank** | HTML + vanilla JS demo (digibank UI + future-surface sims) | `apps/web/` |
+
+### Backend — the deterministic zone
+
+| Layer | Stack | Where |
+|---|---|---|
+| **Agent service** | Node 20+ · TypeScript · **zero runtime deps** — built-in `node:http` router, JSON-file durable state (`STATE_FILE`), `node:crypto` for Ed25519 + hashing · `tsx` dev runner | `apps/service/` |
+| **Shared pure core** | TypeScript · `zod` (draft schemas) · zero IO — shield, formula eval, policy engine, audit hash-chain · `vitest` (29 cases) | `packages/shared/` |
+| **Mock bank** | Same service, separate module — ledger with ordered multi-step execution + read-back | `apps/service/src/bank/` |
+
+### AI / Tencent Cloud
+
+| Role | Tech | Why |
+|---|---|---|
+| **Drafter** | Tencent **ADP** (`ADP_APP_KEY`) — JSON-only typed drafts | The only model that writes a draft; no tools attached |
+| **Validator** | Tencent **Hunyuan** (`HUNYUAN_SECRET_KEY`) — read-only, different engine than the drafter | Dual-engine semantic audit: a different model family checks the draft against the transcript |
+| **ASR / TTS** | Tencent **TRTC** standalone ASR (16 kHz PCM) + cloud TTS API | Voice in / voice out — never in the decision path |
+| **Fallback** | `mock-drafter` + `mock-validator` providers | Deterministic offline demo; same JSON contract |
+
+Deliberately **not** used: ADP tool-calling and TRTC real-time conversational AI — both bypass the deterministic zone and break Principle I.
+
+### Tooling
+
+**Spec Kit** (spec-driven: `specs/001-conversational-transaction-agent/`) · **CodeBuddy + WorkBuddy** (build sessions — proof in `design/tool-proof/`) · **Playwright** (HUD capture, screenshot evidence) · `ffmpeg`/`simctl` (demo footage) · **Mokkoi** MCP (RN screen scaffolds in `design/mokkoi/`) · GitHub Pages (hosted demos)
 
 ## The problem
 
