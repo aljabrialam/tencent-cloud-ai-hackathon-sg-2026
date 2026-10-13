@@ -4,7 +4,16 @@
 
 <p align="center"><b>One pipeline across phone, glasses, watch and web</b> · <a href="https://youtu.be/K-hxJaWUQCc">youtu.be/K-hxJaWUQCc</a></p>
 
-<p align="center"><b>Try it live</b> — <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html">product mockup</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html">phone film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html">glasses film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html">watch film</a></p>
+<h3 align="center">Live app — running on Vercel</h3>
+
+| URL | Serves |
+|---|---|
+| [digivoice-app.vercel.app](https://digivoice-app.vercel.app) | **Web app** — `apps/web`, the digibank web surface |
+| [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app) | **Phone app** — Expo web build · [`?live=1`](https://digivoice-mobile.vercel.app/?live=1) hits the prod API |
+| [digivoice-hud.vercel.app](https://digivoice-hud.vercel.app) | **Glasses HUD** — Meta Ray-Ban Display surface |
+| [tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs) | **API + Swagger** — every endpoint, *Try it out* enabled |
+
+<p align="center"><b>Interactive mockup</b> — <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html">product mockup</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html">phone film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html">glasses film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html">watch film</a></p>
 
 ### Speak a payment. Code decides. You sign.
 
@@ -254,17 +263,13 @@ cd apps/mobile && npx expo start --web               # then open http://localhos
 
 `?live=1` (web) or `EXPO_PUBLIC_LIVE=1` (native) flips the toggle; a **LIVE** chip in the demo chrome shows the connection state. With live off — the default — the app is pure mock and needs no backend. Every stage fires the real call: listening → `POST /api/drafts`, authorise → `POST /api/drafts/{id}/authorise` + `POST /api/execute` (Ed25519 device signature in-app), audit → `GET /api/audit/{conversationId}`. The sole authorise button still lives only on the phone.
 
-### Deployed API — try it without running anything
+### Deployed — try it without running anything
 
-The service is deployed on Vercel — a live, callable backend, not a mock page:
+Everything is deployed on Vercel — [live URLs at the top of this page](#readme). The service is a live, callable backend, not a mock page:
 
 | | |
 |---|---|
-| **Web app** | [digivoice-app.vercel.app](https://digivoice-app.vercel.app) — the digibank web surface (React + Vite build) |
-| **Phone app** | [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app) — the real Expo app in the browser; add [`?live=1`](https://digivoice-mobile.vercel.app/?live=1) to run it against the deployed pipeline (mock by default) |
-| **Glasses HUD** | [digivoice-hud.vercel.app](https://digivoice-hud.vercel.app) — Meta Ray-Ban Display surface (React + Wearables UI Toolkit) |
 | **API base** | `https://tencent-cloud-ai-hackathon-sg-2026.vercel.app` |
-| **Swagger UI** | [tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs) — every endpoint, *Try it out* enabled |
 | **OpenAPI JSON** | […/api/openapi.json](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/openapi.json) |
 | **Health** | […/health](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/health) — shows active providers |
 
