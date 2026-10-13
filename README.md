@@ -50,18 +50,18 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 
 | Surface | Stack | Where |
 |---|---|---|
-| **Mobile (signing surface)** | Expo SDK 54 · React Native 0.81 · React 19 · TypeScript 5.9 · `react-native-web` for the browser demo · in-app Ed25519 signing (`node:crypto`-compatible impl in `src/signing.ts`) · eslint-config-expo | `apps/mobile/` |
-| **Meta Ray-Ban Display** | React 19 · Vite · TypeScript · `@wearables-ui-toolkit/mrbd` + icons (Meta's official UI Toolkit — passes Meta's own test gate) | `apps/glasses-hud/` |
-| **Apple Watch** | SwiftUI · watchOS · compiles to `arm64` dylib via `build.sh` | `apps/watch/` |
-| **Web / digibank** | HTML + vanilla JS demo (digibank UI + future-surface sims) | `apps/web/` |
+| **Mobile (signing surface)** | Expo SDK 54 · React Native 0.81 · React 19 · TypeScript 5.9 · `react-native-web` for the browser demo · in-app Ed25519 signing ([`src/signing.ts`](apps/mobile/src/signing.ts)) · eslint-config-expo | [`apps/mobile/`](apps/mobile/) |
+| **Meta Ray-Ban Display** | React 19 · Vite · TypeScript · `@wearables-ui-toolkit/mrbd` + icons (Meta's official UI Toolkit — passes Meta's own test gate) | [`apps/glasses-hud/`](apps/glasses-hud/) |
+| **Apple Watch** | SwiftUI · watchOS · compiles to `arm64` dylib via [`build.sh`](apps/watch/build.sh) | [`apps/watch/`](apps/watch/) |
+| **Web / digibank** | HTML + vanilla JS demo (digibank UI + future-surface sims) | [`apps/web/`](apps/web/) |
 
 ### Backend — the deterministic zone
 
 | Layer | Stack | Where |
 |---|---|---|
-| **Agent service** | Node 20+ · TypeScript · **zero runtime deps** — built-in `node:http` router, JSON-file durable state (`STATE_FILE`), `node:crypto` for Ed25519 + hashing · `tsx` dev runner | `apps/service/` |
-| **Shared pure core** | TypeScript · `zod` (draft schemas) · zero IO — shield, formula eval, policy engine, audit hash-chain · `vitest` (29 cases) | `packages/shared/` |
-| **Mock bank** | Same service, separate module — ledger with ordered multi-step execution + read-back | `apps/service/src/bank/` |
+| **Agent service** | Node 20+ · TypeScript · **zero runtime deps** — built-in `node:http` router, JSON-file durable state (`STATE_FILE`), `node:crypto` for Ed25519 + hashing · `tsx` dev runner | [`apps/service/`](apps/service/) |
+| **Shared pure core** | TypeScript · `zod` (draft schemas) · zero IO — shield, formula eval, policy engine, audit hash-chain · `vitest` ([29 cases](packages/shared/test/core.test.ts)) | [`packages/shared/`](packages/shared/) |
+| **Mock bank** | Same service, separate module — ledger with ordered multi-step execution + read-back | [`apps/service/src/bank/`](apps/service/src/bank/) |
 
 ### AI / Tencent Cloud
 
