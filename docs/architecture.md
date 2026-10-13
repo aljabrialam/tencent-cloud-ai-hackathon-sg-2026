@@ -21,31 +21,31 @@ No agent both proposes and approves.
 ```mermaid
 flowchart TB
   subgraph DEVICE["Phone — Expo / React Native"]
-    UI["Screens<br/><small>chat · card · sheets · audit</small>"]
+    UI["Screens<br/>chat · card · sheets · audit"]
     MIC["Voice capture"]
-    KEY["Device keypair<br/><small>Secure Enclave / Keystore (mock in Expo Go)</small>"]
-    BIO["Biometric prompt<br/><small>expo-local-authentication</small>"]
+    KEY["Device keypair<br/>Secure Enclave / Keystore (mock in Expo Go)"]
+    BIO["Biometric prompt<br/>expo-local-authentication"]
   end
 
   subgraph SVC["Agent service — Node / TypeScript"]
     API["HTTP API"]
-    ASR["ASR adapter<br/><small>Tencent Cloud ASR · mock</small>"]
-    SHIELD["Shield<br/><small>injection + scam patterns · sanitiser</small>"]
-    DRAFT["Drafter<br/><small>LLMProvider → TransactionIntent JSON</small>"]
-    SCHEMA["Schema validator<br/><small>zod</small>"]
-    RESOLVE["Resolver<br/><small>payees · accounts · prices · formulas</small>"]
-    VALID["Validation Agent<br/><small>2nd LLMProvider · read-only</small>"]
-    POLICY["Policy engine<br/><small>pure functions · rule table</small>"]
-    AUDIT["Audit log<br/><small>append-only · hash chain</small>"]
+    ASR["ASR adapter<br/>Tencent Cloud ASR · mock"]
+    SHIELD["Shield<br/>injection + scam patterns · sanitiser"]
+    DRAFT["Drafter<br/>LLMProvider → TransactionIntent JSON"]
+    SCHEMA["Schema validator<br/>zod"]
+    RESOLVE["Resolver<br/>payees · accounts · prices · formulas"]
+    VALID["Validation Agent<br/>2nd LLMProvider · read-only"]
+    POLICY["Policy engine<br/>pure functions · rule table"]
+    AUDIT["Audit log<br/>append-only · hash chain"]
   end
 
   subgraph BANK["Mock bank — same service, separate module"]
-    GW["Execution gateway<br/><small>verifies signature · idempotency</small>"]
-    CORE["Core ledger<br/><small>accounts · payees · orders</small>"]
+    GW["Execution gateway<br/>verifies signature · idempotency"]
+    CORE["Core ledger<br/>accounts · payees · orders"]
   end
 
   subgraph LLM["LLM providers (pluggable)"]
-    ADP["Tencent ADP agent<br/><small>AppKey · SSE · JSON-only prompt</small>"]
+    ADP["Tencent ADP agent<br/>AppKey · SSE · JSON-only prompt"]
     HY["Tencent Hunyuan"]
     OA["OpenAI"]
     AN["Anthropic"]

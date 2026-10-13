@@ -98,12 +98,12 @@ The locked demo request, seeded Savings balance S$3,000.00:
 flowchart TB
   G["'Transfer five hundred from my savings to Mum,<br/>then buy DBS shares with half of what's left.'"]
   G --> SH["Shield: no injection, no scam cues"]
-  SH --> D["Drafting LLM → JSON<br/><small>step1 transfer 500 savings→'Mum'<br/>step2 buy_equity 'DBS' amount = half(remaining(savings))</small>"]
-  D --> R["Resolver (code)<br/><small>Mum → PayNow ····4521 · DBS → D05.SI @ S$44.12<br/>3,000 − 500 = 2,500 → half = <b>S$1,250.00</b></small>"]
+  SH --> D["Drafting LLM → JSON<br/>step1 transfer 500 savings→'Mum'<br/>step2 buy_equity 'DBS' amount = half(remaining(savings))"]
+  D --> R["Resolver (code)<br/>Mum → PayNow ····4521 · DBS → D05.SI @ S$44.12<br/>3,000 − 500 = 2,500 → half = <b>S$1,250.00</b>"]
   R --> V{"Validation LLM<br/>draft vs transcript"}
-  V -->|"amount/payee/asset/source agree"| P["Policy engine<br/><small>POL-TIER-03: equity → biometric<br/>velocity ok · KYC verified</small>"]
+  V -->|"amount/payee/asset/source agree"| P["Policy engine<br/>POL-TIER-03: equity → biometric<br/>velocity ok · KYC verified"]
   V -->|"'two hundred' ≠ S$2,000.00"| F["FROZEN — Authorise disabled"]
-  P --> C["Confirmation card<br/><small>Step 1 S$500.00 → Mum · Step 2 S$1,250.00 DBS<br/>formula shown · requires Face ID · expires 0:60</small>"]
+  P --> C["Confirmation card<br/>Step 1 S$500.00 → Mum · Step 2 S$1,250.00 DBS<br/>formula shown · requires Face ID · expires 0:60"]
   C -->|"Face ID → sign(sha256(draft))"| GW{"Gateway verifies<br/>signature over exact draft"}
   C -->|"cancel / edit / timeout"| N["Nothing executed"]
   GW -->|"valid"| E["Execute step 1, then step 2<br/>halt on first failure · idempotent"]
@@ -124,12 +124,12 @@ Two details matter more than they look. The model wrote `half(remaining(savings)
 ```mermaid
 flowchart LR
   subgraph W["Wearables — input & display only"]
-    MIC["Ray-Ban Display<br/><small>mic · speakers · HUD</small>"]
-    BAND["Neural Band<br/><small>pinch → send to phone</small>"]
+    MIC["Ray-Ban Display<br/>mic · speakers · HUD"]
+    BAND["Neural Band<br/>pinch → send to phone"]
   end
   subgraph P["Probabilistic — may be wrong or attacked"]
-    ASR["ASR"] --> L1["Drafting LLM<br/><small>JSON only · no tools</small>"]
-    L2["Validation LLM<br/><small>read-only</small>"]
+    ASR["ASR"] --> L1["Drafting LLM<br/>JSON only · no tools"]
+    L2["Validation LLM<br/>read-only"]
   end
   subgraph D["Deterministic — tested code"]
     S["Schema"] --> RS["Resolver"] --> PO["Policy"] --> SD["Shield"]

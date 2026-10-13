@@ -25,25 +25,25 @@ Three stop points, none of which the language model can skip:
 
 ```mermaid
 flowchart TB
-  U([Customer]) -->|hold mic / type| IN["1 · Input<br/><small>audio or text</small>"]
-  IN --> ASR["2 · Transcribe<br/><small>ASR · transcript shown to user</small>"]
-  ASR --> SH1["3 · Shield (pre)<br/><small>injection + scam cues · sanitise</small>"]
+  U([Customer]) -->|hold mic / type| IN["1 · Input<br/>audio or text"]
+  IN --> ASR["2 · Transcribe<br/>ASR · transcript shown to user"]
+  ASR --> SH1["3 · Shield (pre)<br/>injection + scam cues · sanitise"]
   SH1 -->|"high-risk pattern"| SCAM["Scam interstitial<br/>cooling-off · hotline"]
   SCAM -->|"user proceeds deliberately"| DR
-  SH1 --> DR["4 · Draft<br/><small>LLM → TransactionIntent JSON<br/>schema-validated · no tools</small>"]
-  DR -->|"ambiguous / missing"| CL["5 · Clarify<br/><small>one targeted question</small>"]
+  SH1 --> DR["4 · Draft<br/>LLM → TransactionIntent JSON<br/>schema-validated · no tools"]
+  DR -->|"ambiguous / missing"| CL["5 · Clarify<br/>one targeted question"]
   CL --> DR
-  DR --> RES["6 · Resolve & compute<br/><small>code · payees, accounts, prices,<br/>'half of what's left'</small>"]
-  RES --> VAL["7 · Validate<br/><small>independent read-only LLM<br/>draft vs transcript</small>"]
+  DR --> RES["6 · Resolve & compute<br/>code · payees, accounts, prices,<br/>'half of what's left'"]
+  RES --> VAL["7 · Validate<br/>independent read-only LLM<br/>draft vs transcript"]
   VAL -->|"discrepancy / timeout"| FRZ["FROZEN<br/>Authorise disabled"]
-  VAL --> POL["8 · Policy<br/><small>pure code · tier, limits,<br/>velocity, KYC, new payee</small>"]
+  VAL --> POL["8 · Policy<br/>pure code · tier, limits,<br/>velocity, KYC, new payee"]
   POL -->|"block / hold"| BLK["Blocked or held<br/>reason + rule id"]
-  POL --> CARD["9 · Confirmation card<br/><small>every field · balance after ·<br/>tier · 'verified' badge</small>"]
+  POL --> CARD["9 · Confirmation card<br/>every field · balance after ·<br/>tier · 'verified' badge"]
   CARD -->|"edit any field"| DR
   CARD -->|"cancel / 60 s timeout"| ABN["Abandoned<br/>nothing executed"]
-  CARD --> AUTH["10 · Authorise<br/><small>PIN · biometric · + OOB code<br/>signs hash(draft)</small>"]
-  AUTH --> GW["11 · Gateway<br/><small>verifies signature over exact draft<br/>rejects anything else</small>"]
-  GW --> EX["12 · Execute<br/><small>deterministic · ordered · idempotent</small>"]
+  CARD --> AUTH["10 · Authorise<br/>PIN · biometric · + OOB code<br/>signs hash(draft)"]
+  AUTH --> GW["11 · Gateway<br/>verifies signature over exact draft<br/>rejects anything else"]
+  GW --> EX["12 · Execute<br/>deterministic · ordered · idempotent"]
   EX --> RC["13 · Receipt + audit entry"]
 
   style FRZ fill:#2A1614,stroke:#8B3A34,color:#E6EDF3
@@ -62,8 +62,8 @@ Every box from 1 to 13 appends to the audit log (see §5).
 ```mermaid
 flowchart LR
   subgraph P["Probabilistic zone — may be wrong, may be attacked"]
-    ASR["ASR"] --> LLM1["Drafting LLM<br/><small>outputs JSON only</small>"]
-    LLM2["Validation LLM<br/><small>read-only · compares</small>"]
+    ASR["ASR"] --> LLM1["Drafting LLM<br/>outputs JSON only"]
+    LLM2["Validation LLM<br/>read-only · compares"]
   end
   subgraph D["Deterministic zone — tested code, no model"]
     SCH["Schema validator"] --> RESV["Resolver + arithmetic"]
@@ -152,7 +152,7 @@ Never recorded: PINs, biometric templates, raw credentials.
 flowchart LR
   T["Transcript"] --> D["Draft<br/>step 1: transfer 500 Savings→Mum<br/>step 2: buy D05.SI, amount = half(remaining(Savings) after step 1)"]
   D --> R["Resolver (code)<br/>Savings 3,000 − 500 = 2,500<br/>half = 1,250.00<br/>lot check · indicative price"]
-  R --> C["Card<br/>Step 1 · S$500.00 → Mum<br/>Step 2 · S$1,250.00 DBS shares<br/><small>formula shown</small>"]
+  R --> C["Card<br/>Step 1 · S$500.00 → Mum<br/>Step 2 · S$1,250.00 DBS shares<br/>formula shown"]
   C --> A["One authorisation<br/>signs the whole ordered set"]
   A --> E["Execute in order<br/>halt on first failure"]
 ```
