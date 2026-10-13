@@ -1,5 +1,13 @@
 <img src="design/brand/digivoice-header.svg" height="56" alt="digiVoice · DBS">
 
+<div align="center">
+
+# ▶ [Watch the full demo](https://youtu.be/K-hxJaWUQCc)
+
+**One pipeline across phone, glasses, watch and web** · [youtu.be/K-hxJaWUQCc](https://youtu.be/K-hxJaWUQCc)
+
+</div>
+
 ### Speak a payment. Code decides. You sign.
 
 **Say "send two hundred to Mum for groceries, then buy DBS shares with half of what's left" — and a banking agent drafts it, a second model checks it, deterministic code decides what authorisation it needs, and nothing moves until you sign the exact draft with your face. The model never touches the money.**
@@ -7,8 +15,6 @@
 digiVoice is a Direct Conversational Transaction Agent (DCTA) for the **Banking Track — DBS** at the Tencent Cloud AI CAN DO IT Hackathon Singapore 2026 (Scenario 1: voice-enabled payment and transaction with KYC and basic risk control). It takes the DBS brief literally: GenAI is a *generator of drafts, never an executor of funds*.
 
 Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock biometrics, mock gateway.
-
-**▶ [Watch the full demo](https://youtu.be/K-hxJaWUQCc) — one pipeline across phone, glasses, watch and web**
 
 ---
 
