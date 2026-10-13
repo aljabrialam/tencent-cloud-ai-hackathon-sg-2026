@@ -19,6 +19,7 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 | [digivoice-app.vercel.app](https://digivoice-app.vercel.app) | **Web app** — `apps/web`, the digibank web surface |
 | [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app) | **Phone app** — Expo web build · [`?live=1`](https://digivoice-mobile.vercel.app/?live=1) hits the prod API |
 | [digivoice.apk](https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/download/v1.0.0/digivoice.apk) | **Android app** — real EAS build, installs on a phone · prod API baked in · **Scan to install** via [GitHub Release v1.0.0](https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/tag/v1.0.0): <br><a href="https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/download/v1.0.0/digivoice.apk"><img src="design/digivoice-apk-qr.png" width="120" alt="QR — install digiVoice on Android"></a> |
+| [digivoice-ios.tar.gz](https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/download/v1.0.0/digivoice-ios.tar.gz) | **iOS app** — real EAS build (simulator `.app`, runs in Xcode Simulator) · device `.ipa` needs a paid Apple account |
 | [digivoice-hud.vercel.app](https://digivoice-hud.vercel.app) | **Glasses HUD** — Meta Ray-Ban Display surface |
 | [tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs) | **API + Swagger** — every endpoint, *Try it out* enabled |
 

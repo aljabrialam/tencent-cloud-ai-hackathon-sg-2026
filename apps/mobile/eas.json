@@ -12,6 +12,14 @@
         "EXPO_PUBLIC_API_URL": "https://tencent-cloud-ai-hackathon-sg-2026.vercel.app"
       }
     },
+    "preview-simulator": {
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://tencent-cloud-ai-hackathon-sg-2026.vercel.app"
+      }
+    },
     "production": {
       "autoIncrement": true,
       "env": {

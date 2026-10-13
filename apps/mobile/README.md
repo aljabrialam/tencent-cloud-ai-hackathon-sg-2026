@@ -24,11 +24,15 @@ EAS project: [`@aljabrialam/digivoice`](https://expo.dev/accounts/aljabrialam/pr
 The `preview` profile bakes `EXPO_PUBLIC_API_URL` to the deployed service, so
 the installed app runs `LIVE` out of the box.
 
-**iPhone:** a signed `.ipa` needs a paid Apple Developer account (TestFlight /
-ad-hoc) — out of scope for judging. The deployed web build is installable
-instead: open [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app)
-in **Safari → Share → Add to Home Screen** — real icon, fullscreen standalone,
-same code.
+**iOS — latest build:**
+[`digivoice-ios.tar.gz` (14 MB)](https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/download/v1.0.0/digivoice-ios.tar.gz)
+— real EAS build for iPhone, runs in Xcode Simulator on a Mac:
+`tar -xzf` then `xcrun simctl install booted digiVoice.app`.
+`eas build --platform ios --profile preview-simulator` rebuilds it. A
+device-installable `.ipa` needs a paid Apple Developer account (TestFlight /
+ad-hoc). iPhone judges can also open
+[digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app) in
+**Safari → Share → Add to Home Screen** — real icon, fullscreen, same code.
 
 Real-device cloud testing (TestMu AI, BrowserStack, …): upload the APK artifact
 to run it on a physical cloud device — useful for real-device evidence, but it
