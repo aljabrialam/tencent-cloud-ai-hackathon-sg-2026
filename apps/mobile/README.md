@@ -11,7 +11,8 @@ Real Expo / React Native app (SDK 54, TypeScript). Two modes:
 
 ## Native build — EAS (real .apk / .ipa)
 
-Android APK for judges/testers on real phones:
+Android APK for judges/testers on real phones — **latest build:**
+[`digivoice.apk` (56 MB)](https://expo.dev/artifacts/eas/tY9XcTxAv5INtXoZWzWrdF71162SzbZ10aUSb1rCOy4.apk)
 
 ```sh
 npx eas-cli build --platform android --profile preview   # → shareable install link

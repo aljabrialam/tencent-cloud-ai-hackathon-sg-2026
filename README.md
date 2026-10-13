@@ -10,6 +10,7 @@
 |---|---|
 | [digivoice-app.vercel.app](https://digivoice-app.vercel.app) | **Web app** — `apps/web`, the digibank web surface |
 | [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app) | **Phone app** — Expo web build · [`?live=1`](https://digivoice-mobile.vercel.app/?live=1) hits the prod API |
+| [digivoice.apk](https://expo.dev/artifacts/eas/tY9XcTxAv5INtXoZWzWrdF71162SzbZ10aUSb1rCOy4.apk) | **Android app** — real EAS build, installs on a phone · prod API baked in |
 | [digivoice-hud.vercel.app](https://digivoice-hud.vercel.app) | **Glasses HUD** — Meta Ray-Ban Display surface |
 | [tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs) | **API + Swagger** — every endpoint, *Try it out* enabled |
 
