@@ -1,6 +1,6 @@
 # digiVoice mobile — runnable app (mock + live modes)
 
-Real Expo / React Native app (SDK 57, TypeScript). Two modes:
+Real Expo / React Native app (SDK 54, TypeScript). Two modes:
 
 - **Mock (default)** — no service, no credentials, no network. A single-screen
   state machine walking the documented demo paths from `docs/ux-screens.md`.
@@ -8,6 +8,19 @@ Real Expo / React Native app (SDK 57, TypeScript). Two modes:
 - **Live** — the same screens driven by the real service (`apps/service`):
   shield → LLM draft → resolver → validator → policy → device signature →
   gateway → hash-chained audit.
+
+## Deployed — no install needed
+
+**https://digivoice-app.vercel.app** — the same app, exported for web and served
+from Vercel. Mock by default; [`?live=1`](https://digivoice-app.vercel.app/?live=1)
+runs it against the deployed service (`tencent-cloud-ai-hackathon-sg-2026.vercel.app`,
+auto-selected when not on localhost — `?api=` still overrides).
+
+```sh
+# redeploy the web build
+npx expo export --platform web            # writes dist/ (wipes dist/.vercel)
+cd dist && vercel link --yes --project digivoice-app && vercel --prod
+```
 
 ## Run — mock mode
 
@@ -28,7 +41,7 @@ cd ../mobile && npx expo start --web            # then open http://localhost:808
 |---|---|
 | `?live=1` | web URL |
 | `EXPO_PUBLIC_LIVE=1` | native / Expo Go |
-| `EXPO_PUBLIC_API_URL` or `?api=<url>` | override service URL (default `http://localhost:8787`) |
+| `EXPO_PUBLIC_API_URL` or `?api=<url>` | override service URL (default `http://localhost:8787` on localhost, the Vercel API otherwise) |
 
 A chip in the demo chrome reports the connection: `LIVE`,
 `MOCK · service down`, or `connecting…`. In live mode each stage fires the real

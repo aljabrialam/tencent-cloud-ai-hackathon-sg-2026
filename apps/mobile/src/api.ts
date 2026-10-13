@@ -33,10 +33,13 @@ export interface AuditEntry {
   hash: string;
 }
 
+const PROD_API = 'https://tencent-cloud-ai-hackathon-sg-2026.vercel.app';
+
 export const API_URL =
-  (typeof process !== 'undefined' && process.env?.EXPO_PUBLIC_API_URL) ||
+  (typeof process !== 'undefined' && process.env && process.env.EXPO_PUBLIC_API_URL) ||
   (typeof window !== 'undefined' && window.location
-    ? new URLSearchParams(window.location.search).get('api') || 'http://localhost:8787'
+    ? new URLSearchParams(window.location.search).get('api') ||
+      (/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname) ? 'http://localhost:8787' : PROD_API)
     : 'http://localhost:8787');
 
 async function call<T>(method: string, path: string, body?: unknown): Promise<T> {
