@@ -1,14 +1,10 @@
 <img src="design/brand/digivoice-header.svg" height="56" alt="digiVoice · DBS">
 
-<div align="center">
+<h1 align="center">▶ <a href="https://youtu.be/K-hxJaWUQCc">Watch the full demo</a></h1>
 
-# ▶ [Watch the full demo](https://youtu.be/K-hxJaWUQCc)
+<p align="center"><b>One pipeline across phone, glasses, watch and web</b> · <a href="https://youtu.be/K-hxJaWUQCc">youtu.be/K-hxJaWUQCc</a></p>
 
-**One pipeline across phone, glasses, watch and web** · [youtu.be/K-hxJaWUQCc](https://youtu.be/K-hxJaWUQCc)
-
-**Try it live** — [product mockup](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html) · [phone film](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html) · [glasses film](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html) · [watch film](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html)
-
-</div>
+<p align="center"><b>Try it live</b> — <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html">product mockup</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html">phone film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html">glasses film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html">watch film</a></p>
 
 ### Speak a payment. Code decides. You sign.
 
