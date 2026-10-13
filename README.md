@@ -8,6 +8,8 @@ digiVoice is a Direct Conversational Transaction Agent (DCTA) for the **Banking 
 
 Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock biometrics, mock gateway.
 
+**▶ [Watch the full demo](https://youtu.be/K-hxJaWUQCc) — one pipeline across phone, glasses, watch and web**
+
 ---
 
 ## Summary — the 30-second version
