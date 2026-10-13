@@ -5,7 +5,8 @@ import {StateDetail} from './StateDetail';
 import type {HudState, StateGroup} from './types';
 
 const qs = typeof window !== 'undefined' ? window.location.search : '';
-const initialState = (qs.match(/[?&]state=([a-z]+)/)?.[1] as HudState) ?? null;
+const initialState = (qs.match(/[?&]state=([a-z]+)/)?.[1] as HudState) ??
+  (qs.includes('bare=1') ? null : 'card');
 
 export default function App() {
   const [group, setGroup] = useState<StateGroup | null>(null);

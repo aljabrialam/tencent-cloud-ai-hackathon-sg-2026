@@ -6,7 +6,10 @@ On scam/frozen verdicts the HUD shows "Paused — see your phone".
 
 ## Deployed
 
-**https://digivoice-hud.vercel.app** — production build on Vercel.
+**https://digivoice-hud.vercel.app** — production build on Vercel. The landing
+page composites the app's real state renders (`public/hud/`) onto a drawn
+glasses mock, cycling all 8 states; [`?bare=1`](https://digivoice-hud.vercel.app/?bare=1)
+opens the interactive HUD app itself.
 
 ```sh
 npm run build        # writes dist/ (wipes dist/.vercel)
