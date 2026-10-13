@@ -15,6 +15,15 @@ Real Vite + React + TypeScript app. Two views:
    - **In-car (CarPlay / Android Auto / IVI)** — audio-only while driving; the card
      appears only at standstill; it still can't sign.
 
+## Deployed
+
+**https://digivoice-app.vercel.app** — production build on Vercel.
+
+```sh
+npm run build        # writes dist/ (wipes dist/.vercel)
+cd dist && vercel link --yes --project digivoice-app && vercel --prod
+```
+
 ## Run
 
 ```sh

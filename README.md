@@ -260,7 +260,9 @@ The service is deployed on Vercel — a live, callable backend, not a mock page:
 
 | | |
 |---|---|
-| **Live app** | [digivoice-app.vercel.app](https://digivoice-app.vercel.app) — the real Expo app in the browser; add [`?live=1`](https://digivoice-app.vercel.app/?live=1) to run it against the deployed pipeline (mock by default) |
+| **Web app** | [digivoice-app.vercel.app](https://digivoice-app.vercel.app) — the digibank web surface (React + Vite build) |
+| **Phone app** | [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app) — the real Expo app in the browser; add [`?live=1`](https://digivoice-mobile.vercel.app/?live=1) to run it against the deployed pipeline (mock by default) |
+| **Glasses HUD** | [digivoice-hud.vercel.app](https://digivoice-hud.vercel.app) — Meta Ray-Ban Display surface (React + Wearables UI Toolkit) |
 | **API base** | `https://tencent-cloud-ai-hackathon-sg-2026.vercel.app` |
 | **Swagger UI** | [tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs) — every endpoint, *Try it out* enabled |
 | **OpenAPI JSON** | […/api/openapi.json](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/openapi.json) |

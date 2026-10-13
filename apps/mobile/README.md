@@ -11,15 +11,15 @@ Real Expo / React Native app (SDK 54, TypeScript). Two modes:
 
 ## Deployed — no install needed
 
-**https://digivoice-app.vercel.app** — the same app, exported for web and served
-from Vercel. Mock by default; [`?live=1`](https://digivoice-app.vercel.app/?live=1)
+**https://digivoice-mobile.vercel.app** — the same app, exported for web and served
+from Vercel. Mock by default; [`?live=1`](https://digivoice-mobile.vercel.app/?live=1)
 runs it against the deployed service (`tencent-cloud-ai-hackathon-sg-2026.vercel.app`,
 auto-selected when not on localhost — `?api=` still overrides).
 
 ```sh
 # redeploy the web build
 npx expo export --platform web            # writes dist/ (wipes dist/.vercel)
-cd dist && vercel link --yes --project digivoice-app && vercel --prod
+cd dist && vercel link --yes --project digivoice-mobile && vercel --prod
 ```
 
 ## Run — mock mode
