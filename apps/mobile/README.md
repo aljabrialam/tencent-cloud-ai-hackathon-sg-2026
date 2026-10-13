@@ -1,10 +1,15 @@
-# digiVoice mobile — runnable demo app
+# digiVoice mobile — runnable app (mock + live modes)
 
-Real Expo / React Native app (SDK 57, TypeScript). Mock data only — no service, no
-credentials, no network. The app is a single-screen state machine that walks the
-documented demo paths from `docs/ux-screens.md`.
+Real Expo / React Native app (SDK 57, TypeScript). Two modes:
 
-## Run
+- **Mock (default)** — no service, no credentials, no network. A single-screen
+  state machine walking the documented demo paths from `docs/ux-screens.md`.
+  This is the demo/recording mode.
+- **Live** — the same screens driven by the real service (`apps/service`):
+  shield → LLM draft → resolver → validator → policy → device signature →
+  gateway → hash-chained audit.
+
+## Run — mock mode
 
 ```sh
 npm install
@@ -12,12 +17,35 @@ npx expo start        # scan with Expo Go on your phone
 npx expo start --web  # or open in a browser (add ?bare=1 to hide demo chrome)
 ```
 
+## Run — live mode
+
+```sh
+cd ../service && npm install && npm run dev     # real service on :8787
+cd ../mobile && npx expo start --web            # then open http://localhost:8081?live=1
+```
+
+| Toggle | Where |
+|---|---|
+| `?live=1` | web URL |
+| `EXPO_PUBLIC_LIVE=1` | native / Expo Go |
+| `EXPO_PUBLIC_API_URL` or `?api=<url>` | override service URL (default `http://localhost:8787`) |
+
+A chip in the demo chrome reports the connection: `LIVE`,
+`MOCK · service down`, or `connecting…`. In live mode each stage fires the real
+call — listening → `POST /api/drafts`, authorise → `POST /api/drafts/{id}/authorise`
++ `POST /api/execute` (Ed25519 signature generated in-app), audit →
+`GET /api/audit/{id}`. If the service is unreachable the app falls back to mock
+data and the badge says so — it never silently fakes a live result.
+
 ## What's inside
 
 | File | What it does |
 |---|---|
-| `App.tsx` | Orchestrator — scenario picker + `Next` through the demo path. |
-| `src/mock.ts` | Accounts, payees, the draft object, audit chain, `DEMO_PATHS`. |
+| `App.tsx` | Orchestrator — scenario picker, `Next` through the demo path, live wiring. |
+| `src/mock.ts` | Mock mode: accounts, payees, draft object, audit chain, `DEMO_PATHS`. |
+| `src/api.ts` | Service client — thin fetch wrapper over the API contract. |
+| `src/live.ts` | `useLive` hook — maps each trigger stage to the real service call. |
+| `src/signing.ts` | Ed25519 draft signing in-app (Metro can't import `packages/`). |
 | `src/theme.ts` | Design tokens — the AA-verified palette from `docs/ux-accessibility-audit.md`. |
 | `src/screens/` | Home, Listening (animated waveform), Clarify, Confirm (+multi-intent), Frozen, Scam, Authorise, Receipt, Audit. |
 
