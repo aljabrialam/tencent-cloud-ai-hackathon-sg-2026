@@ -1,11 +1,11 @@
 // Deterministic resolution: model refs (names as the user said them) → ids,
 // Money/Formula → concrete cents, ambiguity → targeted questions. The model
 // never sees balances or ids (FR-002/003/004).
-import { evalAmount, formulaText, isMoney, spent, type FormulaCtx } from '@digivoice/shared/formula';
+import { evalAmount, formulaText, isMoney, spent, type FormulaCtx } from '../../../packages/shared/src/formula.js';
 import type {
   Ambiguity, DraftInputStep, IntentStep, ResolvedStep, UnsupportedStep,
-} from '@digivoice/shared/types';
-import { get } from './store';
+} from '../../../packages/shared/src/types.js';
+import { get } from './store.js';
 
 export interface ResolveOut {
   steps: ResolvedStep[];
@@ -64,7 +64,7 @@ export function resolve(input: DraftInputStep[], priorAnswers: Record<string, st
     if (s.kind === 'bill_payment') {
       const c = matchAll(st.billers.map(b => ({ ...b, aliases: b.aliases })), s.billerRef);
       if (c.length === 1) step.billerId = c[0].id;
-      else if (c.length > 1) ambiguities.push({ field: 'biller', question: `Which biller?`, candidates: c.map(b => ({ id: b.id, label: b.name, detail: b.mask })) });
+      else if (c.length > 1) ambiguities.push({ field: 'biller', question: `Which biller?`, candidates: c.map(b => ({ id: b.id, label: b.name, detail: (b as { mask?: string }).mask ?? '' })) });
       else if (s.billerRef) step.billerId = st.billers[0]?.id;
     }
     if (s.kind === 'buy_equity') {

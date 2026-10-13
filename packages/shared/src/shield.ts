@@ -1,5 +1,5 @@
 // SHD-* pre-draft shield: injection stripping + scam cue detection (FR-009).
-import type { ShieldFlag, ShieldResult } from './types';
+import type { ShieldFlag, ShieldResult } from './types.js';
 
 interface Pattern { id: string; kind: 'injection' | 'scam'; re: RegExp }
 

@@ -5,7 +5,7 @@ import { dirname } from 'node:path';
 import type {
   Account, Asset, AuditEntry, Biller, Customer, HistoryEntry,
   Payee, TransactionDraft,
-} from '@digivoice/shared/types';
+} from '../../../packages/shared/src/types.js';
 
 export interface Transcript { id: string; text: string; raw: string; lang: string; ts: number; warnings: string[] }
 export interface DeviceKey { deviceId: string; publicKey: string }

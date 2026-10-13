@@ -254,6 +254,29 @@ cd apps/mobile && npx expo start --web               # then open http://localhos
 
 `?live=1` (web) or `EXPO_PUBLIC_LIVE=1` (native) flips the toggle; a **LIVE** chip in the demo chrome shows the connection state. With live off — the default — the app is pure mock and needs no backend. Every stage fires the real call: listening → `POST /api/drafts`, authorise → `POST /api/drafts/{id}/authorise` + `POST /api/execute` (Ed25519 device signature in-app), audit → `GET /api/audit/{conversationId}`. The sole authorise button still lives only on the phone.
 
+### Deployed API — try it without running anything
+
+The service is deployed on Vercel — a live, callable backend, not a mock page:
+
+| | |
+|---|---|
+| **API base** | `https://tencent-cloud-ai-hackathon-sg-2026.vercel.app` |
+| **Swagger UI** | [tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs) — every endpoint, *Try it out* enabled |
+| **OpenAPI JSON** | […/api/openapi.json](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/openapi.json) |
+| **Health** | […/health](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/health) — shows active providers |
+
+```sh
+# point the app at the deployed API instead of localhost
+EXPO_PUBLIC_API_URL=https://tencent-cloud-ai-hackathon-sg-2026.vercel.app npx expo start --web   # open :8081?live=1
+
+# or replay the whole pipeline against prod
+./scripts/happy_path.sh https://tencent-cloud-ai-hackathon-sg-2026.vercel.app
+```
+
+Verified end-to-end on the deployed API: draft → sign → gateway execute → ledger read-back → audit chain (`chainOk: true`), plus unsigned 403, scam shield, injection shield and clarify — the same checks as `happy_path.sh`.
+
+Honest caveat: state lives in a per-instance JSON file (`/tmp`) on serverless — durable while the instance is warm, but not across cold starts or redeploys. It's the same mock-bank honesty as everything else; a real deployment would point `STATE_FILE` at managed storage.
+
 End-to-end proof script: `scripts/happy_path.sh` (happy path + multi-intent + clarify + unsigned/tampered rejection + scam shield + audit-chain verification).
 
 ## Who it is for

@@ -1,12 +1,12 @@
 // Execution gateway — signature-only entry (FR-007/014). The conversational
 // pipeline has no path here; only the app calls it, with a signature over the
 // exact stored draft hash. Any edit ⇒ different hash ⇒ rejected.
-import { mockVerify } from '@digivoice/shared/signing';
-import type { TransactionDraft } from '@digivoice/shared/types';
-import { get, save } from '../store';
-import { append } from '@digivoice/shared/audit';
-import { execute } from './ledger';
-import type { ExecutionResult } from '@digivoice/shared/types';
+import { mockVerify } from '../../../../packages/shared/src/signing.js';
+import type { TransactionDraft } from '../../../../packages/shared/src/types.js';
+import { get, save } from '../store.js';
+import { append } from '../../../../packages/shared/src/audit.js';
+import { execute } from './ledger.js';
+import type { ExecutionResult } from '../../../../packages/shared/src/types.js';
 
 export type GateResult =
   | { ok: true; execution: ExecutionResult }

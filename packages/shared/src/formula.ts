@@ -1,6 +1,6 @@
 // Symbolic amount evaluation — the model emits formulas, code computes.
 // remaining(account) is evaluated against balance AFTER prior steps (R3).
-import type { Formula, Money } from './types';
+import type { Formula, Money } from './types.js';
 
 export interface FormulaCtx {
   balances: Record<string, number>;  // accountId → cents at draft time

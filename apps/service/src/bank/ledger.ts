@@ -1,8 +1,8 @@
 // Mock bank core — the ONLY writer to balances. Ordered steps, halt-on-first-
 // failure (FR-013), ledger read-back for the receipt (Principle IV).
-import type { ExecutionResult, TransactionDraft } from '@digivoice/shared/types';
-import { get, save } from '../store';
-import { append } from '@digivoice/shared/audit';
+import type { ExecutionResult, TransactionDraft } from '../../../../packages/shared/src/types.js';
+import { get, save } from '../store.js';
+import { append } from '../../../../packages/shared/src/audit.js';
 
 export function execute(draft: TransactionDraft): ExecutionResult {
   const st = get();

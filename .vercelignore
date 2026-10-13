@@ -1,0 +1,16 @@
+# everything except what the function needs
+demo/
+design/
+apps/mobile/
+apps/watch/
+apps/web/
+apps/glasses-hud/
+scripts/
+specs/
+docs/
+.specify/
+.devin/
+.claude/
+README.md
+AGENTS.md
+*.log

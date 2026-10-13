@@ -1,6 +1,6 @@
 // Append-only, tamper-evident audit chain (FR-011). hash = sha256(prevHash + canonical(payload)).
-import { canonical, sha256Hex } from './signing';
-import type { AuditEntry, AuditStage } from './types';
+import { canonical, sha256Hex } from './signing.js';
+import type { AuditEntry, AuditStage } from './types.js';
 
 const GENESIS = '0'.repeat(64);
 

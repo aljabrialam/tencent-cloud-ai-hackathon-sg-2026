@@ -1,15 +1,15 @@
 // Draft pipeline: shield → drafter → schema gate → resolve → policy → signable
 // draft. Validator runs after resolution (separate call site in index.ts).
-import { draftInputSchema } from '@digivoice/shared/schema';
-import { draftHash } from '@digivoice/shared/signing';
-import { evaluate } from '@digivoice/shared/policy/engine';
-import { T } from '@digivoice/shared/policy/thresholds';
-import { fmt } from '@digivoice/shared/formula';
-import type { DraftInputStep, TransactionDraft } from '@digivoice/shared/types';
-import { drafter } from './provider';
-import { resolve } from '../resolver';
-import { get, save } from '../store';
-import { append } from '@digivoice/shared/audit';
+import { draftInputSchema } from '../../../../packages/shared/src/schema.js';
+import { draftHash } from '../../../../packages/shared/src/signing.js';
+import { evaluate } from '../../../../packages/shared/src/policy/engine.js';
+import { T } from '../../../../packages/shared/src/policy/thresholds.js';
+import { fmt } from '../../../../packages/shared/src/formula.js';
+import type { DraftInputStep, TransactionDraft } from '../../../../packages/shared/src/types.js';
+import { drafter } from './provider.js';
+import { resolve } from '../resolver.js';
+import { get, save } from '../store.js';
+import { append } from '../../../../packages/shared/src/audit.js';
 
 const DRAFT_SYSTEM = `You convert a banking request into JSON steps for a parser. Emit ONLY a JSON array — no prose, no markdown.
 Kinds: {"kind":"transfer"}, {"kind":"bill_payment"}, {"kind":"buy_equity"}; anything else → {"kind":"unsupported","text":...}.

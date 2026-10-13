@@ -22,3 +22,4 @@ __pycache__/
 # Local agent config (not for the public repo)
 .claude/
 .devin/skills/
+.vercel

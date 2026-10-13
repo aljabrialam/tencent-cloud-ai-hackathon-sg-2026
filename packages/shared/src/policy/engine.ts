@@ -1,10 +1,10 @@
 // Pure policy engine: (draft steps, ctx) → PolicyResult. Highest tier wins.
 // Every rule is a named, testable decision (FR-010, docs/policy-rules.md).
-import { T } from './thresholds';
+import { T } from './thresholds.js';
 import type {
   ResolvedStep, PolicyDecision, PolicyResult, Tier,
   Customer, Account, Payee, Asset, HistoryEntry,
-} from '../types';
+} from '../types.js';
 
 export interface PolicyCtx {
   customer: Customer;
