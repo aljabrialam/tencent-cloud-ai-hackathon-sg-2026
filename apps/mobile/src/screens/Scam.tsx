@@ -11,7 +11,7 @@ export function Scam({ onDone }: { onDone: () => void }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={s.h}>⚠ Pause. This looks like a scam.</Text>
         <View style={s.banner}>
-          <Text style={s.bannerT}><Text style={{ fontWeight: '800' }}>Why we're pausing</Text> — your request has patterns scammers use.</Text>
+          <Text style={s.bannerT}><Text style={{ fontWeight: '800' }}>Why we&apos;re pausing</Text> — your request has patterns scammers use.</Text>
         </View>
         <View style={s.card}>
           {SCAM_REASONS.map(r => (

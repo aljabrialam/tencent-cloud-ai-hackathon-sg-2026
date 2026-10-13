@@ -23,7 +23,7 @@ export function Authorise({ onDone, draft = DRAFT }: { onDone: () => void; draft
       <TopBar />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>
         <Text style={s.h}>Authorise</Text>
-        <Text style={s.hsub}>This code identifies <Text style={{ fontWeight: '800' }}>exactly</Text> what you're approving. Any change = a new code = new signature.</Text>
+        <Text style={s.hsub}>This code identifies <Text style={{ fontWeight: '800' }}>exactly</Text> what you&apos;re approving. Any change = a new code = new signature.</Text>
         <View style={s.hash}><Text style={s.hashT}>{draft.id.split('·').join(' · ')}</Text></View>
         <Animated.View style={[s.face, { transform: [{ scale: pulse }] }]}>
           <Text style={s.faceT}>🙂</Text>

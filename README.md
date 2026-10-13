@@ -201,7 +201,20 @@ cd apps/mobile && npm install && npx expo start   # Expo Go — or --web for bro
   <img src="apps/mobile/screenshots/app-audit.png" width="19%" alt="Running app — Audit">
 </p>
 
-Captured from the running app, not the mockup (`apps/mobile/screenshots/`). All mock data — the sole authorise button lives only here.
+Captured from the running app, not the mockup (`apps/mobile/screenshots/`).
+
+### Live mode — same UI, real pipeline
+
+The same app can also run against the **real deterministic pipeline** — shield → LLM draft → resolver → validator → policy → device signature → gateway → hash-chained audit — implemented in `packages/shared` + `apps/service`:
+
+```sh
+cd apps/service && npm install && npm run dev        # service on :8787 (mock drafter/validator by default)
+cd apps/mobile && npx expo start --web               # then open http://localhost:8081?live=1
+```
+
+`?live=1` (web) or `EXPO_PUBLIC_LIVE=1` (native) flips the toggle; a **LIVE** chip in the demo chrome shows the connection state. With live off — the default — the app is pure mock and needs no backend. Every stage fires the real call: listening → `POST /api/drafts`, authorise → `POST /api/drafts/{id}/authorise` + `POST /api/execute` (Ed25519 device signature in-app), audit → `GET /api/audit/{conversationId}`. The sole authorise button still lives only on the phone.
+
+End-to-end proof script: `scripts/happy_path.sh` (happy path + multi-intent + clarify + unsigned/tampered rejection + scam shield + audit-chain verification).
 
 ## Who it is for
 

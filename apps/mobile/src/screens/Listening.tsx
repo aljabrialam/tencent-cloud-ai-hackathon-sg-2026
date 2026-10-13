@@ -44,7 +44,7 @@ export function Listening({ onStop, transcript }: { onStop: () => void; transcri
     <View style={s.c}>
       <TopBar />
       <View style={s.badge}><View style={s.dot} /><Text style={s.badgeT}>Listening…</Text></View>
-      <Text style={s.title}>I'm listening</Text>
+      <Text style={s.title}>I&apos;m listening</Text>
       <View style={s.wave}>
         {anims.map((a, i) => (
           <Animated.View key={i} style={[s.bar, { height: BARS[i], transform: [{ scaleY: a }] }]} />

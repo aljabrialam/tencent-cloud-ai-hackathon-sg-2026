@@ -19,7 +19,7 @@ export function Frozen({ onAudit }: { onAudit: () => void }) {
           <View style={s.cmp}>
             <View style={{ flex: 1 }}>
               <Text style={s.cmpK}>You said</Text>
-              <Text style={s.cmpV}>"two hundred"</Text>
+              <Text style={s.cmpV}>&quot;two hundred&quot;</Text>
             </View>
             <View style={{ flex: 1 }}>
               <Text style={s.cmpK}>Draft shows</Text>

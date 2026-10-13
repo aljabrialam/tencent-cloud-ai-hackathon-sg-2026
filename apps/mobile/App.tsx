@@ -12,6 +12,7 @@ import { Scam } from './src/screens/Scam';
 import { Authorise } from './src/screens/Authorise';
 import { Receipt } from './src/screens/Receipt';
 import { Audit } from './src/screens/Audit';
+import { useLive } from './src/live';
 
 const SCENARIOS = Object.keys(DEMO_PATHS);
 
@@ -20,6 +21,11 @@ const qs =
 const IS_NATIVE = qs === '';
 const AUTO = /[?&]auto=1/.test(qs) || IS_NATIVE; // native demo devices self-walk
 const BARE = /[?&]bare=1/.test(qs) || IS_NATIVE; // and never show demo chrome
+// live mode: real service pipeline (apps/service). ?live=1 on web,
+// EXPO_PUBLIC_LIVE=1 on native. Off → pure mock, no network.
+const LIVE =
+  /[?&]live=1/.test(qs) ||
+  (typeof process !== 'undefined' && !!process.env?.EXPO_PUBLIC_LIVE);
 
 export default function App() {
   const scnMatch = qs.match(/[?&]scn=(\d)/);
@@ -52,13 +58,34 @@ export default function App() {
   const next = () => setIdx(i => Math.min(i + 1, path.length - 1));
   const pickScenario = (name: string) => { setScenario(name); setIdx(0); };
 
+  // live pipeline — reset per scenario, fire the real call per trigger stage
+  const live = useLive(LIVE);
+  useEffect(() => {
+    if (LIVE && live.ok === true) live.reset();
+  }, [scenario, live.ok]);
+  useEffect(() => {
+    if (LIVE && live.ok === true) live.advance(stage, TRANSCRIPTS[scenario].text);
+  }, [stage, scenario, live.ok]);
+
+  const liveDraft = LIVE && live.ok ? live.cardDraft : null;
+  const liveAudit = LIVE && live.ok && live.audit ? live.audit : null;
+
   return (
     <View style={s.c}>
       <StatusBar style="dark" />
       {/* demo chrome — not part of the product UI; ?bare=1 hides it for screenshots */}
       {!BARE && (
       <View style={s.chrome}>
-        <Text style={s.chromeLbl} numberOfLines={1}>{scenario} · {stage} ({idx + 1}/{path.length})</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 7 }}>
+          <Text style={s.chromeLbl} numberOfLines={1}>{scenario} · {stage} ({idx + 1}/{path.length})</Text>
+          {LIVE && (
+            <View style={[s.modeChip, live.ok === true ? s.modeLive : live.ok === false ? s.modeDown : s.modeWait]}>
+              <Text style={s.modeT}>
+                {live.ok === true ? 'LIVE' : live.ok === false ? 'MOCK · service down' : 'connecting…'}
+              </Text>
+            </View>
+          )}
+        </View>
         <View style={s.chromeRow}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
             {SCENARIOS.map(n => (
@@ -78,13 +105,13 @@ export default function App() {
         {stage === 'home' && <Home onMic={() => go('listening')} />}
         {stage === 'listening' && <Listening transcript={TRANSCRIPTS[scenario]} onStop={next} />}
         {stage === 'clarify' && <Clarify onPick={next} />}
-        {stage === 'confirm' && <Confirm draft={DRAFTS[scenario]} onAuthorise={next} />}
+        {stage === 'confirm' && <Confirm draft={liveDraft ?? DRAFTS[scenario]} onAuthorise={next} />}
         {stage === 'confirm-multi' && <Confirm multi onAuthorise={next} />}
         {stage === 'frozen' && <Frozen onAudit={() => go('audit')} />}
         {stage === 'scam' && <Scam onDone={next} />}
-        {stage === 'authorise' && <Authorise draft={DRAFTS[scenario]} onDone={next} />}
-        {stage === 'receipt' && <Receipt draft={DRAFTS[scenario]} onAudit={() => go('audit')} onHome={() => setIdx(0)} />}
-        {stage === 'audit' && <Audit entries={AUDITS[scenario]} onHome={() => setIdx(0)} />}
+        {stage === 'authorise' && <Authorise draft={liveDraft ?? DRAFTS[scenario]} onDone={next} />}
+        {stage === 'receipt' && <Receipt draft={liveDraft ?? DRAFTS[scenario]} onAudit={() => go('audit')} onHome={() => setIdx(0)} />}
+        {stage === 'audit' && <Audit entries={liveAudit ?? AUDITS[scenario]} onHome={() => setIdx(0)} />}
       </View>
     </View>
   );
@@ -100,5 +127,10 @@ const s = StyleSheet.create({
   scnT: { fontSize: 11, fontWeight: '700', color: T.muted },
   scnTOn: { color: '#fff' },
   next: { backgroundColor: T.red, borderRadius: 999, paddingHorizontal: 14, paddingVertical: 8 },
+  modeChip: { borderRadius: 999, paddingHorizontal: 8, paddingVertical: 2 },
+  modeLive: { backgroundColor: '#1a7f37' },
+  modeDown: { backgroundColor: '#b45309' },
+  modeWait: { backgroundColor: T.muted },
+  modeT: { color: '#fff', fontSize: 10, fontWeight: '800', letterSpacing: 0.4 },
   nextT: { color: '#fff', fontSize: 12, fontWeight: '800' },
 });

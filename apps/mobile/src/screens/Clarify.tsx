@@ -11,7 +11,7 @@ export function Clarify({ onPick }: { onPick: () => void }) {
       <TopBar />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={s.h}>One question</Text>
-        <Text style={s.hsub}>"Send fifty to John"</Text>
+        <Text style={s.hsub}>&quot;Send fifty to John&quot;</Text>
         <View style={s.bubble}>
           <Text style={s.bubbleT}>I found two payees named <Text style={{ fontWeight: '800' }}>John</Text>. Which one?</Text>
         </View>

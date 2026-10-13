@@ -18,3 +18,7 @@ __pycache__/
 .idea/
 .vscode/
 .devin/commands/
+
+# Local agent config (not for the public repo)
+.claude/
+.devin/skills/
