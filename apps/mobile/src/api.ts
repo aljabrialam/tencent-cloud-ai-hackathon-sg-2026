@@ -55,7 +55,10 @@ export const api = {
   home: () => call<{ customer: { name: string }; accounts: { id: string; label: string; mask: string; balanceCents: number }[]; recent: { ts: number; amountCents: number; payee: string; status: string }[] }>('GET', '/api/home'),
   registerKey: (publicKey: string, deviceId: string) =>
     call<{ registered: boolean }>('POST', '/api/device/keys', { publicKey, deviceId }),
-  draft: (text: string) => call<{ draft?: LiveDraft; scam?: { cues: string[]; coolingOffMs: number; hotline: string } }>('POST', '/api/drafts', { text }),
+  transcribe: (body: { text?: string; audio?: string; mime?: string; hint?: string; lang?: string }) =>
+    call<{ transcriptId: string; text: string; lang: string; warnings: string[]; scamCues: number }>('POST', '/api/transcribe', body),
+  draft: (body: { text?: string; transcriptId?: string; lang?: string }) =>
+    call<{ draft?: LiveDraft; scam?: { cues: string[]; coolingOffMs: number; hotline: string } }>('POST', '/api/drafts', body),
   clarify: (id: string, field: string, choice: string) =>
     call<{ draft: LiveDraft }>('POST', `/api/drafts/${id}/clarify`, { field, choice }),
   authorise: (id: string, tier: string, method: string, signature: string, deviceId: string) =>

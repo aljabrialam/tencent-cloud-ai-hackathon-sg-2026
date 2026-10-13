@@ -41,10 +41,18 @@ export const verdictSchema = z.object({
   })).default([]),
 }).strict();
 
-export const transcribeBody = z.object({ text: z.string().min(1).max(2000) }).strict();
+export const langSchema = z.enum(['en', 'zh', 'ms', 'ta']);
+export const transcribeBody = z.object({
+  text: z.string().min(1).max(2000).optional(),
+  audio: z.string().min(1).max(2_000_000).optional(), // base64 capture (webm/pcm)
+  mime: z.string().max(100).optional(),
+  hint: z.string().max(2000).optional(), // mock-asr sidecar for demo reproducibility
+  lang: langSchema.default('en'),
+}).strict().refine(b => b.text || b.audio || b.hint, { message: 'text, audio or hint required' });
 export const draftsBody = z.object({
   transcriptId: z.string().optional(),
   text: z.string().min(1).max(2000).optional(),
+  lang: langSchema.default('en'),
 }).strict().refine(b => b.transcriptId || b.text, { message: 'transcriptId or text required' });
 export const clarifyBody = z.object({
   field: z.string().optional(),

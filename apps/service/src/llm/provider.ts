@@ -159,14 +159,77 @@ function parseClause(clause: string): Record<string, unknown> | null {
   return null;
 }
 
+// FR-016: zh/ms/ta reach the same typed pipeline. The mock drafter normalises
+// the demo-corpus phrases to English before parsing — a real provider handles
+// the languages natively through the identical JSON contract.
+const PRE: [RegExp, string][] = [
+  // zh — longer patterns first
+  [/剩下的?一半|一半的?剩余|半数/g, " half of what's left "],
+  [/转账|汇款|转给|转/g, ' send '],
+  [/两百|二百/g, ' two hundred '],
+  [/一百/g, ' one hundred '],
+  [/五十/g, ' fifty '],
+  [/给妈妈|给母亲/g, ' to Mum '],
+  [/买|购买/g, ' buy '],
+  [/股票|股份/g, ' shares '],
+  [/然后|接着|并且|再/g, ' then '],
+  // ms
+  [/separuh (baki|yang tinggal)/g, " half of what's left "],
+  [/hantar|pindahkan?/g, ' send '],
+  [/bayar/g, ' pay '],
+  [/kepada|untuk/g, ' to '],
+  [/ibu|emak|mak/g, ' Mum '],
+  [/dua ratus/g, ' two hundred '],
+  [/seratus/g, ' one hundred '],
+  [/lima puluh/g, ' fifty '],
+  [/kemudian/g, ' then '],
+  // ta — minimal: 200 to Mum
+  [/அனுப்பு/g, ' send '],
+  [/அம்மா/g, ' Mum '],
+];
+
+function normaliseLang(t: string): string {
+  let s = t;
+  for (const [re, to] of PRE) s = s.replace(re, to);
+  return s.replace(/\s{2,}/g, ' ').trim();
+}
+
 export const mockProvider: LLMProvider = {
   name: 'mock-drafter',
   async complete(_system, user) {
-    const transcript = (user.match(/"""([\s\S]*?)"""/) ?? [])[1] ?? '';
+    const transcript = normaliseLang((user.match(/"""([\s\S]*?)"""/) ?? [])[1] ?? '');
     const clauses = transcript.split(/\bthen\b|, then|;| and (?:then )?buy| and (?:then )?pay| and (?:then )?send| and (?:then )?transfer/i).map(s => s.trim()).filter(Boolean);
     const steps = clauses.map(parseClause).filter(Boolean);
     if (!steps.length) return JSON.stringify([{ kind: 'unsupported', text: transcript.slice(0, 200) }]);
     return JSON.stringify(steps);
+  },
+};
+
+// ---------------------------------------------------------------------------
+// ASR provider (FR-021 voice path). Mock ASR recognises the demo `hint` sidecar
+// and is labelled 'mock-asr' in the audit trail; TRTC ASR plugs in via env —
+// without its SDK signature wiring the call fails closed with a 502.
+
+export interface ASRProvider {
+  name: string;
+  recognise(audioB64: string, mime: string, lang: string, hint?: string): Promise<string>;
+}
+
+export function asr(): ASRProvider {
+  if (env('TRTC_ASR_SDK_APP_ID')) return {
+    name: 'trtc-asr',
+    async recognise() {
+      throw new Error('trtc-asr: SDK signature wiring pending (AppID set but no signer) — unset TRTC_ASR_SDK_APP_ID to use mock-asr');
+    },
+  };
+  return mockAsr;
+}
+
+export const mockAsr: ASRProvider = {
+  name: 'mock-asr',
+  async recognise(_audio, _mime, _lang, hint) {
+    if (!hint) throw new Error('mock-asr: no hint sidecar — mock cannot decode audio (provider is labelled, never fakes)');
+    return hint;
   },
 };
 

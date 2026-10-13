@@ -13,7 +13,7 @@ import { get, save, reseed, type Transcript } from './store';
 import { makeDraft } from './llm/draft';
 import { validate } from './llm/validate';
 import { gate } from './bank/gateway';
-import { drafter, validator } from './llm/provider';
+import { drafter, validator, asr } from './llm/provider';
 import { draftHash } from '@digivoice/shared/signing';
 import { T } from '@digivoice/shared/policy/thresholds';
 
@@ -32,7 +32,7 @@ const route = (method: string, path: string, h: Handler) =>
 // ---------- contract routes ----------
 route('GET', '/health', async () => json(200, {
   ok: true,
-  providers: { drafter: drafter().name, validator: validator().name, asr: 'mock', tts: 'mock' },
+  providers: { drafter: drafter().name, validator: validator().name, asr: asr().name, tts: 'mock' },
   seeded: true,
 }));
 
@@ -57,14 +57,17 @@ route('POST', '/api/device/keys', async ({ body }) => {
 route('POST', '/api/transcribe', async ({ body }) => {
   const b = transcribeBody.parse(body);
   const st = get();
-  const sh = shield(b.text);
-  const t: Transcript = { id: id('trn'), text: sh.clean, raw: b.text, lang: 'en', ts: Date.now(), warnings: sh.flags.map(f => f.id) };
+  // Voice path (FR-021): audio bytes → ASR provider. Mock ASR recognises the
+  // demo `hint` sidecar; real engines plug in via env (provider name audited).
+  const asrText = b.audio ? await asr().recognise(b.audio, b.mime ?? 'audio/webm', b.lang, b.hint) : (b.text ?? b.hint)!;
+  const sh = shield(asrText);
+  const t: Transcript = { id: id('trn'), text: sh.clean, raw: asrText, lang: b.lang, ts: Date.now(), warnings: sh.flags.map(f => f.id) };
   st.transcripts.push(t);
-  append(st.audit, 'input', { transcriptId: t.id, len: b.text.length });
+  append(st.audit, 'input', { transcriptId: t.id, len: asrText.length, lang: b.lang, asr: b.audio ? asr().name : 'text' });
   append(st.audit, 'shield', { transcriptId: t.id, flags: sh.flags.map(f => f.id), scamCues: sh.scamCueCount, injection: sh.injection });
   save();
   return json(200, {
-    transcriptId: t.id, text: sh.clean, lang: 'en',
+    transcriptId: t.id, text: sh.clean, lang: b.lang,
     warnings: [...new Set(sh.flags.map(f => f.id))],
     scamCues: sh.scamCueCount,
     injection: sh.injection,
@@ -78,7 +81,7 @@ route('POST', '/api/drafts', async ({ body }) => {
   if (!transcript) {
     // text path — run shield here so drafts API is self-contained
     const sh = shield(b.text!);
-    transcript = { id: id('trn'), text: sh.clean, raw: b.text!, lang: 'en', ts: Date.now(), warnings: sh.flags.map(f => f.id) };
+    transcript = { id: id('trn'), text: sh.clean, raw: b.text!, lang: b.lang, ts: Date.now(), warnings: sh.flags.map(f => f.id) };
     st.transcripts.push(transcript);
     append(st.audit, 'input', { transcriptId: transcript.id });
     append(st.audit, 'shield', { transcriptId: transcript.id, flags: sh.flags.map(f => f.id), scamCues: sh.scamCueCount });

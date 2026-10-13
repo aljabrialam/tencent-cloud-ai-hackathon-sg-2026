@@ -4,6 +4,7 @@
 // the badge always says which mode you're seeing).
 import { useEffect, useRef, useState } from 'react';
 import { api, type LiveDraft, type AuditEntry, API_URL } from './api';
+import { captureMic } from './audio';
 import { mockSign } from './signing';
 import { DRAFT, type AuditEv, type Stage } from './mock';
 
@@ -136,7 +137,15 @@ export function useLive(enabled: boolean) {
         case 'listening': {
           const home = await api.home().catch(() => null);
           r.homeBal = home?.accounts.find(a => a.id === 'acc_savings')?.balanceCents;
-          const res = await api.draft(transcriptText);
+          // FR-021 voice path: real mic bytes → /api/transcribe → draft by id.
+          // mock-asr recognises the hint sidecar; provider name is audited.
+          const cap = await captureMic(3000);
+          const tr = await api.transcribe({
+            ...(cap ? { audio: cap.audio, mime: cap.mime } : {}),
+            hint: transcriptText,
+            lang: 'en',
+          });
+          const res = await api.draft({ transcriptId: tr.transcriptId });
           if (res.scam) {
             setSt(s => ({ ...s, scamCues: res.scam!.cues }));
             return;

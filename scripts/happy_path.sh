@@ -47,4 +47,24 @@ say "audit chain"
 CONV=$(echo "$DRAFT" | python3 -c "import json,sys; print(json.load(sys.stdin)['draft']['conversationId'])")
 curl -sf "$API/api/audit/$CONV" | python3 -c "import json,sys; r=json.load(sys.stdin); [print(f'  {e[\"seq\"]:>2} {e[\"stage\"]}') for e in r['entries']]; print('  chainOk:', r['chainOk'])"
 
+say "voice path: audio + hint → transcribe → draft (FR-021)"
+TR=$(curl -sf -X POST "$API/api/transcribe" -H 'content-type: application/json' \
+  -d '{"audio":"QUJDREVGRw==","mime":"audio/webm","hint":"send mum fifty dollars","lang":"en"}')
+echo "$TR" | python3 -c "import json,sys; r=json.load(sys.stdin); print(f'  asr → \"{r[\"text\"]}\" · transcriptId={r[\"transcriptId\"]}')"
+TID=$(echo "$TR" | python3 -c "import json,sys; print(json.load(sys.stdin)['transcriptId'])")
+curl -sf -X POST "$API/api/drafts" -H 'content-type: application/json' \
+  -d "{\"transcriptId\":\"$TID\"}" | python3 -c "import json,sys; d=json.load(sys.stdin)['draft']; print(f'  draft by transcriptId → {d[\"status\"]} · {len(d[\"steps\"])} step(s)')"
+
+say "multi-lang: zh + ms produce the same typed draft (FR-016)"
+for pair in '转账两百给妈妈|zh' 'hantar dua ratus kepada ibu|ms'; do
+  IFS='|' read -r txt lang <<< "$pair"
+  curl -sf -X POST "$API/api/drafts" -H 'content-type: application/json' \
+    -d "{\"text\":\"$txt\",\"lang\":\"$lang\"}" | python3 -c "
+import json,sys
+d=json.load(sys.stdin)['draft']
+s=d['steps'][0]
+assert s['payeeId']=='payee_mum' and s['amountCents']==20000, s
+print(f'  $lang → transfer S\$200.00 → payee_mum ✓')"
+done
+
 say "happy path PASSED"

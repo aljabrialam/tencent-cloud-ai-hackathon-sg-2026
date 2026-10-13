@@ -23,7 +23,8 @@ restart mid-flow loses nothing. `PORT` overrides the listen port.
 | `ADP_APP_KEY` | Tencent ADP becomes the **drafter** |
 | `HUNYUAN_SECRET_KEY` (+ `HUNYUAN_MODEL`) | Hunyuan becomes the **validator** |
 | `DRAFTER_OPENAI_KEY` / `VALIDATOR_OPENAI_KEY` (+ `*_MODEL`) | OpenAI-compatible fallbacks |
-| *(none set)* | `mock-drafter` + `mock-validator` — deterministic, offline |
+| `TRTC_ASR_SDK_APP_ID` | Tencent TRTC ASR — fails closed (502) until SDK signing is wired |
+| *(none set)* | `mock-drafter` + `mock-validator` + `mock-asr` — deterministic, offline |
 
 Drafter and validator are **different engines by construction** — the dual-engine
 audit requirement. Either one timing out or disagreeing freezes the draft.
