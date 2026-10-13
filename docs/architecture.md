@@ -160,7 +160,7 @@ References: ADP Chat API (see hackathon ADP guide §6), TRTC ASR SDK
 <https://github.com/Tencent-RTC/trtc-asr-sdk-nodejs>, TTS API <https://trtc.io/document/80010>,
 docs index <https://trtc.io/llms/conversational-ai.txt>.
 
-## Repository layout (planned)
+## Repository layout
 
 ```
 apps/mobile        Expo app

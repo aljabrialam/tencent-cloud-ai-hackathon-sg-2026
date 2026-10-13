@@ -419,22 +419,6 @@ The claim isn't "first voice payment" or "first glasses payment" — it's **firs
 
 Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — both let the model act or answer directly, which would bypass the deterministic zone.
 
-## Status
-
-| Area | State |
-|---|---|
-| Constitution v1.2.0 | Done |
-| Feature spec 001 | Done — quality checklist passed |
-| Business flow, use cases, UX screens, architecture, policy rules, demo script, submission checklist | Done — `docs/` |
-| Interactive mockup — 9 screens + glasses HUD | Done — `design/digivoice-app-mockup.html` · mirrored in Figma |
-| Per-screen PNGs of the mockup | Done — `design/screens/` (all 10 screens) |
-| RN screen scaffolds (Mokkoi, DBS tokens) | Done — `design/mokkoi/` (all 10 screens, consistent tokens + WCAG checks) |
-| Plan + design artifacts (Spec Kit) | Done — `specs/001-*/plan.md`, `research.md`, `data-model.md`, `contracts/` (service API + LLM prompts), `quickstart.md` |
-| Tasks (Spec Kit) | Next — `/speckit.tasks` |
-| Shared types, policy engine + tests, mock bank, gateway | Planned |
-| Expo app, LLM adapter, validator, shield | Planned |
-| CodeBuddy proof, cover, demo video, submission | Planned |
-
 ## Repository
 
 ```
