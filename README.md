@@ -10,9 +10,12 @@
 |---|---|
 | [digivoice-app.vercel.app](https://digivoice-app.vercel.app) | **Web app** — `apps/web`, the digibank web surface |
 | [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app) | **Phone app** — Expo web build · [`?live=1`](https://digivoice-mobile.vercel.app/?live=1) hits the prod API |
-| [digivoice.apk](https://expo.dev/artifacts/eas/tY9XcTxAv5INtXoZWzWrdF71162SzbZ10aUSb1rCOy4.apk) | **Android app** — real EAS build, installs on a phone · prod API baked in |
+| [digivoice.apk](https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/download/v1.0.0/digivoice.apk) | **Android app** — real EAS build, installs on a phone · prod API baked in |
 | [digivoice-hud.vercel.app](https://digivoice-hud.vercel.app) | **Glasses HUD** — Meta Ray-Ban Display surface |
 | [tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs) | **API + Swagger** — every endpoint, *Try it out* enabled |
+
+<p align="center"><b>Scan to install on Android</b> — real build via <a href="https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/tag/v1.0.0">GitHub Release v1.0.0</a><br>
+<a href="https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/download/v1.0.0/digivoice.apk"><img src="design/digivoice-apk-qr.png" width="150" alt="QR — install digiVoice on Android"></a></p>
 
 <p align="center"><b>Interactive mockup</b> — <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html">product mockup</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html">phone film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html">glasses film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html">watch film</a></p>
 

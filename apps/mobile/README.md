@@ -12,7 +12,8 @@ Real Expo / React Native app (SDK 54, TypeScript). Two modes:
 ## Native build — EAS (real .apk / .ipa)
 
 Android APK for judges/testers on real phones — **latest build:**
-[`digivoice.apk` (56 MB)](https://expo.dev/artifacts/eas/tY9XcTxAv5INtXoZWzWrdF71162SzbZ10aUSb1rCOy4.apk)
+[`digivoice.apk` (56 MB)](https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/download/v1.0.0/digivoice.apk)
+hosted on [GitHub Release v1.0.0](https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/tag/v1.0.0) · QR: [`design/digivoice-apk-qr.png`](../../design/digivoice-apk-qr.png)
 
 ```sh
 npx eas-cli build --platform android --profile preview   # → shareable install link
