@@ -15,11 +15,11 @@
          background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%); }
   .stage { display:flex; align-items:center; gap:90px; position:relative; }
   .phone {
-    height: 880px; border-radius: 60px; overflow: hidden; flex-shrink:0;
+    height: min(880px, 92vh); border-radius: 60px; overflow: hidden; flex-shrink:0;
     box-shadow: 0 40px 100px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.06),
                 0 60px 60px -40px rgba(230,0,35,.12);
   }
-  .phone video { display:block; height:100%; }
+  .phone video { display:block; height:100%; width:auto; }
   .meta { max-width:520px; }
   .state { color:#fff; font:800 44px -apple-system,Helvetica,sans-serif; letter-spacing:-.5px; min-height:54px; }
   .sub { color:#8a8a93; font:500 19px/1.5 -apple-system,Helvetica,sans-serif; margin-top:14px; }
@@ -53,6 +53,14 @@ v.addEventListener('timeupdate', () => {
   if (st.textContent !== cur[1]) { st.textContent = cur[1]; sub.textContent = cur[2]; }
 });
 v.play().catch(() => {});
+
+// scale the whole scene to fit any viewport
+const stage = document.querySelector('.stage');
+function fit() {
+  const s = Math.min(1, (innerHeight - 24) / stage.offsetHeight, (innerWidth - 24) / stage.offsetWidth);
+  stage.style.transform = `scale(${s})`;
+}
+addEventListener('resize', fit); fit();
 </script>
 </body>
 </html>

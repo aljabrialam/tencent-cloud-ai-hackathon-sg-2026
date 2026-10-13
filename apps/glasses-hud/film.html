@@ -129,6 +129,14 @@ v.addEventListener('timeupdate', () => {
   mini.style.transform = cur[4] ? 'translateY(0)' : 'translateY(320px)';
 });
 v.play().catch(() => {});
+
+// scale the 1920x1080 scene to fit any viewport
+const stage = document.querySelector('.stage');
+function fit() {
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  stage.style.transform = `scale(${s})`;
+}
+addEventListener('resize', fit); fit();
 </script>
 </body>
 </html>

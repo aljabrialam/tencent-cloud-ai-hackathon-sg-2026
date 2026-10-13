@@ -70,6 +70,14 @@ function show(n) {
 }
 show(0);
 setInterval(() => { i = (i + 1) % STATES.length; show(i); }, HOLD);
+
+// scale the whole scene to fit any viewport (GitHub Pages demo on laptops)
+const stage = document.querySelector('.stage');
+function fit() {
+  const s = Math.min(1, (innerHeight - 24) / stage.offsetHeight, (innerWidth - 24) / stage.offsetWidth);
+  stage.style.transform = `scale(${s})`;
+}
+addEventListener('resize', fit); fit();
 </script>
 </body>
 </html>
