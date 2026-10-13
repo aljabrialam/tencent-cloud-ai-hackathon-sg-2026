@@ -22,8 +22,13 @@ npx eas-cli build:list                                    # get the artifact URL
 
 EAS project: [`@aljabrialam/digivoice`](https://expo.dev/accounts/aljabrialam/projects/digivoice).
 The `preview` profile bakes `EXPO_PUBLIC_API_URL` to the deployed service, so
-the installed app runs `LIVE` out of the box. iOS needs a paid Apple Developer
-account (ad-hoc/TestFlight) — skipped for judging.
+the installed app runs `LIVE` out of the box.
+
+**iPhone:** a signed `.ipa` needs a paid Apple Developer account (TestFlight /
+ad-hoc) — out of scope for judging. The deployed web build is installable
+instead: open [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app)
+in **Safari → Share → Add to Home Screen** — real icon, fullscreen standalone,
+same code.
 
 Real-device cloud testing (TestMu AI, BrowserStack, …): upload the APK artifact
 to run it on a physical cloud device — useful for real-device evidence, but it
@@ -38,7 +43,8 @@ auto-selected when not on localhost — `?api=` still overrides).
 
 ```sh
 # redeploy the web build
-npx expo export --platform web            # writes dist/ (wipes dist/.vercel)
+npx expo export --platform web            # writes dist/ (copies public/, wipes .vercel)
+bash scripts/post-export.sh               # injects PWA + iOS A2HS tags
 cd dist && vercel link --yes --project digivoice-mobile && vercel --prod
 ```
 

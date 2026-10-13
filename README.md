@@ -9,7 +9,7 @@
 | URL | Serves |
 |---|---|
 | [digivoice-app.vercel.app](https://digivoice-app.vercel.app) | **Web app** — `apps/web`, the digibank web surface |
-| [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app) | **Phone app** — Expo web build · [`?live=1`](https://digivoice-mobile.vercel.app/?live=1) hits the prod API |
+| [digivoice-mobile.vercel.app](https://digivoice-mobile.vercel.app) | **Phone app** — Expo web build · [`?live=1`](https://digivoice-mobile.vercel.app/?live=1) hits the prod API · **iPhone:** Safari → Share → **Add to Home Screen** (installs as a standalone app icon) |
 | [digivoice.apk](https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/download/v1.0.0/digivoice.apk) | **Android app** — real EAS build, installs on a phone · prod API baked in · **Scan to install** via [GitHub Release v1.0.0](https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/tag/v1.0.0): <br><a href="https://github.com/aljabrialam/tencent-cloud-ai-hackathon-sg-2026/releases/download/v1.0.0/digivoice.apk"><img src="design/digivoice-apk-qr.png" width="120" alt="QR — install digiVoice on Android"></a> |
 | [digivoice-hud.vercel.app](https://digivoice-hud.vercel.app) | **Glasses HUD** — Meta Ray-Ban Display surface |
 | [tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs) | **API + Swagger** — every endpoint, *Try it out* enabled |
