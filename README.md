@@ -23,7 +23,7 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 | [digivoice-hud.vercel.app](https://digivoice-hud.vercel.app) | **Glasses HUD** — Meta Ray-Ban Display surface |
 | [tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs](https://tencent-cloud-ai-hackathon-sg-2026.vercel.app/api/docs) | **API + Swagger** — every endpoint, *Try it out* enabled |
 
-*On iPhone the phone app also installs like a native app — open the URL in Safari, tap Share → **Add to Home Screen**. A signed `.ipa` needs a paid Apple Developer account; the APK above covers Android natively.*
+*On iPhone the phone app also installs like a native app — open the URL in Safari, tap Share → **Add to Home Screen**.*
 
 <p align="center"><b>Interactive mockup</b> — <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html">product mockup</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html">phone film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html">glasses film</a> · <a href="https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html">watch film</a></p>
 
@@ -40,62 +40,8 @@ Built with Spec Kit, CodeBuddy, WorkBuddy and Tencent Cloud. Mock bank, mock bio
 | **When it stops** | **Freeze** (auditor disagrees) · **Hold/Block** (limits, velocity, KYC, new payee) · **Scam interstitial** (cooling-off + hotline) — all visible, all audited |
 | **Beyond the phone** | One agent, every surface — Meta glasses + Neural Band, watch, car, speaker, earbuds, web. **Wearables propose; only the phone approves.** Four surfaces are real runnable code, not slides: `apps/mobile/` (Expo, all demo paths), `apps/web/` (digibank web + future-surface sims), `apps/glasses-hud/` passes Meta's own test gate, `apps/watch/` compiles for arm64 watchOS |
 | **Stack** | FE: Expo/React Native · React+Vite (glasses) · SwiftUI (watch) · BE: Node+TS, zod, Ed25519 · AI: ADP drafts, Hunyuan validates, TRTC ASR/TTS · [full stack ↓](#tech-stack) |
-| **Demo** | ▶ [Watch the full demo](https://youtu.be/K-hxJaWUQCc) — one pipeline across phone, glasses, watch and web |
 
-**📖 In a hurry? Start here:** [the problem](#the-problem) → [one worked example](#a-concrete-example) → [how it works](#how-it-works) → [every DBS requirement, answered](#mapping-to-the-dbs-challenge) → [the screens](#what-the-user-sees) → [wearables](#beyond-the-phone--wearables) → [vs what's out there](#whats-out-there--and-how-digivoice-differs) → [judge's index](#for-judges)
-
-## Demo
-
-**▶ Watch the full demo: [youtu.be/K-hxJaWUQCc](https://youtu.be/K-hxJaWUQCc)** — one signed-draft pipeline across phone, glasses, watch and web, including the validator-freeze and scam-shield stops.
-
-| Segment | What you're watching | File |
-|---|---|---|
-| Phone | Real iOS Simulator screen capture — the native app walks all five scenarios itself (happy → multi-intent → ambiguous → freeze → scam) | [`demo/phone-film.mp4`](demo/phone-film.mp4) · raw run [`demo/mobile-all.mp4`](demo/mobile-all.mp4) |
-| Meta Ray-Ban Display | Wearer-view scene over real 600×600 HUD app captures — draft card, "approve on your phone", Neural Band pinch | [`demo/glasses-film.mp4`](demo/glasses-film.mp4) |
-| Smartwatch | Compiled SwiftUI renders in a bezel (no watchOS runtime on this machine) — glance, buzz, phone signs | [`demo/watch-film.mp4`](demo/watch-film.mp4) |
-| Web | digibank web shell + speaker / earbuds / in-car future-surface sims | [`demo/web-app.mp4`](demo/web-app.mp4) |
-| Consolidated | All of the above, stitched at 1920×1080 | [`demo/digivoice-demo.mp4`](demo/digivoice-demo.mp4) · voice-over cue sheet [`demo/narration.md`](demo/narration.md) |
-
-**Interactive demos** — live on GitHub Pages, auto-play in the browser:
-
-- [**Full product mockup**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html) — phone, watch, HUD, surfaces · press **▶ Play demo path**
-- [**Phone film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html) — real simulator footage + per-scenario captions
-- [**Glasses film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html) — wearer-view scene, real HUD capture
-- [**Watch film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html) — compiled SwiftUI renders in bezel
-
-## Tech stack
-
-### Frontend — one pipeline, four real clients
-
-| Surface | Stack | Where |
-|---|---|---|
-| **Mobile (signing surface)** | Expo SDK 54 · React Native 0.81 · React 19 · TypeScript 5.9 · `react-native-web` for the browser demo · in-app Ed25519 signing ([`src/signing.ts`](apps/mobile/src/signing.ts)) · eslint-config-expo | [`apps/mobile/`](apps/mobile/) |
-| **Meta Ray-Ban Display** | React 19 · Vite · TypeScript · `@wearables-ui-toolkit/mrbd` + icons (Meta's official UI Toolkit — passes Meta's own test gate) | [`apps/glasses-hud/`](apps/glasses-hud/) |
-| **Apple Watch** | SwiftUI · watchOS · compiles to `arm64` dylib via [`build.sh`](apps/watch/build.sh) | [`apps/watch/`](apps/watch/) |
-| **Web / digibank** | HTML + vanilla JS demo (digibank UI + future-surface sims) | [`apps/web/`](apps/web/) |
-
-### Backend — the deterministic zone
-
-| Layer | Stack | Where |
-|---|---|---|
-| **Agent service** | Node 20+ · TypeScript · **zero runtime deps** — built-in `node:http` router, JSON-file durable state (`STATE_FILE`), `node:crypto` for Ed25519 + hashing · `tsx` dev runner | [`apps/service/`](apps/service/) |
-| **Shared pure core** | TypeScript · `zod` (draft schemas) · zero IO — shield, formula eval, policy engine, audit hash-chain · `vitest` ([29 cases](packages/shared/test/core.test.ts)) | [`packages/shared/`](packages/shared/) |
-| **Mock bank** | Same service, separate module — ledger with ordered multi-step execution + read-back | [`apps/service/src/bank/`](apps/service/src/bank/) |
-
-### AI / Tencent Cloud
-
-| Role | Tech | Why |
-|---|---|---|
-| **Drafter** | Tencent **ADP** (`ADP_APP_KEY`) — JSON-only typed drafts | The only model that writes a draft; no tools attached |
-| **Validator** | Tencent **Hunyuan** (`HUNYUAN_SECRET_KEY`) — read-only, different engine than the drafter | Dual-engine semantic audit: a different model family checks the draft against the transcript |
-| **ASR / TTS** | Tencent **TRTC** standalone ASR (16 kHz PCM) + cloud TTS API | Voice in / voice out — never in the decision path |
-| **Fallback** | `mock-drafter` + `mock-validator` providers | Deterministic offline demo; same JSON contract |
-
-Deliberately **not** used: ADP tool-calling and TRTC real-time conversational AI — both bypass the deterministic zone and break Principle I.
-
-### Tooling
-
-**Spec Kit** (spec-driven: `specs/001-conversational-transaction-agent/`) · **CodeBuddy + WorkBuddy** (build sessions — proof in `design/tool-proof/`) · **Playwright** (HUD capture, screenshot evidence) · `ffmpeg`/`simctl` (demo footage) · **Mokkoi** MCP (RN screen scaffolds in `design/mokkoi/`) · GitHub Pages (hosted demos)
+**📖 In a hurry? Start here:** [the problem](#the-problem) → [one worked example](#a-concrete-example) → [who it's for](#who-it-is-for) → [every DBS requirement, answered](#mapping-to-the-dbs-challenge) → [how it works](#how-it-works) → [the screens](#what-the-user-sees) → [wearables](#beyond-the-phone--wearables) → [vs what's out there](#whats-out-there--and-how-digivoice-differs) → [judge's index](#for-judges)
 
 ## The problem
 
@@ -137,6 +83,34 @@ flowchart TB
 ```
 
 Two details matter more than they look. The model wrote `half(remaining(savings))`, not `1250` — arithmetic is code, so it is right or it is a bug you can test. And the signature is over the *resolved* draft the user saw, so editing the amount after authorising is not a thing; it is a new draft needing a new signature.
+
+## Who it is for
+
+| Persona | Need | Stories |
+|---|---|---|
+| Working parent on the MRT | One sentence for three tasks; certainty nothing happens without her | US1, US2, US6 |
+| Retiree targeted by "police" scam calls | Voice-first, large text, a system that *stops him* | US5, US8, US3 |
+| First-time investor | "Buy S$300 of DBS" without forms; a clear record | US2, US7 |
+| Compliance reviewer | What was said, understood, approved, executed — in order | US7 |
+
+Business value, personas and the eight use cases: [`docs/use-cases.md`](docs/use-cases.md).
+
+## Mapping to the DBS challenge
+
+Every requirement in the brief, answered — full bullet-by-bullet traceability (incl. all 10 judging dimensions) in [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md):
+
+| DBS asked for | digiVoice | Where |
+|---|---|---|
+| Zero-UI multi-intent parsing → structured JSON drafts | Drafting LLM emits typed steps with symbolic formulas; resolver computes | [prompt contract](specs/001-conversational-transaction-agent/contracts/llm-prompts.md) · [`IntentStep`/`Formula`](specs/001-conversational-transaction-agent/data-model.md) |
+| Dynamic ambiguity resolution | Clarify screen, one targeted question, never a default | [screen 3](docs/ux-screens.md#3--clarify) · [`Ambiguity`](specs/001-conversational-transaction-agent/data-model.md) |
+| Dual-engine semantic discrepancy auditing | Independent read-only Validation LLM; discrepancy or timeout → frozen | [validator contract](specs/001-conversational-transaction-agent/contracts/llm-prompts.md#validator--llmprovidercompletevalidatesystem-validateuser--verdict) · [policy](docs/policy-rules.md#dual-engine-validation) |
+| Deterministic HITL biometric authorisation | Native card + biometric signing `sha256(draft)`; edit invalidates | [auth tiers](docs/policy-rules.md#authorisation-tiers) · [screen 7](docs/ux-screens.md#7--authorise) |
+| Zero-trust API gateway | Gateway accepts only drafts with a valid device signature; model has no write path | [API contract](specs/001-conversational-transaction-agent/contracts/service-api.md) · [error contract](specs/001-conversational-transaction-agent/contracts/service-api.md#error-contract) |
+| Adversarial prompt / injection shielding | Shield patterns, prompt isolation, inert rendering of free text | [shield patterns](docs/policy-rules.md#shield-patterns-pre-draft) |
+| Dynamic risk and velocity throttling | Policy rules `POL-TIER-*`, `POL-VEL-*`, `POL-NEWPAYEE-*`, OOB step-up | [rule table](docs/policy-rules.md#rules) |
+| Highly traceable and auditable | Hash-chained audit, in-app "Why did the agent do this?" | [`AuditEntry` chain](specs/001-conversational-transaction-agent/data-model.md#auditentry) · [screen 9](docs/ux-screens.md#9--audit-trail--why-did-the-agent-do-this) |
+
+Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md).
 
 ## How it works
 
@@ -184,23 +158,6 @@ Eleven principles hold this together; they are the project's [constitution](.spe
 11. **Disruptive reach.** Declared intent replaces menus; excluded users (elderly, disabled, non-English, scam-targeted) become first-class; safety is the product; wearables extend the same zero-trust pipeline while authorisation stays on the phone.
 
 Full flow, trust boundaries and sequence diagrams: [`docs/business-flow.md`](docs/business-flow.md) · components and types: [`docs/architecture.md`](docs/architecture.md).
-
-## Mapping to the DBS challenge
-
-Every requirement in the brief, answered — full bullet-by-bullet traceability (incl. all 10 judging dimensions) in [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md):
-
-| DBS asked for | digiVoice | Where |
-|---|---|---|
-| Zero-UI multi-intent parsing → structured JSON drafts | Drafting LLM emits typed steps with symbolic formulas; resolver computes | [prompt contract](specs/001-conversational-transaction-agent/contracts/llm-prompts.md) · [`IntentStep`/`Formula`](specs/001-conversational-transaction-agent/data-model.md) |
-| Dynamic ambiguity resolution | Clarify screen, one targeted question, never a default | [screen 3](docs/ux-screens.md#3--clarify) · [`Ambiguity`](specs/001-conversational-transaction-agent/data-model.md) |
-| Dual-engine semantic discrepancy auditing | Independent read-only Validation LLM; discrepancy or timeout → frozen | [validator contract](specs/001-conversational-transaction-agent/contracts/llm-prompts.md#validator--llmprovidercompletevalidatesystem-validateuser--verdict) · [policy](docs/policy-rules.md#dual-engine-validation) |
-| Deterministic HITL biometric authorisation | Native card + biometric signing `sha256(draft)`; edit invalidates | [auth tiers](docs/policy-rules.md#authorisation-tiers) · [screen 7](docs/ux-screens.md#7--authorise) |
-| Zero-trust API gateway | Gateway accepts only drafts with a valid device signature; model has no write path | [API contract](specs/001-conversational-transaction-agent/contracts/service-api.md) · [error contract](specs/001-conversational-transaction-agent/contracts/service-api.md#error-contract) |
-| Adversarial prompt / injection shielding | Shield patterns, prompt isolation, inert rendering of free text | [shield patterns](docs/policy-rules.md#shield-patterns-pre-draft) |
-| Dynamic risk and velocity throttling | Policy rules `POL-TIER-*`, `POL-VEL-*`, `POL-NEWPAYEE-*`, OOB step-up | [rule table](docs/policy-rules.md#rules) |
-| Highly traceable and auditable | Hash-chained audit, in-app "Why did the agent do this?" | [`AuditEntry` chain](specs/001-conversational-transaction-agent/data-model.md#auditentry) · [screen 9](docs/ux-screens.md#9--audit-trail--why-did-the-agent-do-this) |
-
-Rule table and test matrix: [`docs/policy-rules.md`](docs/policy-rules.md).
 
 ## What the user sees
 
@@ -290,17 +247,6 @@ Verified end-to-end on the deployed API: draft → sign → gateway execute → 
 Honest caveat: state lives in a per-instance JSON file (`/tmp`) on serverless — durable while the instance is warm, but not across cold starts or redeploys. It's the same mock-bank honesty as everything else; a real deployment would point `STATE_FILE` at managed storage.
 
 End-to-end proof script: `scripts/happy_path.sh` (happy path + multi-intent + clarify + unsigned/tampered rejection + scam shield + audit-chain verification).
-
-## Who it is for
-
-| Persona | Need | Stories |
-|---|---|---|
-| Working parent on the MRT | One sentence for three tasks; certainty nothing happens without her | US1, US2, US6 |
-| Retiree targeted by "police" scam calls | Voice-first, large text, a system that *stops him* | US5, US8, US3 |
-| First-time investor | "Buy S$300 of DBS" without forms; a clear record | US2, US7 |
-| Compliance reviewer | What was said, understood, approved, executed — in order | US7 |
-
-Business value, personas and the eight use cases: [`docs/use-cases.md`](docs/use-cases.md).
 
 ## Beyond the phone — wearables
 
@@ -437,17 +383,39 @@ Voice banking and glasses payments already exist; the difference is the constrai
 
 The claim isn't "first voice payment" or "first glasses payment" — it's **first transaction agent where the LLM cannot move money by construction**, extended to a surface you can't even see a confirmation screen on.
 
-## For judges
+## Tech stack
 
-| | |
-|---|---|
-| **Demo script** | [`docs/demo-script.md`](docs/demo-script.md) — 3-minute beat sheet: success, multi-intent, clarify, freeze, scam, audit |
-| **Spec** | [`specs/001-conversational-transaction-agent/spec.md`](specs/001-conversational-transaction-agent/spec.md) — 8 user stories, 18 functional requirements, 8 measurable success criteria |
-| **Requirements map** | [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md) — every DCTA brief bullet → mechanism → artifact, incl. the 10 judging dimensions |
-| **Technical approach** | [`specs/001-conversational-transaction-agent/plan.md`](specs/001-conversational-transaction-agent/plan.md) — technical context, constitution gate, source layout · [`research.md`](specs/001-conversational-transaction-agent/research.md) — 12 decisions with alternatives · [`data-model.md`](specs/001-conversational-transaction-agent/data-model.md) · [`contracts/`](specs/001-conversational-transaction-agent/contracts/service-api.md) — service API + LLM prompt contracts · [`quickstart.md`](specs/001-conversational-transaction-agent/quickstart.md) — e2e validation |
-| **UX / accessibility audit** | [`docs/ux-accessibility-audit.md`](docs/ux-accessibility-audit.md) — WCAG 2.2 AA contrast measured from real hex values, HIG/M3 target sizes, colour-never-alone — with the fixes applied |
-| **Constitution** | [`.specify/memory/constitution.md`](.specify/memory/constitution.md) |
-| **Submission checklist** | [`docs/submission-checklist.md`](docs/submission-checklist.md) — mandatory items incl. CodeBuddy/WorkBuddy proof |
+### Frontend — one pipeline, four real clients
+
+| Surface | Stack | Where |
+|---|---|---|
+| **Mobile (signing surface)** | Expo SDK 54 · React Native 0.81 · React 19 · TypeScript 5.9 · `react-native-web` for the browser demo · in-app Ed25519 signing ([`src/signing.ts`](apps/mobile/src/signing.ts)) · eslint-config-expo | [`apps/mobile/`](apps/mobile/) |
+| **Meta Ray-Ban Display** | React 19 · Vite · TypeScript · `@wearables-ui-toolkit/mrbd` + icons (Meta's official UI Toolkit — passes Meta's own test gate) | [`apps/glasses-hud/`](apps/glasses-hud/) |
+| **Apple Watch** | SwiftUI · watchOS · compiles to `arm64` dylib via [`build.sh`](apps/watch/build.sh) | [`apps/watch/`](apps/watch/) |
+| **Web / digibank** | HTML + vanilla JS demo (digibank UI + future-surface sims) | [`apps/web/`](apps/web/) |
+
+### Backend — the deterministic zone
+
+| Layer | Stack | Where |
+|---|---|---|
+| **Agent service** | Node 20+ · TypeScript · **zero runtime deps** — built-in `node:http` router, JSON-file durable state (`STATE_FILE`), `node:crypto` for Ed25519 + hashing · `tsx` dev runner | [`apps/service/`](apps/service/) |
+| **Shared pure core** | TypeScript · `zod` (draft schemas) · zero IO — shield, formula eval, policy engine, audit hash-chain · `vitest` ([29 cases](packages/shared/test/core.test.ts)) | [`packages/shared/`](packages/shared/) |
+| **Mock bank** | Same service, separate module — ledger with ordered multi-step execution + read-back | [`apps/service/src/bank/`](apps/service/src/bank/) |
+
+### AI / Tencent Cloud
+
+| Role | Tech | Why |
+|---|---|---|
+| **Drafter** | Tencent **ADP** (`ADP_APP_KEY`) — JSON-only typed drafts | The only model that writes a draft; no tools attached |
+| **Validator** | Tencent **Hunyuan** (`HUNYUAN_SECRET_KEY`) — read-only, different engine than the drafter | Dual-engine semantic audit: a different model family checks the draft against the transcript |
+| **ASR / TTS** | Tencent **TRTC** standalone ASR (16 kHz PCM) + cloud TTS API | Voice in / voice out — never in the decision path |
+| **Fallback** | `mock-drafter` + `mock-validator` providers | Deterministic offline demo; same JSON contract |
+
+Deliberately **not** used: ADP tool-calling and TRTC real-time conversational AI — both bypass the deterministic zone and break Principle I.
+
+### Tooling
+
+**Spec Kit** (spec-driven: `specs/001-conversational-transaction-agent/`) · **CodeBuddy + WorkBuddy** (build sessions — proof in `design/tool-proof/`) · **Playwright** (HUD capture, screenshot evidence) · `ffmpeg`/`simctl` (demo footage) · **Mokkoi** MCP (RN screen scaffolds in `design/mokkoi/`) · GitHub Pages (hosted demos) · Vercel (service + three frontends) · EAS (cloud builds)
 
 ## Tencent Cloud usage
 
@@ -460,6 +428,37 @@ The claim isn't "first voice payment" or "first glasses payment" — it's **firs
 
 Not used on purpose: ADP tool-calling and TRTC real-time AI conversation — both let the model act or answer directly, which would bypass the deterministic zone.
 
+## Demo
+
+**▶ Watch the full demo: [youtu.be/K-hxJaWUQCc](https://youtu.be/K-hxJaWUQCc)** — one signed-draft pipeline across phone, glasses, watch and web, including the validator-freeze and scam-shield stops.
+
+| Segment | What you're watching | File |
+|---|---|---|
+| Phone | Real iOS Simulator screen capture — the native app walks all five scenarios itself (happy → multi-intent → ambiguous → freeze → scam) | [`demo/phone-film.mp4`](demo/phone-film.mp4) · raw run [`demo/mobile-all.mp4`](demo/mobile-all.mp4) |
+| Meta Ray-Ban Display | Wearer-view scene over real 600×600 HUD app captures — draft card, "approve on your phone", Neural Band pinch | [`demo/glasses-film.mp4`](demo/glasses-film.mp4) |
+| Smartwatch | Compiled SwiftUI renders in a bezel (no watchOS runtime on this machine) — glance, buzz, phone signs | [`demo/watch-film.mp4`](demo/watch-film.mp4) |
+| Web | digibank web shell + speaker / earbuds / in-car future-surface sims | [`demo/web-app.mp4`](demo/web-app.mp4) |
+| Consolidated | All of the above, stitched at 1920×1080 | [`demo/digivoice-demo.mp4`](demo/digivoice-demo.mp4) · voice-over cue sheet [`demo/narration.md`](demo/narration.md) |
+
+**Interactive demos** — live on GitHub Pages, auto-play in the browser:
+
+- [**Full product mockup**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/design/digivoice-app-mockup.html) — phone, watch, HUD, surfaces · press **▶ Play demo path**
+- [**Phone film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/mobile/film.html) — real simulator footage + per-scenario captions
+- [**Glasses film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/glasses-hud/film.html) — wearer-view scene, real HUD capture
+- [**Watch film**](https://aljabrialam.github.io/tencent-cloud-ai-hackathon-sg-2026/apps/watch/film.html) — compiled SwiftUI renders in bezel
+
+## For judges
+
+| | |
+|---|---|
+| **Demo script** | [`docs/demo-script.md`](docs/demo-script.md) — 3-minute beat sheet: success, multi-intent, clarify, freeze, scam, audit |
+| **Spec** | [`specs/001-conversational-transaction-agent/spec.md`](specs/001-conversational-transaction-agent/spec.md) — 8 user stories, 18 functional requirements, 8 measurable success criteria |
+| **Requirements map** | [`docs/dcta-requirements-map.md`](docs/dcta-requirements-map.md) — every DCTA brief bullet → mechanism → artifact, incl. the 10 judging dimensions |
+| **Technical approach** | [`specs/001-conversational-transaction-agent/plan.md`](specs/001-conversational-transaction-agent/plan.md) — technical context, constitution gate, source layout · [`research.md`](specs/001-conversational-transaction-agent/research.md) — 12 decisions with alternatives · [`data-model.md`](specs/001-conversational-transaction-agent/data-model.md) · [`contracts/`](specs/001-conversational-transaction-agent/contracts/service-api.md) — service API + LLM prompt contracts · [`quickstart.md`](specs/001-conversational-transaction-agent/quickstart.md) — e2e validation |
+| **UX / accessibility audit** | [`docs/ux-accessibility-audit.md`](docs/ux-accessibility-audit.md) — WCAG 2.2 AA contrast measured from real hex values, HIG/M3 target sizes, colour-never-alone — with the fixes applied |
+| **Constitution** | [`.specify/memory/constitution.md`](.specify/memory/constitution.md) |
+| **Submission checklist** | [`docs/submission-checklist.md`](docs/submission-checklist.md) — mandatory items incl. CodeBuddy/WorkBuddy proof |
+
 ## Repository
 
 ```
@@ -469,6 +468,7 @@ docs/       Business flow · use cases · UX screens · architecture · policy r
 design/     Figma exports, cover image, tool-usage proof
 apps/       mobile (Expo, runnable) · web (Vite React, runnable) · service (Node) · glasses-hud (Display Web App) · watch (SwiftUI watchOS)
 packages/   shared types, schemas, policy
+api/        Vercel serverless entry — same router as apps/service
 ```
 
 ## Workflow
